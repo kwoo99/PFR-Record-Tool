@@ -18,7 +18,7 @@ var portalName = sessionStorage.getItem("management_deeplink").replace(/"/ig, ""
 var next = null;
 var processing = false;
 
-$._delete = function (url, data, errorfunc) {
+$._delete = function (url, data, errorfunc) { //Delete request function
 	return $.ajax({
 		url: url,
 		type: "delete",
@@ -27,7 +27,7 @@ $._delete = function (url, data, errorfunc) {
 	});
 };
 
-$._get = function (url, data, errorfunc) {
+$._get = function (url, data, errorfunc) { //Get Request function
 	return $.ajax({
 		url: url,
 		type: "get",
@@ -36,7 +36,7 @@ $._get = function (url, data, errorfunc) {
 	});
 };
 
-var log = function (message) {
+var log = function (message) { //
 	if ($("#message").length == 0) {
 		$("body").append($("<div id='message' style='position:fixed;z-index:9999999999;width:600px;height:300px;left:calc(50% - 300px);top:calc(50% - 150px);padding:15px;border-radius:5px;background:#333;color:white'>Start to delete invoice and payments</div>"))
 	}
@@ -46,7 +46,7 @@ var log = function (message) {
 	$("#message").append($("<div>" + message + "</div>"));
 };
 
-var invoices = [];
+var invoices = []; // Array of invoices from portal
 var deletedInvoicesCount = 0;
 var collectCustomerInvoice = function (pageIndex) {
 	processing = true;
@@ -54,7 +54,7 @@ var collectCustomerInvoice = function (pageIndex) {
 	var url = host + "/receivables/api/" + portalName + "/api/reports/invoices";
 	$._get(url, { criteria: {}, pageIndex: pageIndex, pageSize: 10 })
 		.then(function (response) {
-			for (var i in response.result) {
+			for (var i in response.result) { // Goes through invoices page and pushes them into invoices array
 				invoices.push(response.result[i]);
 			}
 			if (response.result.length > 0) {
@@ -65,13 +65,13 @@ var collectCustomerInvoice = function (pageIndex) {
 				next = deleteCustomerInvoice;
 			}
 			processing = false;
-		}, function () {
+		}, function () { // ???
 			next = collectCustomerInvoice.bind(this, ++pageIndex);
 			processing = false;
 		});
 }
 
-var deleteCustomerInvoice = function () {
+var deleteCustomerInvoice = function () { // Removes customer invoices from invoices array
 	processing = true;
 	var invoice = invoices.pop();
 	if (invoice == null) {
@@ -80,7 +80,7 @@ var deleteCustomerInvoice = function () {
 		return;
 	}
 
-	var url = host + "/receivables/api/" + portalName + "/api/reports/invoices/delete?includeReversal=false"
+	var url = host + "/receivables/api/" + portalName + "/api/reports/invoices/delete?includeReversal=false" // Endpoint to delete invoice 
 	$._delete(url, JSON.stringify([invoice.identity])).then(function () {
 		log("deleted invoice " + invoice.identity);
 		deletedInvoicesCount++;
@@ -128,7 +128,7 @@ var deleteCustomerPayments = function () {
 		processing = false;
 		return;
 	}
-	var url = host + "/receivables/api/" + portalName + "/api/reports/payments?includeReversal=false";
+	var url = host + "/receivables/api/" + portalName + "/api/reports/payments?includeReversal=false"; // Gets list of payments from PFR portal
 	
 	$._delete(url, JSON.stringify([{ "paymentIdentity": payment.identity, "rowVersion": payment.rowVersion }]))
 		.then(function () {
@@ -184,7 +184,7 @@ function refreshPFSTSCookie() {
 var next = collectCustomerInvoice.bind(this, 0);
 
 var logout = new Date();
-var interval = setInterval(function () {
+var interval = setInterval(function () { // Interval function runs script
 	if ((new Date() - logout) > 5 * 60 * 1000) {
 		refreshToken();
 		refreshPFSTSCookie();
