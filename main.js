@@ -21,14 +21,13 @@ if (isTest) {
 // function to grab invoices
 function getInvoices() {
   // build endpoint url for invoice request
-  var url =
-    hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
+  var url = hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
   // create request
   var request = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authentication: "integration",
+      "Authorization": "integration",
     },
   };
   // create fetch to send out request
@@ -38,12 +37,33 @@ function getInvoices() {
 function getPayments() {
   // build endpoint url for invoice request
   var url =
-    hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
+    hostURL + "/receivables/sync/api/" + portalName + "/api/reports/payments";
   // authentication
 }
 // function to grab customers
-// build endpoint url for invoice request
-// authentication
+async function getCustomers(customers) {
+  var customerList = [];
+  for (let i = 0; i < customers.length; i++) {
+    // build endpoint url for invoice request
+    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/customers?id=${customers[i]}`;
+    var request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${tokenInfo}`,
+      },
+    };
+    try {
+      var response = await fetch(url, request);
+      var json = await response.json();
+      customerList.push(json.CustomerId);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+  return customerList;
+}
 
 // function to delete invoices
 // build endpoint url for invoice request
@@ -53,13 +73,41 @@ function getPayments() {
 // build endpoint url for delete request
 // authentication
 
-// function to delete customers
+// function to delete customer
+async function deleteCustomers(customers) {
+  //   for (let i = 0; i < customerList.length; i++) {
+  //     var url =
+  //       hostURL +
+  //       "/receivables/sync/api/" +
+  //       portalName +
+  //       `api/customers?id=${customerList[i]}`;
+  //     var request = {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": `Bearer ${tokenInfo}`,
+  //       },
+  //     };
+  //   }
+  var url = hostURL + "/receivables/sync/api/" + portalName + "/api/customers?id=PFC000015";
+  var request = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${tokenInfo}`,
+    },
+  };
+  fetch(url, request)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}
 // build endpoint url for delete request
 // authentication
 
 // function to run deletion function for specified record type
 
-// function to generate security token
+// function to generate security token for authenticating api calls
 async function generateToken() {
   //Creates endpoint url for generating a security token
   var url = hostURL + "/receivables/sync/api/" + portalName + "/api/token";
@@ -92,8 +140,10 @@ async function generateToken() {
 
 async function main() {
   //Test that generateToken function works
+  var custos = ["AARONFIT0001", "ADAMPARK0001"];
   tokenInfo = await generateToken();
-  console.log(tokenInfo);
+  customer_List = await getCustomers(custos);
+  await deleteCustomers();
 }
 
 main();
