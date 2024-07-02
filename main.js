@@ -1,7 +1,9 @@
+import {readCSVFile} from './csvParser.cjs';
+
 //Define variables for Receivables portal and credentials
-portalName = "Kyle";
-var integrationKey = "Kyle_Ci0pW46";
-var integrationPass = ".Wu62/?";
+var portalName = "Gorilla";
+var integrationKey = "Gorilla_JMl0qPu";
+var integrationPass = "%Hr9<US";
 var tokenInfo;
 // host url for production
 var hostURLProd = `https://www.payfabric.com`;
@@ -17,6 +19,8 @@ if (isTest) {
 } else {
   hostURL = hostURLProd;
 }
+
+var customerList = 'Customers.csv';
 
 // function to grab invoices
 function getInvoices() {
@@ -75,32 +79,23 @@ async function getCustomers(customers) {
 
 // function to delete customer
 async function deleteCustomers(customers) {
-  //   for (let i = 0; i < customerList.length; i++) {
-  //     var url =
-  //       hostURL +
-  //       "/receivables/sync/api/" +
-  //       portalName +
-  //       `api/customers?id=${customerList[i]}`;
-  //     var request = {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": `Bearer ${tokenInfo}`,
-  //       },
-  //     };
-  //   }
-  var url = hostURL + "/receivables/sync/api/" + portalName + "/api/customers?id=PFC000015";
-  var request = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${tokenInfo}`,
-    },
-  };
-  fetch(url, request)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+  var deleteCount = 0;
+  for (let i = 0; i < customers.length; i++){
+    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/customers?id=${customers[i]}`;
+    var request = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${tokenInfo}`,
+      },
+    };
+    fetch(url, request)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+    deleteCount++;
+  }
+  console.log(deleteCount + ' Customers deleted');
 }
 // build endpoint url for delete request
 // authentication
@@ -139,11 +134,10 @@ async function generateToken() {
 }
 
 async function main() {
-  //Test that generateToken function works
-  var custos = ["AARONFIT0001", "ADAMPARK0001"];
+  var customers = await readCSVFile(customerList);
   tokenInfo = await generateToken();
-  customer_List = await getCustomers(custos);
-  await deleteCustomers();
+  deleteCustomers(customers)
+  console.log(customers);
 }
 
 main();
