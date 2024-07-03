@@ -91,9 +91,8 @@ async function deleteCustomers(customers) {
     };
     fetch(url, request)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then(() => console.log(customers[i]))
       .catch((error) => console.error(error));
-    deleteCount++;
   }
   console.log(deleteCount + ' Customers deleted');
 }
