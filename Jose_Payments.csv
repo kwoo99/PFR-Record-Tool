@@ -1,0 +1,529 @@
+Payment ID,Customer ID,Customer Name,Type,Status,Payment Method,Date,Amount,Balance,Currency,Batch Number
+CM1000.1,AARONFIT0001,Aaron Fitz Electrical,CreditMemo,Processed,Check,06/15/2023,$98.31,$0.00,Z-US$,BEG BAL
+CM5000.3,LEISURET0001,Leisure & Travel Consultants,CreditMemo,Processed,Check,06/20/2023,$637.38,$0.00,Z-US$,BEG BAL
+PMT2010.1,COMPUTER0002,Computers Unlimited,Payment,Processed,Cash,06/27/2023,$855.05,$0.00,Z-US$,BEG BAL
+PMT3020.1,CENTRALD0001,Central Distributing,Payment,Processed,Cash,07/02/2023,"$3,252.38",$0.00,Z-US$,BEG BAL
+PMT6010.1,COMPUTER0001,Computerized Phone Systems,Payment,Processed,Cash,07/13/2023,"$6,882.33",$0.00,Z-US$,BEG BAL
+CM6001.1,COMPUTER0001,Computerized Phone Systems,CreditMemo,Processed,Check,07/20/2023,$214.00,$214.00,Z-US$,BEG BAL
+PMT6000.1,MULTITEC0001,Multitech Office Components,Payment,Processed,Cash,07/28/2023,"$5,673.68",$0.00,Z-US$,BEG BAL
+PMT1010.1,ASSOCIAT0001,Associated Insurance Company,Payment,Processed,Cash,07/29/2023,"$2,049.70",$0.00,Z-US$,BEG BAL
+RTN1001.1,COMPUTEC0001,Compu-Tech Solutions,Return,Processed,Check,07/31/2023,$183.76,$0.00,Z-US$,BEG BAL
+RTN6001.1,MULTITEC0001,Multitech Office Components,Return,Processed,Check,07/31/2023,$276.85,$0.00,Z-US$,BEG BAL
+PMT4010.1,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,08/02/2023,$740.49,$0.00,Z-US$,BEG BAL
+CM14000.1,HAMPTONV0001,Hampton Village Eatery,CreditMemo,Processed,Check,08/02/2023,$462.82,$0.00,Z-US$,BEG BAL
+PMT4020.1,COMPUTER0003,Computer Equipment Leasing,Payment,Processed,Cash,08/02/2023,"$1,576.65",$0.00,Z-US$,BEG BAL
+PMT13010.1,SSPROPER0001,S & S Properties,Payment,Processed,Cash,08/03/2023,"$1,681.15",$0.00,Z-US$,BEG BAL
+CM17000.1,NORTHERN0001,Northern State College,CreditMemo,Processed,Check,08/05/2023,$802.50,$0.00,Z-US$,BEG BAL
+CM9001.1,MANCHEST0001,Manchester Suites,CreditMemo,Processed,Check,08/11/2023,$535.00,$0.00,Z-US$,BEG BAL
+CM5000.2,DIRECTMA0001,Direct Marketers,CreditMemo,Processed,Check,08/13/2023,$939.64,$0.00,Z-US$,BEG BAL
+PMT11000.1,NORTHCOL0001,North College,Payment,Processed,Cash,08/13/2023,$522.91,$0.00,Z-US$,BEG BAL
+PMT3000.1,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,08/14/2023,"$8,948.10",$0.00,Z-US$,BEG BAL
+PMT7020.1,PLACEMAD0001,Place & MacDero Associates,Payment,Processed,Cash,08/14/2023,$828.24,$0.00,Z-US$,BEG BAL
+CM1000.3,COUNTRYV0001,Country View Estates,CreditMemo,Processed,Check,08/20/2023,"$1,687.50",$0.00,Z-US$,BEG BAL
+PMT9000.1,MANCHEST0001,Manchester Suites,Payment,Processed,Cash,08/20/2023,"$2,000.00",$0.00,Z-US$,BEG BAL
+PMT14000.1,NATIONAL0001,National Shopping World,Payment,Processed,Cash,08/20/2023,"$2,500.00",$0.00,Z-US$,BEG BAL
+PMT3021.1,CENTRALD0001,Central Distributing,Payment,Processed,Cash,08/21/2023,"$2,990.93",$0.00,Z-US$,BEG BAL
+PMT8000.1,FOURTHCO0001,Fourth Coffee,Payment,Processed,Cash,08/22/2023,"$2,695.54",$0.00,Z-US$,BEG BAL
+CM2000.1,BOYLESCO0001,Boyle's Country Inn's,CreditMemo,Processed,Check,08/23/2023,$480.00,$0.00,Z-US$,BEG BAL
+PMT11010.1,MARGIEST0001,Margie's Travel,Payment,Processed,Cash,08/23/2023,$500.00,$0.00,Z-US$,BEG BAL
+CM3000.1,ADVANCED0001,Advanced Paper Co.,CreditMemo,Processed,Check,08/24/2023,$497.78,$0.00,Z-US$,BEG BAL
+PMT3030.1,NORTHERN0002,Northern Family Hospital,Payment,Processed,Cash,08/28/2023,$360.86,$0.00,Z-US$,BEG BAL
+RTN5003.1,VISTATRA0001,Vista Travel,Return,Processed,Check,08/28/2023,$223.33,$0.00,Z-US$,BEG BAL
+PMT1001.1,ASSOCIAT0001,Associated Insurance Company,Payment,Processed,Cash,08/30/2023,"$4,145.93",$0.00,Z-US$,BEG BAL
+CM4000.1,COMMUNIC0002,Communication Connections,CreditMemo,Processed,Check,08/30/2023,$535.00,$0.00,Z-US$,BEG BAL
+PMT13000.1,HEARTLAN0001,Heartland Tower Systems,Payment,Processed,Cash,08/30/2023,"$1,750.00",$0.00,Z-US$,BEG BAL
+PMT4000.1,AMERICAN0001,American Science Museum,Payment,Processed,Cash,09/02/2023,"$1,153.43",$0.00,Z-US$,BEG BAL
+CM13001.1,HEARTLAN0001,Heartland Tower Systems,CreditMemo,Processed,Check,09/02/2023,$300.00,$0.00,Z-US$,BEG BAL
+PMT3041.1,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,09/04/2023,"$2,250.00",$0.00,Z-US$,BEG BAL
+PMT3010.1,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,09/04/2023,"$2,250.00",$0.00,Z-US$,BEG BAL
+PMT12010.1,NORTHSTA0001,Northstar Mall,Payment,Processed,Cash,09/04/2023,"$2,200.00",$0.00,Z-US$,BEG BAL
+PMT7010.1,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,09/04/2023,"$1,802.39",$0.00,Z-US$,BEG BAL
+PMT7011.1,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,09/04/2023,"$1,759.49",$0.00,Z-US$,BEG BAL
+PMT5001.1,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,09/07/2023,"$2,944.11",$0.00,Z-US$,BEG BAL
+PMT5011.1,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,09/07/2023,"$2,944.11",$0.00,Z-US$,BEG BAL
+PMT5011.2,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,09/07/2023,$946.12,$0.00,Z-US$,BEG BAL
+PMT1000.2,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,09/08/2023,"$1,500.00",$0.00,Z-US$,BEG BAL
+CM4001.1,AMERICAN0001,American Science Museum,CreditMemo,Processed,Check,09/14/2023,$350.00,$0.00,Z-US$,BEG BAL
+PMT15000.1,COHOWINE0001,Coho Wintery,Payment,Processed,Cash,09/15/2023,"$2,140.00",$0.00,Z-US$,BEG BAL
+PMT8010.1,NOVASYST0001,"Nova Systems, Inc.",Payment,Processed,Cash,09/20/2023,"$1,852.14",$0.00,Z-US$,BEG BAL
+PMT21000.1,RAINBOWR0001,Rainbow Research,Payment,Processed,Cash,09/20/2023,"$10,902.77",$0.00,Z-US$,BEG BAL
+PMT13011.1,SSPROPER0001,S & S Properties,Payment,Processed,Cash,09/20/2023,"$1,000.00",$0.00,Z-US$,BEG BAL
+PMT10010.1,SUPERFOO0001,Super Foods Plus,Payment,Processed,Cash,09/25/2023,"$10,700.61",$0.00,Z-US$,BEG BAL
+PMT2000.2,BOYLESCO0001,Boyle's Country Inn's,Payment,Processed,Cash,09/26/2023,"$3,792.83",$0.00,Z-US$,BEG BAL
+PMT12001.1,OCTAGONM0001,Octagon Marketing Org.,Payment,Processed,Cash,09/30/2023,$454.90,$0.00,Z-US$,BEG BAL
+PMT18001.1,DOWNTOWN001,Downtown Hotel,Payment,Processed,Cash,10/01/2023,"$6,000.00",$0.00,Z-US$,BEG BAL
+PMT2000.1,AMERICAN0002,American Electrical Contractor,Payment,Processed,Cash,10/02/2023,$299.07,$0.00,Z-US$,BEG BAL
+PMT1001.2,COUNTRYV0001,Country View Estates,Payment,Processed,Cash,10/03/2023,"$10,430.00",$0.00,Z-US$,BEG BAL
+PMT1010.2,COUNTRYV0001,Country View Estates,Payment,Processed,Cash,10/03/2023,"$25,618.41",$0.00,Z-US$,BEG BAL
+PMT24000.1,ISNINDUS0001,ISN Industries,Payment,Processed,Cash,10/04/2023,"$1,200.00",$0.00,Z-US$,BEG BAL
+PMT17000.2,NORTHERN0001,Northern State College,Payment,Processed,Cash,10/04/2023,"$13,936.95",$0.00,Z-US$,BEG BAL
+PMT4011.1,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,10/05/2023,"$10,700.00",$0.00,Z-US$,BEG BAL
+PMT5010.1,HOMEFURN0001,Home Furnishings Limited,Payment,Processed,Cash,10/05/2023,"$6,015.45",$0.00,Z-US$,BEG BAL
+CM17001.1,NORTHERN0001,Northern State College,CreditMemo,Processed,Check,10/05/2023,$428.00,$0.00,Z-US$,BEG BAL
+PMT2002.1,ATMORERE0001,Atmore Retirement Center,Payment,Processed,Cash,10/10/2023,"$1,000.00",$0.00,Z-US$,BEG BAL
+PMT5002.1,CELLULAR0001,Cellular Express,Payment,Processed,Cash,10/12/2023,"$2,140.00",$0.00,Z-US$,BEG BAL
+PMT5012.1,HOMEFURN0001,Home Furnishings Limited,Payment,Processed,Cash,10/12/2023,"$1,104.20",$0.00,Z-US$,BEG BAL
+PMT11010.2,MARGIEST0001,Margie's Travel,Payment,Processed,Cash,10/13/2023,"$1,500.00",$0.00,Z-US$,BEG BAL
+PMT11011.1,MARGIEST0001,Margie's Travel,Payment,Processed,Cash,10/13/2023,"$1,500.00",$0.00,Z-US$,BEG BAL
+CM1004.2,BREAKTHR0001,Breakthrough Telemarketing,CreditMemo,Processed,Check,10/14/2023,$535.00,$0.00,Z-US$,BEG BAL
+PMT4002.1,COMPUTER0003,Computer Equipment Leasing,Payment,Processed,Cash,10/14/2023,"$3,139.85",$0.00,Z-US$,BEG BAL
+PMT14004.1,HAMPTONV0001,Hampton Village Eatery,Payment,Processed,Cash,10/14/2023,"$1,178.50",$0.00,Z-US$,BEG BAL
+PMT3011.1,ADAMPARK0001,Adam Park Resort,Payment,Processed,Cash,10/15/2023,"$1,070.00",$0.00,Z-US$,BEG BAL
+PMT3000.2,ADVANCED0001,Advanced Paper Co.,Payment,Processed,Cash,10/15/2023,"$2,078.78",$0.00,Z-US$,BEG BAL
+CM5000.1,CELLULAR0001,Cellular Express,CreditMemo,Processed,Check,10/15/2023,"$1,000.00",$0.00,Z-US$,BEG BAL
+PMT7014.1,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,10/15/2023,$197.21,$0.00,Z-US$,BEG BAL
+PMT8003.1,FOURTHCO0001,Fourth Coffee,Payment,Processed,Cash,10/17/2023,$235.26,$0.00,Z-US$,BEG BAL
+CM3003.1,ADAMPARK0001,Adam Park Resort,CreditMemo,Processed,Check,10/20/2023,$350.00,$0.00,Z-US$,BEG BAL
+PMT12000.1,CENTRALI0001,Central Illinois Hospital,Payment,Processed,Cash,10/21/2023,$974.93,$0.00,Z-US$,BEG BAL
+CM1004.1,ASSOCIAT0001,Associated Insurance Company,CreditMemo,Processed,Check,10/24/2023,$428.00,$0.00,Z-US$,BEG BAL
+PMT6002.1,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,10/25/2023,"$11,347.92",$0.00,Z-US$,BEG BAL
+PMT10000.1,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,10/31/2023,"$21,539.00",$0.00,Z-US$,BEG BAL
+PMT23001.1,NETWORKS0001,Network Solutions,Payment,Processed,Cash,10/31/2023,"$1,700.72",$0.00,Z-US$,BEG BAL
+PMT7001.1,CRAWFORD0001,"Crawfords, Inc.",Payment,Processed,Cash,11/03/2023,"$2,335.91",$0.00,Z-US$,BEG BAL
+PMT7000.1,CRAWFORD0001,"Crawfords, Inc.",Payment,Processed,Cash,11/03/2023,"$1,070.00",$0.00,Z-US$,BEG BAL
+PMT9005.1,MANCHEST0001,Manchester Suites,Payment,Processed,Cash,11/04/2023,"$7,500.00",$0.00,Z-US$,BEG BAL
+PMT4001.2,AMERICAN0001,American Science Museum,Payment,Processed,Cash,11/05/2023,"$10,603.92",$0.00,Z-US$,BEG BAL
+PMT2013.1,BOYLESCO0001,Boyle's Country Inn's,Payment,Processed,Cash,11/21/2023,"$1,922.50",$0.00,Z-US$,BEG BAL
+PMT2003.1,ATMORERE0001,Atmore Retirement Center,Payment,Processed,Cash,11/21/2023,"$2,619.52",$0.00,Z-US$,BEG BAL
+PMT3001.1,ADVANCED0001,Advanced Paper Co.,Payment,Processed,Cash,12/01/2023,"$2,140.01",$0.00,Z-US$,BEG BAL
+PMT12002.1,CENTRALI0001,Central Illinois Hospital,Payment,Processed,Cash,12/05/2023,"$6,000.00",$0.00,Z-US$,BEG BAL
+PMT16000.1,POLKVALL0001,Polk Valley Highway Dept.,Payment,Processed,Cash,12/05/2023,"$10,766.89",$0.00,Z-US$,BEG BAL
+PMT14005.1,HAMPTONV0001,Hampton Village Eatery,Payment,Processed,Cash,12/12/2023,"$6,000.00",$0.00,Z-US$,BEG BAL
+PMT1004.1,COUNTRYV0001,Country View Estates,Payment,Processed,Cash,12/14/2023,$720.33,$0.00,Z-US$,BEG BAL
+PMT12070,BOYLESCO0001,Boyle's Country Inn's,Payment,Processed,Cash,01/02/2024,$855.21,$0.00,Z-US$,JAN-98
+PMT14070,COMPUTER0003,Computer Equipment Leasing,Payment,Processed,Cash,01/02/2024,$470.54,$0.00,Z-US$,JAN-98
+CM110000,HOLLINGC0001,Holling Communications Inc.,CreditMemo,Processed,Check,01/02/2024,"$1,855.79",$0.00,Z-US$,JAN-98
+RTN14060,NOVASCOT0001,Novia Scotia Tech. Institute,Return,Processed,Check,01/02/2024,"$1,761.56",$0.00,Z-US$,JAN-98
+PMT114010,NATIONAL0001,National Shopping World,Payment,Processed,Cash,01/02/2024,"$11,404.87",$0.00,Z-US$,JAN-98
+RTN12010,WORLDENT0001,World Enterprises,Return,Processed,Check,01/02/2024,"$3,851.37",$0.00,Z-US$,JAN-98
+PMT16030,COMPUTER0001,Computerized Phone Systems,Payment,Processed,Cash,01/03/2024,$131.08,$0.00,Z-US$,JAN-98
+CM13000,ADVANCED0001,Advanced Paper Co.,CreditMemo,Processed,Check,01/05/2024,$488.79,$0.00,Z-US$,JAN-98
+PMT11050,ADVANCED0002,Advanced Tech Satellite System,Payment,Processed,Cash,01/05/2024,"$2,111.20",$0.00,Z-US$,JAN-98
+CM14000,AMERICAN0001,American Science Museum,CreditMemo,Processed,Check,01/05/2024,$21.97,$0.00,Z-US$,JAN-98
+PMT12001,ATMORERE0001,Atmore Retirement Center,Payment,Processed,Cash,01/05/2024,$523.01,$0.00,Z-US$,JAN-98
+CM115000,COHOWINE0001,Coho Wintery,CreditMemo,Processed,Check,01/05/2024,$845.67,$0.00,Z-US$,JAN-98
+RTN14010,ASTORSUI0001,Astor Suites,Return,Processed,Check,01/05/2024,"$2,128.28",$0.00,Z-US$,JAN-98
+PMT15030,DIRECTMA0001,Direct Marketers,Payment,Processed,Cash,01/05/2024,"$1,959.10",$0.00,Z-US$,JAN-98
+PMT124000,ISNINDUS0001,ISN Industries,Payment,Processed,Cash,01/05/2024,"$5,780.77",$0.00,Z-US$,JAN-98
+PMT112001,CENTRALI0001,Central Illinois Hospital,Payment,Processed,Cash,01/05/2024,"$12,750.00",$0.00,Z-US$,JAN-98
+PMT11030,COMPUTEC0001,Compu-Tech Solutions,Payment,Processed,Cash,01/05/2024,"$2,516.03",$0.00,Z-US$,JAN-98
+PMT17017,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,01/05/2024,"$2,966.78",$0.00,Z-US$,JAN-98
+PMT15070,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,01/05/2024,"$1,491.18",$0.00,Z-US$,JAN-98
+PMT11060,PLACEONE0001,Place One Suites,Payment,Processed,Cash,01/05/2024,"$3,894.49",$0.00,Z-US$,JAN-98
+RTN113010,SSPROPER0001,S & S Properties,Return,Processed,Check,01/05/2024,$563.97,$0.00,Z-US$,JAN-98
+RTN113011,SSPROPER0001,S & S Properties,Return,Processed,Check,01/05/2024,"$1,537.16",$0.00,Z-US$,JAN-98
+PMT116012,REYNOLDS0001,Reynolds State College,Payment,Processed,Cash,01/06/2024,"$7,651.00","$7,651.00",Z-US$,JAN-98
+CM15001,CELLULAR0001,Cellular Express,CreditMemo,Processed,Check,01/06/2024,$679.89,$0.00,Z-US$,JAN-98
+PMT16001,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,01/06/2024,"$1,027.40",$0.00,Z-US$,JAN-98
+PMT15000,CELLULAR0001,Cellular Express,Payment,Processed,Check,01/06/2024,$495.00,$0.00,Z-US$,JAN-98
+PMT13050,COMMUNIC0001,Communication Connections,Payment,Processed,Cash,01/06/2024,"$3,800.45",$0.00,Z-US$,JAN-98
+PMT17001,CRAWFORD0001,"Crawfords, Inc.",Payment,Processed,Cash,01/06/2024,"$2,798.74",$0.00,Z-US$,JAN-98
+PMT110001,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,01/06/2024,"$1,583.96",$0.00,Z-US$,JAN-98
+PMT14020,COMTELPA0001,Comtel-Page Inc.,Payment,Processed,Cash,01/06/2024,"$2,865.91",$0.00,Z-US$,JAN-98
+CM111000,INTERNAT0001,International Mailing Corp.,CreditMemo,Processed,Check,01/06/2024,"$7,752.45",$0.00,Z-US$,JAN-98
+CM17000,CRAWFORD0001,"Crawfords, Inc.",CreditMemo,Processed,Check,01/06/2024,$971.29,$0.00,Z-US$,JAN-98
+PMT111030,MARGIEST0001,Margie's Travel,Payment,Processed,Cash,01/06/2024,"$10,045.79",$0.00,Z-US$,JAN-98
+RTN17080,PLACEMAD0001,Place & MacDero Associates,Return,Processed,Check,01/06/2024,"$2,658.86",$0.00,Z-US$,JAN-98
+RTN17010,MIDLANDC0001,Midland Construction,Return,Processed,Check,01/06/2024,$582.30,$0.00,Z-US$,JAN-98
+RTN110010,SUPERFOO0001,Super Foods Plus,Return,Processed,Check,01/06/2024,$696.57,$0.00,Z-US$,JAN-98
+PMT14001,AMERICAN0001,American Science Museum,Payment,Processed,Cash,01/07/2024,"$3,977.41",$0.00,Z-US$,JAN-98
+PMT115032,BERRYMED0001,Berry Medical Center,Payment,Processed,Cash,01/07/2024,"$14,552.46",$0.00,Z-US$,JAN-98
+PMT116000,POLKVALL0001,Polk Valley Highway Dept.,Payment,Processed,Cash,01/07/2024,"$1,098.45",$0.00,Z-US$,JAN-98
+PMT17030,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,01/07/2024,"$1,257.63",$0.00,Z-US$,JAN-98
+PMT14041,NOVASCOT0001,Novia Scotia Tech. Institute,Payment,Processed,Cash,01/07/2024,"$4,588.79",$0.00,Z-US$,JAN-98
+PMT15050,VISTATRA0001,Vista Travel,Payment,Processed,Cash,01/07/2024,$491.34,$0.00,Z-US$,JAN-98
+CM13001,ADVANCED0001,Advanced Paper Co.,CreditMemo,Processed,Check,01/08/2024,$701.80,$0.00,Z-US$,JAN-98
+CM11071,ADVANCED0002,Advanced Tech Satellite System,CreditMemo,Processed,Check,01/08/2024,$799.23,$0.00,Z-US$,JAN-98
+PMT18000,DIALDIRE0001,Dial Direct Paging Inc.,Payment,Processed,Cash,01/08/2024,"$2,108.54",$0.00,Z-US$,JAN-98
+PMT11070,COUNTRYV0001,Country View Estates,Payment,Processed,Cash,01/08/2024,"$1,332.90",$0.00,Z-US$,JAN-98
+PMT111000,NORTHCOL0001,North College,Payment,Processed,Cash,01/08/2024,"$1,355.85",$0.00,Z-US$,JAN-98
+PMT13040,NORTHERN0002,Northern Family Hospital,Payment,Processed,Cash,01/08/2024,"$4,139.08",$0.00,Z-US$,JAN-98
+RTN112010,OCTAGONM0001,Octagon Marketing Org.,Return,Processed,Check,01/08/2024,"$1,427.05",$0.00,Z-US$,JAN-98
+RTN19010,MANCHEST0001,Manchester Suites,Return,Processed,Check,01/08/2024,$563.58,$0.00,Z-US$,JAN-98
+RTN13021,CONTOSOL0001,"Contoso, Ltd.",Return,Processed,Check,01/09/2024,"$2,302.93",$0.00,Z-US$,JAN-98
+RTN12080,COMPUTER0002,Computers Unlimited,Return,Processed,Check,01/09/2024,$639.82,$0.00,Z-US$,JAN-98
+PMT13023,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,01/09/2024,"$5,698.82",$0.00,Z-US$,JAN-98
+RTN13022,CONTOSOL0001,"Contoso, Ltd.",Return,Processed,Check,01/09/2024,"$2,534.55",$0.00,Z-US$,JAN-98
+PMT17011,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,01/09/2024,"$2,148.17",$0.00,Z-US$,JAN-98
+PMT121000,RAINBOWR0001,Rainbow Research,Payment,Processed,Cash,01/09/2024,"$2,896.70",$0.00,Z-US$,JAN-98
+PMT113012,SSPROPER0001,S & S Properties,Payment,Processed,Cash,01/09/2024,"$3,011.24",$0.00,Z-US$,JAN-98
+RTN15071,VISTATRA0001,Vista Travel,Return,Processed,Check,01/09/2024,$403.32,$0.00,Z-US$,JAN-98
+PMT11803,DOWNTOWN001,Downtown Hotel,Payment,Processed,Check,01/12/2024,$41.59,$41.59,Z-US$,JAN-98
+RTN116013,REYNOLDS0001,Reynolds State College,Return,Processed,Check,01/12/2024,"$1,197.88","$1,197.88",Z-US$,JAN-98
+RTN13030,CENTRALD0001,Central Distributing,Return,Processed,Check,01/12/2024,$587.82,$0.00,Z-US$,JAN-98
+PMT14011,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,01/12/2024,"$3,238.49",$0.00,Z-US$,JAN-98
+PMT14060,COMMUNIC0002,Communication Connections,Payment,Processed,Cash,01/12/2024,"$1,900.57",$0.00,Z-US$,JAN-98
+PMT12071,BOYLESCO0001,Boyle's Country Inn's,Payment,Processed,Cash,01/12/2024,"$5,395.71",$0.00,Z-US$,JAN-98
+PMT11007,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,01/12/2024,"$10,946.06",$0.00,Z-US$,JAN-98
+PMT12021,AMERICAN0002,American Electrical Contractor,Payment,Processed,Cash,01/12/2024,$850.46,$0.00,Z-US$,JAN-98
+PMT11040,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Cash,01/12/2024,"$1,648.24",$0.00,Z-US$,JAN-98
+RTN15061,DOLLISCO0001,Dollis Cove Resort,CreditMemo,Processed,Check,01/12/2024,$844.05,$0.00,Z-US$,JAN-98
+PMT114000,HAMPTONV0001,Hampton Village Eatery,Payment,Processed,Cash,01/12/2024,"$3,466.03",$0.00,Z-US$,JAN-98
+RTN13010,ADAMPARK0001,Adam Park Resort,Return,Processed,Check,01/12/2024,$499.57,$0.00,Z-US$,JAN-98
+RTN16092,EXECUTIV0001,Executive Resources,Return,Processed,Check,01/12/2024,$736.06,$0.00,Z-US$,JAN-98
+PMT14072,COMPUTER0003,Computer Equipment Leasing,Payment,Processed,Cash,01/12/2024,"$3,558.09",$0.00,Z-US$,JAN-98
+PMT18020,FOURTHCO0001,Fourth Coffee,Payment,Processed,Cash,01/12/2024,$199.87,$0.00,Z-US$,JAN-98
+PMT15011,HOMEFURN0001,Home Furnishings Limited,Payment,Processed,Cash,01/12/2024,$488.54,$0.00,Z-US$,JAN-98
+PMT17021,HUMONGOU0001,Humongous Insurance,Payment,Processed,Cash,01/12/2024,"$18,375.65",$0.00,Z-US$,JAN-98
+PMT17061,PLACEMAD0001,Place & MacDero Associates,Payment,Processed,Cash,01/12/2024,"$13,150.60",$0.00,Z-US$,JAN-98
+CM121001,RAINBOWR0001,Rainbow Research,CreditMemo,Processed,Check,01/12/2024,"$1,377.13",$0.00,Z-US$,JAN-98
+PMT111001,NORTHCOL0001,North College,Payment,Processed,Cash,01/12/2024,"$1,567.88",$0.00,Z-US$,JAN-98
+PMT110030,PLAZAONE0001,Plaza One,Payment,Processed,Cash,01/12/2024,"$1,488.67",$0.00,Z-US$,JAN-98
+PMT112011,OCTAGONM0001,Octagon Marketing Org.,Payment,Processed,Cash,01/12/2024,"$6,023.11",$0.00,Z-US$,JAN-98
+PMT120000,FRANCHIS0001,Franchise Office Machines,Payment,Processed,Cash,01/13/2024,"$3,897.54",$0.00,Z-US$,JAN-98
+PMT12061,COMPUTER0002,Computers Unlimited,Payment,Processed,Cash,01/13/2024,$737.01,$0.00,Z-US$,JAN-98
+PMT180001,DIALDIRE0001,Dial Direct Paging Inc.,Payment,Processed,Cash,01/13/2024,$986.45,$0.00,Z-US$,JAN-98
+PMT14051,ROSELLEN0001,Rosellen General Hospital,Payment,Processed,Cash,01/13/2024,"$17,906.17",$0.00,Z-US$,JAN-98
+RTN13031,CENTRALD0001,Central Distributing,Return,Processed,Check,01/14/2024,"$9,854.57",$0.00,Z-US$,JAN-98
+RTN18022,FOURTHCO0001,Fourth Coffee,Return,Processed,Check,01/14/2024,$403.12,$0.00,Z-US$,JAN-98
+PMT16073,EXECUTIV0001,Executive Resources,Payment,Processed,Cash,01/14/2024,"$5,162.76",$0.00,Z-US$,JAN-98
+PMT16061,DATACOMM0001,Data Communications Inc.,Payment,Processed,Cash,01/14/2024,"$8,656.31",$0.00,Z-US$,JAN-98
+RTN18021,FOURTHCO0001,Fourth Coffee,Return,Processed,Check,01/14/2024,$218.31,$0.00,Z-US$,JAN-98
+PMT18011,MENDOTAU0001,Mendota University,Payment,Processed,Cash,01/14/2024,"$10,349.06",$0.00,Z-US$,JAN-98
+PMT18030,NOVASYST0001,"Nova Systems, Inc.",Payment,Processed,Cash,01/14/2024,"$2,129.04",$0.00,Z-US$,JAN-98
+PMT12011,WORLDENT0001,World Enterprises,Payment,Processed,Cash,01/14/2024,"$4,561.29",$0.00,Z-US$,JAN-98
+PMT12050,CASTLEIN0001,Castle Inn Resort,Payment,Processed,Cash,01/15/2024,"$3,981.64",$0.00,Z-US$,JAN-98
+RTN12092,BOYLESCO0001,Boyle's Country Inn's,Return,Processed,Check,01/15/2024,"$2,000.00",$0.00,Z-US$,JAN-98
+PMT15002,CELLULAR0001,Cellular Express,Payment,Processed,Cash,01/15/2024,"$3,975.45",$0.00,Z-US$,JAN-98
+PMT13011,ADAMPARK0001,Adam Park Resort,Payment,Processed,Cash,01/15/2024,"$2,117.51",$0.00,Z-US$,JAN-98
+PMT19004,GREENWAY0001,Greenway Foods,Payment,Processed,Cash,01/15/2024,"$19,258.22",$0.00,Z-US$,JAN-98
+MT115001,COHOWINE0001,Coho Wintery,Payment,Processed,Cash,01/15/2024,"$4,016.63",$0.00,Z-US$,JAN-98
+PMT123000,NETWORKS0001,Network Solutions,Payment,Processed,Cash,01/15/2024,"$10,022.59",$0.00,Z-US$,JAN-98
+PMT16021,MULTITEC0001,Multitech Office Components,Payment,Processed,Cash,01/15/2024,"$2,764.91",$0.00,Z-US$,JAN-98
+PMT15042,DOLLISCO0001,Dollis Cove Resort,Payment,Processed,Cash,01/16/2024,"$12,420.51",$0.00,Z-US$,JAN-98
+PMT11001,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,01/16/2024,"$4,880.46",$0.00,Z-US$,JAN-98
+PMT12033,KENSINGT0001,Kensington Gardens Resort,Payment,Processed,Cash,01/16/2024,"$10,978.02",$0.00,Z-US$,JAN-98
+PMT15071,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,01/16/2024,"$5,808.34",$0.00,Z-US$,JAN-98
+PMT19030,PULASKIE0001,Pulaski Enterprises Inc.,Payment,Processed,Cash,01/16/2024,"$21,627.26",$0.00,Z-US$,JAN-98
+RTN110012,SUPERFOO0001,Super Foods Plus,Return,Processed,Check,01/16/2024,$976.29,$0.00,Z-US$,JAN-98
+PMT124003,ISNINDUS0001,ISN Industries,Payment,Processed,Cash,01/19/2024,"$18,696.40",$0.00,Z-US$,JAN-98
+PMT19005,GREENWAY0001,Greenway Foods,Payment,Processed,Cash,01/19/2024,$678.92,$0.00,Z-US$,JAN-98
+PMT14022,COMTELPA0001,Comtel-Page Inc.,Payment,Processed,Cash,01/19/2024,"$9,617.43",$0.00,Z-US$,JAN-98
+PMT113014,SSPROPER0001,S & S Properties,Payment,Processed,Cash,01/19/2024,"$17,722.62",$0.00,Z-US$,JAN-98
+RTN14094,COMPUTER0003,Computer Equipment Leasing,Return,Processed,Check,01/19/2024,"$1,031.69",$352.33,Z-US$,JAN-98
+PMT11002,ALTONMAN0001,Alton Manufacturing,Payment,Processed,Cash,01/20/2024,"$13,535.23",$0.00,Z-US$,JAN-98
+PMT13032,CENTRALD0001,Central Distributing,Payment,Processed,Cash,01/20/2024,"$4,959.89",$0.00,Z-US$,JAN-98
+PMT115033,BERRYMED0001,Berry Medical Center,Payment,Processed,Cash,01/20/2024,"$5,647.37",$0.00,Z-US$,JAN-98
+PMT110003,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,01/20/2024,$875.84,$0.00,Z-US$,JAN-98
+PMT117011,BAKERSEM0001,Baker's Emporium Inc.,Payment,Processed,Cash,01/21/2024,"$20,209.63",$0.00,Z-US$,JAN-98
+PMT12052,CASTLEIN0001,Castle Inn Resort,Payment,Processed,Cash,01/21/2024,"$12,417.54",$0.00,Z-US$,JAN-98
+PMT11053,ADVANCED0002,Advanced Tech Satellite System,Payment,Processed,Cash,01/21/2024,"$4,059.33",$0.00,Z-US$,JAN-98
+CM17005,MIDLANDC0001,Midland Construction,CreditMemo,Processed,Check,01/21/2024,$793.59,$0.00,Z-US$,JAN-98
+PMT15053,VISTATRA0001,Vista Travel,Payment,Processed,Cash,01/21/2024,$778.77,$0.00,Z-US$,JAN-98
+PMT13025,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,01/22/2024,"$2,157.63",$0.00,Z-US$,JAN-98
+PMT11063,PLACEONE0001,Place One Suites,Payment,Processed,Cash,01/22/2024,"$16,940.87",$0.00,Z-US$,JAN-98
+RTN20015,AARONFIT0001,Aaron Fitz Electrical,Return,Processed,Check,01/23/2024,"$2,568.00","$2,568.00",Z-US$,SLS - 1/15
+PMT12022,AMERICAN0002,American Electrical Contractor,Payment,Processed,Cash,01/23/2024,"$4,911.02",$0.00,Z-US$,JAN-98
+CM115054,BERRYMED0001,Berry Medical Center,CreditMemo,Processed,Check,01/23/2024,"$2,032.36",$0.00,Z-US$,JAN-98
+PMT11032,COMPUTEC0001,Compu-Tech Solutions,Payment,Processed,Cash,01/23/2024,"$7,855.22",$0.00,Z-US$,JAN-98
+PMT14032,LASERMES0001,Laser Messenger Service,Payment,Processed,Cash,01/23/2024,"$9,808.05",$0.00,Z-US$,JAN-98
+PMT17016,MIDLANDC0001,Midland Construction,Payment,Processed,Cash,01/23/2024,"$1,456.87",$0.00,Z-US$,JAN-98
+RTN19012,MANCHEST0001,Manchester Suites,Return,Processed,Check,01/23/2024,$260.41,$0.00,Z-US$,JAN-98
+TRN17083,PLACEMAD0001,Place & MacDero Associates,Return,Processed,Check,01/23/2024,"$1,972.78",$0.00,Z-US$,JAN-98
+CM110032,PLAZAONE0001,Plaza One,CreditMemo,Processed,Check,01/23/2024,"$1,350.00",$0.00,Z-US$,JAN-98
+PMT18062,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Cash,01/23/2024,"$8,923.95",$0.00,Z-US$,JAN-98
+PMT118020,UNIFIEDW0001,Unified Wire and Cable Systems,Payment,Processed,Check,01/26/2024,"$19,927.62","$19,927.62",Z-US$,JAN-98
+PMT11043,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Cash,01/26/2024,"$7,007.21",$0.00,Z-US$,JAN-98
+PMT16012,GETAWAYI0001,Getaway Inn,Payment,Processed,Cash,01/26/2024,"$3,488.57",$0.00,Z-US$,JAN-98
+PMT117003,NORTHERN0001,Northern State College,Payment,Processed,Cash,01/26/2024,"$1,859.63",$0.00,Z-US$,JAN-98
+RTN14074,ROSELLEN0001,Rosellen General Hospital,Return,Processed,Check,01/26/2024,$695.16,$0.00,Z-US$,JAN-98
+PMT17033,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,01/26/2024,$825.59,$0.00,Z-US$,JAN-98
+PMT116031,CENTERSU0001,Center Suite Hotel,Payment,Processed,Cash,01/27/2024,"$10,218.93","$10,218.93",Z-US$,JAN-98
+PMT17003,CRAWFORD0001,"Crawfords, Inc.",Payment,Processed,Cash,01/27/2024,"$12,000.00",$0.00,Z-US$,JAN-98
+PMT14046,NOVASCOT0001,Novia Scotia Tech. Institute,Payment,Processed,Cash,01/27/2024,"$1,487.56",$0.00,Z-US$,JAN-98
+RTN15095,LEISURET0001,Leisure & Travel Consultants,Return,Processed,Check,01/27/2024,$255.48,$0.00,Z-US$,JAN-98
+PMT110033,PLAZAONE0001,Plaza One,Payment,Processed,Cash,01/27/2024,"$3,422.11",$0.00,Z-US$,JAN-98
+PMT18032,NOVASYST0001,"Nova Systems, Inc.",Payment,Processed,Cash,01/27/2024,"$14,668.11",$0.00,Z-US$,JAN-98
+PMT13073,STPATRIC0001,St. Patrick's Hospital,Payment,Processed,Cash,01/27/2024,"$5,162.08",$0.00,Z-US$,JAN-98
+RTN13094,STPATRIC0001,St. Patrick's Hospital,Return,Processed,Check,01/27/2024,$473.14,$0.00,Z-US$,JAN-98
+PMT12024,AMERICAN0002,American Electrical Contractor,Payment,Processed,Cash,01/28/2024,"$2,429.19",$0.00,Z-US$,JAN-98
+PMT13004,ADVANCED0001,Advanced Paper Co.,Payment,Processed,Cash,01/28/2024,"$10,706.18",$0.00,Z-US$,JAN-98
+PMT12074,BOYLESCO0001,Boyle's Country Inn's,Payment,Processed,Cash,01/28/2024,"$3,676.95",$0.00,Z-US$,JAN-98
+PMT113002,HEARTLAN0001,Heartland Tower Systems,Payment,Processed,Cash,01/28/2024,"$25,493.92",$0.00,Z-US$,JAN-98
+CM112052,NORTHSTA0001,Northstar Mall,CreditMemo,Processed,Check,01/28/2024,$750.00,$0.00,Z-US$,JAN-98
+PMT19023,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Cash,01/29/2024,"$27,065.17",$0.00,Z-US$,JAN-98
+PMT11005,ALTONMAN0001,Alton Manufacturing,Payment,Processed,Cash,01/29/2024,"$27,138.56",$0.00,Z-US$,JAN-98
+PMT118003,DOWNTOWN001,Downtown Hotel,Payment,Processed,Check,01/29/2024,$909.00,$0.00,Z-US$,JAN-98
+PMT16076,EXECUTIV0001,Executive Resources,Payment,Processed,Cash,01/29/2024,"$12,807.80",$0.00,Z-US$,JAN-98
+PMT18004,DIALDIRE0001,Dial Direct Paging Inc.,Payment,Processed,Cash,01/29/2024,"$14,202.25",$0.00,Z-US$,JAN-98
+PMT14076,COMPUTER0003,Computer Equipment Leasing,Payment,Processed,Cash,01/29/2024,"$7,231.76",$0.00,Z-US$,JAN-98
+RTN13073,COMMUNIC0001,Communication Connections,Return,Processed,Check,01/29/2024,"$1,695.73",$0.00,Z-US$,JAN-98
+CM122001,PACIFICD0001,Pacific Digital,CreditMemo,Processed,Check,01/29/2024,"$1,800.60",$0.00,Z-US$,JAN-98
+PMT114013,NATIONAL0001,National Shopping World,Payment,Processed,Cash,01/29/2024,"$12,569.41",$0.00,Z-US$,JAN-98
+PMT15056,VISTATRA0001,Vista Travel,Payment,Processed,Cash,01/29/2024,"$1,566.32",$0.00,Z-US$,JAN-98
+CM126002,SNELLING0001,Snelling Communications Inc.,CreditMemo,Processed,Check,01/30/2024,"$1,831.54","$1,831.54",Z-US$,JAN-98
+PMT11022,ASSOCIAT0001,Associated Insurance Company,Payment,Processed,Cash,01/30/2024,"$2,159.87",$0.00,Z-US$,JAN-98
+PMT11055,ADVANCED0002,Advanced Tech Satellite System,Payment,Processed,Cash,01/30/2024,"$2,203.71",$0.00,Z-US$,JAN-98
+PMT11017,ALTONMAN0001,Alton Manufacturing,Payment,Processed,Cash,01/30/2024,"$6,819.23",$0.00,Z-US$,JAN-98
+RTN14097,COMPUTER0003,Computer Equipment Leasing,Return,Processed,Check,01/30/2024,$420.00,$0.00,Z-US$,JAN-98
+PMT14004,AMERICAN0001,American Science Museum,Payment,Processed,Cash,01/30/2024,"$17,175.93",$0.00,Z-US$,JAN-98
+PMT13016,ADAMPARK0001,Adam Park Resort,Payment,Processed,Cash,01/30/2024,"$2,477.31",$0.00,Z-US$,JAN-98
+PMT15045,DOLLISCO0001,Dollis Cove Resort,Payment,Processed,Cash,01/30/2024,"$9,535.41",$0.00,Z-US$,JAN-98
+CM111001,INTERNAT0001,International Mailing Corp.,CreditMemo,Processed,Check,01/30/2024,"$15,250.00",$0.00,Z-US$,JAN-98
+PMT114004,HAMPTONV0001,Hampton Village Eatery,Payment,Processed,Cash,01/30/2024,"$10,239.39",$0.00,Z-US$,JAN-98
+PMT15033,DIRECTMA0001,Direct Marketers,Payment,Processed,Cash,01/30/2024,"$9,769.52",$0.00,Z-US$,JAN-98
+PMT111033,MARGIEST0001,Margie's Travel,Payment,Processed,Cash,01/30/2024,"$9,500.00",$0.00,Z-US$,JAN-98
+PMT12043,LECLERC0001,LeClerc & Associates,Payment,Processed,Cash,01/30/2024,"$4,740.69",$0.00,Z-US$,JAN-98
+PMT11067,PLACEONE0001,Place One Suites,Payment,Processed,Cash,01/30/2024,"$1,671.61",$0.00,Z-US$,JAN-98
+PMT18014,MENDOTAU0001,Mendota University,Payment,Processed,Cash,01/30/2024,"$16,007.14",$0.00,Z-US$,JAN-98
+PMT15078,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,01/30/2024,"$2,136.51",$0.00,Z-US$,JAN-98
+PMT115013,MIDCITYH0001,Mid-City Hospital,Payment,Processed,Cash,01/30/2024,"$10,716.72",$0.00,Z-US$,JAN-98
+PMT15076,LEISURET0001,Leisure & Travel Consultants,Payment,Processed,Cash,01/30/2024,"$25,874.32",$0.00,Z-US$,JAN-98
+PMT17066,PLACEMAD0001,Place & MacDero Associates,Payment,Processed,Cash,01/30/2024,"$15,600.00",$0.00,Z-US$,JAN-98
+PMT113033,MAHLERST0001,Mahler State University,Payment,Processed,Cash,01/30/2024,"$5,000.00",$0.00,Z-US$,JAN-98
+CM14066,NOVASCOT0001,Novia Scotia Tech. Institute,CreditMemo,Processed,Check,01/30/2024,$128.75,$0.00,Z-US$,JAN-98
+PMT125002,REDSFOOD0001,Red's Food Market,Payment,Processed,Cash,01/30/2024,"$37,596.08",$0.00,Z-US$,JAN-98
+PMT114001,STMARYHO0001,St. Mary's Hospital,Payment,Processed,Cash,01/30/2024,"$29,105.94",$0.00,Z-US$,JAN-98
+PMT14056,ROSELLEN0001,Rosellen General Hospital,Payment,Processed,Cash,01/30/2024,"$3,664.46",$0.00,Z-US$,JAN-98
+PMT13075,STPATRIC0001,St. Patrick's Hospital,Payment,Processed,Cash,01/30/2024,"$12,500.00",$0.00,Z-US$,JAN-98
+PYMNT000000000009,ASSOCIAT0001,Associated Insurance Company,Payment,Processed,Check,01/31/2024,"$6,847.75",$0.00,Z-US$,RMFIRST
+PYMNT000000000012,ASTORSUI0001,Astor Suites,Payment,Processed,Check,01/31/2024,"$24,592.81",$0.00,Z-US$,RMASTOR
+PYMNT000000000019,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,01/31/2024,$119.54,$0.00,Z-US$,PCRM
+PYMNT000000000016,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,01/31/2024,"$8,372.19",$0.00,Z-US$,RM5
+PYMNT000000000010,BAKERSEM0001,Baker's Emporium Inc.,Payment,Processed,Check,01/31/2024,"$4,917.40",$0.00,Z-US$,RMFIRST2
+PYMNT000000000008,ADVANCED0002,Advanced Tech Satellite System,Payment,Processed,Check,01/31/2024,"$10,719.36",$0.00,Z-US$,RMFIRST
+PYMNT000000000011,FOURTHCO0001,Fourth Coffee,Payment,Processed,Check,01/31/2024,"$12,039.44",$0.00,Z-US$,RMFIRST2
+PYMNT000000000015,COMPUTEC0001,Compu-Tech Solutions,Payment,Processed,Check,01/31/2024,"$17,172.56",$0.00,Z-US$,RM4
+PYMNT000000000014,COHOWINE0001,Coho Wintery,Payment,Processed,Check,01/31/2024,"$30,553.27",$0.00,Z-US$,RM4
+PYMNT000000000021,MIDLANDC0001,Midland Construction,Payment,Processed,Check,01/31/2024,"$10,832.43",$0.00,Z-US$,MIDCO
+PYMNT000000000018,NATIONAL0001,National Shopping World,Payment,Processed,Credit Card,01/31/2024,"$18,254.37",$0.00,Z-US$,RM5
+PYMNT000000000013,OCTAGONM0001,Octagon Marketing Org.,Payment,Processed,Check,01/31/2024,"$21,884.66",$0.00,Z-US$,RMASTOR
+PYMNT000000000017,SUPERFOO0001,Super Foods Plus,Payment,Processed,Credit Card,01/31/2024,"$26,587.27",$0.00,Z-US$,RM5
+PYMNT000000000020,SNELLING0001,Snelling Communications Inc.,Payment,Processed,Check,01/31/2024,"$54,068.13",$0.00,Z-US$,LESSON USER1
+PYMNT000000000022,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,02/10/2024,$128.35,$0.00,Z-US$,INV & PAYMENT
+PYMNT000000000023,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,02/15/2024,$117.65,$0.00,Z-US$,INV & DEPOSIT
+PYMNT000000000005,OFFICEDE0001,Office Design Systems Ltd,Payment,Processed,Check,05/07/2024,"$15,000.00",$0.00,Z-US$,MAY INV & RTN
+PYMNT000000000007,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,05/10/2024,"$5,500.00",$0.00,Z-US$,sa
+PYMNT000000000006,VISIONIN0001,Vision Inc.,Payment,Processed,Check,05/18/2024,"$7,000.00","$7,000.00",Z-US$,sa
+INV1011,MENDOTAU0001,Mendota University,Return,Processed,Check,05/19/2024,$189.95,$189.95,Z-US$,MAY INV & RTN
+PYMNT000000000002,PLAZAONE0001,Plaza One,Payment,Processed,Check,05/20/2024,$812.99,$0.00,Z-US$,MAY INV & RTN
+INV1013,ADVANCED0002,Advanced Tech Satellite System,Return,Processed,Check,05/27/2024,"$1,016.24","$1,016.24",Z-US$,MAY INV & RTN
+INV1012,KELLYCON0001,Kelly Consulting,Return,Processed,Check,05/27/2024,$731.94,$731.94,Z-US$,MAY INV & RTN
+PYMNT000000000003,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,05/28/2024,$500.00,$0.00,Z-US$,MAY QTE & ORD
+PFR000001,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Visa,05/31/2024,$468.70,$0.00,Z-US$,PF20240531
+PFR000004,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Visa,06/03/2024,$20.00,$0.00,Z-US$,PF20240603
+PFR000005,ADAMPARK0001,Adam Park Resort,Payment,Processed,MasterCard,06/03/2024,$96.25,$0.00,Z-US$,PF20240603
+PFR000006,ADVANCED0001,Advanced Paper Co.,Payment,Processed,AmericanExpress,06/03/2024,$327.08,$0.00,Z-US$,PF20240603
+PYMNT000000000025,AMERICAN0001,American Science Museum,Payment,Processed,Cash,02/01/2026,"$1,139.70",$0.00,Z-US$,sa
+PYMNT000000000024,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,02/01/2026,"$3,049.75",$0.00,Z-US$,sa
+PYMNT000000000027,ADVANCED0001,Advanced Paper Co.,Payment,Processed,Check,02/02/2026,$479.80,$0.00,Z-US$,sa
+PYMNT000000000026,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/02/2026,"$1,139.70",$0.00,Z-US$,sa
+PYMNT000000000028,RIVERSID0001,Riverside University,Payment,Processed,Check,02/03/2026,$379.90,$0.00,Z-US$,sa
+PYMNT000000000029,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/04/2026,$959.95,$0.00,Z-US$,sa
+PYMNT000000000030,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,02/04/2026,$399.75,$0.00,Z-US$,sa
+PYMNT000000000032,LONDONBE0001,Londonberry Nursing Home,Payment,Processed,Cash,02/04/2026,$359.85,$0.00,Z-US$,sa
+PYMNT000000000033,MIDLANDC0001,Midland Construction,Payment,Processed,Check,02/04/2026,$39.90,$0.00,Z-US$,sa
+PYMNT000000000036,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/05/2026,$53.24,$0.00,Z-US$,sa
+PYMNT000000000031,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/05/2026,$299.90,$0.00,Z-US$,sa
+PYMNT000000000035,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/06/2026,$53.24,$0.00,Z-US$,sa
+PYMNT000000000034,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,02/06/2026,$379.90,$0.00,Z-US$,sa
+PYMNT000000000037,ISNINDUS0001,ISN Industries,Payment,Processed,Check,02/08/2026,"$1,444.45",$0.00,Z-US$,sa
+PYMNT000000000038,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,02/08/2026,$203.25,$0.00,Z-US$,sa
+PYMNT000000000039,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,02/10/2026,$652.65,$0.00,Z-US$,sa
+PYMNT000000000041,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,02/11/2026,$31.95,$0.00,Z-US$,sa
+PYMNT000000000040,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/11/2026,"$1,016.24",$0.00,Z-US$,sa
+PYMNT000000000042,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,02/13/2026,$770.30,$0.00,Z-US$,sa
+PYMNT000000000044,MAHLERST0001,Mahler State University,Payment,Processed,Check,02/14/2026,"$11,999.90",$0.00,Z-US$,sa
+PYMNT000000000043,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,02/14/2026,$31.95,$0.00,Z-US$,sa
+PYMNT000000000046,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,02/17/2026,"$1,349.95",$0.00,Z-US$,sa
+PYMNT000000000047,ASTORSUI0001,Astor Suites,Payment,Processed,Check,02/18/2026,$31.95,$0.00,Z-US$,sa
+PYMNT000000000051,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/20/2026,$117.65,$0.00,Z-US$,sa
+PYMNT000000000048,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/20/2026,$812.99,$0.00,Z-US$,sa
+PYMNT000000000049,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,02/20/2026,"$25,679.47",$0.00,Z-US$,sa
+PYMNT000000000050,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/21/2026,$128.35,$0.00,Z-US$,sa
+PYMNT000000000053,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/24/2026,$641.47,$0.00,Z-US$,sa
+PYMNT000000000052,ADAMPARK0001,Adam Park Resort,Payment,Processed,Check,02/24/2026,$641.47,$0.00,Z-US$,sa
+PYMNT000000000055,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,02/24/2026,$320.74,$0.00,Z-US$,sa
+PYMNT000000000054,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/25/2026,$128.30,$0.00,Z-US$,sa
+PYMNT000000000057,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/28/2026,$256.70,$0.00,Z-US$,sa
+PYMNT000000000059,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,02/28/2026,$641.47,$0.00,Z-US$,sa
+PYMNT000000000056,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,02/28/2026,$64.15,$0.00,Z-US$,sa
+PYMNT000000000058,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,03/01/2026,$320.74,$0.00,Z-US$,sa
+PYMNT000000000045,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,03/03/2026,"$6,419.95",$0.00,Z-US$,sa
+PYMNT000000000063,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,03/04/2026,$19.90,$0.00,Z-US$,sa
+PYMNT000000000061,MAHLERST0001,Mahler State University,Payment,Processed,Check,03/04/2026,$19.90,$0.00,Z-US$,sa
+PYMNT000000000060,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,03/04/2026,$53.24,$0.00,Z-US$,sa
+PYMNT000000000064,ASTORSUI0001,Astor Suites,Payment,Processed,Check,03/05/2026,$10.65,$0.00,Z-US$,sa
+PYMNT000000000067,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,03/06/2026,$320.74,$0.00,Z-US$,sa
+PYMNT000000000065,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/06/2026,$10.65,$0.00,Z-US$,sa
+PYMNT000000000066,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/07/2026,$128.30,$0.00,Z-US$,sa
+PYMNT000000000068,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,03/10/2026,$128.35,$0.00,Z-US$,sa
+PYMNT000000000071,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,03/10/2026,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000070,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/10/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000069,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/10/2026,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000072,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,03/13/2026,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000073,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,03/13/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000074,MAHLERST0001,Mahler State University,Payment,Processed,Check,03/16/2026,"$2,399.95",$0.00,Z-US$,sa
+PYMNT000000000183,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Cash,03/19/2026,"$2,399.95",$0.00,Z-US$,sa
+PYMNT000000000076,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,03/19/2026,"$2,399.95",$0.00,Z-US$,sa
+PYMNT000000000077,ASTORSUI0001,Astor Suites,Payment,Processed,Check,03/19/2026,$10.65,$0.00,Z-US$,sa
+PYMNT000000000078,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/19/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000079,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/19/2026,$171.10,$0.00,Z-US$,sa
+PYMNT000000000181,MAHLERST0001,Mahler State University,Payment,Processed,Cash,03/19/2026,"$2,399.95",$0.00,Z-US$,sa
+PYMNT000000000185,PLAZAONE0001,Plaza One,Payment,Processed,Cash,03/20/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000186,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Cash,03/20/2026,$171.10,$0.00,Z-US$,sa
+PYMNT000000000062,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,03/20/2026,$10.65,$0.00,Z-US$,sa
+PYMNT000000000187,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,03/21/2026,"$2,910.14",$0.00,Z-US$,sa
+PYMNT000000000080,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,03/21/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000083,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,03/21/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000081,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,03/21/2026,$342.19,$0.00,Z-US$,sa
+PYMNT000000000082,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/21/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000189,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,03/22/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000188,PLAZAONE0001,Plaza One,Payment,Processed,Cash,03/22/2026,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000086,ASTORSUI0001,Astor Suites,Payment,Voided,Check,03/23/2026,"$1,433.75",$0.00,Z-US$,sa
+PYMNT000000000087,ASTORSUI0001,Astor Suites,Payment,Processed,Check,03/23/2026,"$1,433.75",$0.00,Z-US$,sa
+PYMNT000000000088,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/23/2026,$205.70,$0.00,Z-US$,sa
+PYMNT000000000085,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,03/23/2026,$64.15,$0.00,Z-US$,sa
+PYMNT000000000084,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,03/23/2026,$256.59,$0.00,Z-US$,sa
+PYMNT000000000190,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Cash,03/23/2026,$256.59,$0.00,Z-US$,sa
+PYMNT000000000192,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,03/24/2026,"$1,433.75",$0.00,Z-US$,sa
+PYMNT000000000191,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,03/24/2026,$64.15,$0.00,Z-US$,sa
+PYMNT000000000193,PLAZAONE0001,Plaza One,Payment,Processed,Cash,03/24/2026,$205.70,$0.00,Z-US$,sa
+PYMNT000000000194,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,03/25/2026,$203.25,$0.00,Z-US$,sa
+PYMNT000000000092,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,03/25/2026,$406.50,$0.00,Z-US$,sa
+PYMNT000000000089,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,03/25/2026,$203.25,$0.00,Z-US$,sa
+PYMNT000000000195,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Cash,03/25/2026,$21.30,$0.00,Z-US$,sa
+PYMNT000000000090,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Check,03/25/2026,$21.30,$0.00,Z-US$,sa
+PYMNT000000000091,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,03/25/2026,$256.59,$0.00,Z-US$,sa
+PYMNT000000000196,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,03/26/2026,$256.59,$0.00,Z-US$,sa
+PYMNT000000000096,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,03/27/2026,"$1,219.49",$0.00,Z-US$,sa
+PYMNT000000000198,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Cash,03/27/2026,$652.65,$0.00,Z-US$,sa
+PYMNT000000000197,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,03/27/2026,$406.50,$0.00,Z-US$,sa
+PYMNT000000000093,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,03/27/2026,$652.65,$0.00,Z-US$,sa
+PYMNT000000000094,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/27/2026,$117.65,$0.00,Z-US$,sa
+PYMNT000000000199,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/28/2026,$117.65,$0.00,Z-US$,sa
+PYMNT000000000095,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/28/2026,$609.75,$0.00,Z-US$,sa
+PYMNT000000000200,PLAZAONE0001,Plaza One,Payment,Processed,Cash,03/29/2026,$609.75,$0.00,Z-US$,sa
+PYMNT000000000201,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,03/30/2026,"$1,219.49",$0.00,Z-US$,sa
+PYMNT000000000098,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,03/30/2026,"$1,919.90",$0.00,Z-US$,sa
+PYMNT000000000097,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,03/30/2026,$812.99,$0.00,Z-US$,sa
+PYMNT000000000202,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Cash,03/30/2026,$812.99,$0.00,Z-US$,sa
+PYMNT000000000099,MAHLERST0001,Mahler State University,Payment,Processed,Check,03/31/2026,$359.85,$0.00,Z-US$,sa
+PYMNT000000000203,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,03/31/2026,"$2,054.30",$0.00,Z-US$,sa
+PYMNT000000000205,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Cash,04/01/2026,"$29,638.90",$0.00,Z-US$,sa
+PYMNT000000000204,MAHLERST0001,Mahler State University,Payment,Processed,Check,04/01/2026,$359.85,$0.00,Z-US$,sa
+PYMNT000000000102,ASTORSUI0001,Astor Suites,Payment,Processed,Check,04/02/2026,$49.75,$0.00,Z-US$,sa
+PYMNT000000000101,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,04/02/2026,$109.95,$0.00,Z-US$,sa
+PYMNT000000000103,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/02/2026,$29.85,$0.00,Z-US$,sa
+PYMNT000000000075,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,04/02/2026,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000104,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,04/02/2026,$19.90,$0.00,Z-US$,sa
+PYMNT000000000108,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,04/03/2026,$19.95,$0.00,Z-US$,sa
+PYMNT000000000210,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/03/2026,$256.70,$0.00,Z-US$,sa
+PYMNT000000000105,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/03/2026,$239.90,$0.00,Z-US$,sa
+PYMNT000000000106,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/03/2026,$219.90,$0.00,Z-US$,sa
+PYMNT000000000107,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/03/2026,$159.80,$0.00,Z-US$,sa
+PYMNT000000000110,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,04/06/2026,$569.85,$0.00,Z-US$,sa
+PYMNT000000000109,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,04/06/2026,"$2,679.90",$0.00,Z-US$,sa
+PYMNT000000000112,MAHLERST0001,Mahler State University,Payment,Processed,Check,04/06/2026,$759.80,$0.00,Z-US$,sa
+PYMNT000000000111,ASTORSUI0001,Astor Suites,Payment,Processed,Check,04/07/2026,"$41,549.85",$0.00,Z-US$,sa
+PYMNT000000000115,ASTORSUI0001,Astor Suites,Payment,Processed,Check,04/09/2026,$119.95,$0.00,Z-US$,sa
+PYMNT000000000119,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/12/2026,$358.20,$0.00,Z-US$,sa
+PYMNT000000000118,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/12/2026,$119.40,$0.00,Z-US$,sa
+PYMNT000000000120,PLACEONE0001,Place One Suites,Payment,Processed,Check,04/12/2026,$39.80,$0.00,Z-US$,sa
+PYMNT000000000117,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,04/12/2026,$329.85,$0.00,Z-US$,sa
+PYMNT000000000121,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,04/15/2026,$239.90,$0.00,Z-US$,sa
+PYMNT000000000124,ASTORSUI0001,Astor Suites,Payment,Processed,Check,04/15/2026,$39.90,$0.00,Z-US$,sa
+PYMNT000000000123,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,04/15/2026,$159.80,$0.00,Z-US$,sa
+PYMNT000000000122,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,04/15/2026,"$1,099.50",$0.00,Z-US$,sa
+PYMNT000000000100,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,04/16/2026,"$27,699.90",$0.00,Z-US$,sa
+PYMNT000000000127,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Check,04/17/2026,"$21,599.55",$0.00,Z-US$,sa
+PYMNT000000000128,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,04/17/2026,$799.50,$0.00,Z-US$,sa
+PYMNT000000000126,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,04/17/2026,$239.85,$0.00,Z-US$,sa
+PYMNT000000000125,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/17/2026,"$8,039.70",$0.00,Z-US$,sa
+PYMNT000000000129,MAHLERST0001,Mahler State University,Payment,Processed,Check,04/20/2026,"$28,799.40",$0.00,Z-US$,sa
+PYMNT000000000131,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,04/21/2026,$59.95,$0.00,Z-US$,sa
+PYMNT000000000136,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/24/2026,$39.80,$0.00,Z-US$,sa
+PYMNT000000000133,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/24/2026,"$1,339.95",$0.00,Z-US$,sa
+PYMNT000000000134,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,04/24/2026,$419.40,$0.00,Z-US$,sa
+PYMNT000000000135,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/25/2026,$189.95,$0.00,Z-US$,sa
+PYMNT000000000114,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,04/25/2026,"$1,919.90",$0.00,Z-US$,sa
+PYMNT000000000113,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,04/25/2026,$569.85,$0.00,Z-US$,sa
+PYMNT000000000116,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/25/2026,"$55,399.80",$0.00,Z-US$,sa
+PYMNT000000000140,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,04/28/2026,$109.95,$0.00,Z-US$,sa
+PYMNT000000000138,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,04/28/2026,$569.85,$0.00,Z-US$,sa
+PYMNT000000000137,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/28/2026,$359.70,$0.00,Z-US$,sa
+PYMNT000000000139,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Check,04/29/2026,"$1,219.90",$0.00,Z-US$,sa
+PYMNT000000000132,ASTORSUI0001,Astor Suites,Payment,Processed,Check,05/06/2026,$479.60,$0.00,Z-US$,sa
+PYMNT000000000130,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,05/06/2026,"$4,799.90",$0.00,Z-US$,sa
+PYMNT000000000141,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,02/01/2027,"$3,263.24",$0.00,Z-US$,sa
+PYMNT000000000142,AMERICAN0001,American Science Museum,Payment,Processed,Check,02/01/2027,"$1,219.49",$0.00,Z-US$,sa
+PYMNT000000000143,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/02/2027,"$1,219.49",$0.00,Z-US$,sa
+PYMNT000000000144,ADVANCED0001,Advanced Paper Co.,Payment,Processed,Check,02/02/2027,$256.59,$0.00,Z-US$,sa
+PYMNT000000000145,RIVERSID0001,Riverside University,Payment,Processed,Check,02/03/2027,$406.50,$0.00,Z-US$,sa
+PYMNT000000000149,LONDONBE0001,Londonberry Nursing Home,Payment,Processed,Check,02/04/2027,$404.84,$0.00,Z-US$,sa
+PYMNT000000000150,MIDLANDC0001,Midland Construction,Payment,Processed,Check,02/04/2027,$42.70,$0.00,Z-US$,sa
+PYMNT000000000146,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/05/2027,"$1,027.15",$0.00,Z-US$,sa
+PYMNT000000000147,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/05/2027,$427.74,$0.00,Z-US$,sa
+PYMNT000000000153,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/05/2027,$53.24,$0.00,Z-US$,sa
+PYMNT000000000148,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/05/2027,$342.30,$0.00,Z-US$,sa
+PYMNT000000000151,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/06/2027,$406.50,$0.00,Z-US$,sa
+PYMNT000000000152,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/06/2027,$53.24,$0.00,Z-US$,sa
+PYMNT000000000154,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,02/08/2027,$203.25,$0.00,Z-US$,sa
+PYMNT000000000155,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,02/08/2027,$652.65,$0.00,Z-US$,sa
+PYMNT000000000157,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,02/11/2027,$31.95,$0.00,Z-US$,sa
+PYMNT000000000158,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,02/11/2027,$770.30,$0.00,Z-US$,sa
+PYMNT000000000156,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/11/2027,"$1,016.24",$0.00,Z-US$,sa
+PYMNT000000000159,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,02/14/2027,$31.95,$0.00,Z-US$,sa
+PYMNT000000000160,MAHLERST0001,Mahler State University,Payment,Processed,Check,02/14/2027,"$11,990.00",$0.00,Z-US$,sa
+PYMNT000000000162,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,02/17/2027,"$1,349.95",$0.00,Z-US$,sa
+PYMNT000000000163,ASTORSUI0001,Astor Suites,Payment,Processed,Check,02/18/2027,$31.95,$0.00,Z-US$,sa
+PYMNT000000000167,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/20/2027,$117.65,$0.00,Z-US$,sa
+PYMNT000000000164,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/20/2027,$812.99,$0.00,Z-US$,sa
+PYMNT000000000165,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,02/20/2027,"$30,066.47",$0.00,Z-US$,sa
+PYMNT000000000166,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Check,02/21/2027,$128.35,$0.00,Z-US$,sa
+PYMNT000000000168,PLAZAONE0001,Plaza One,Payment,Processed,Check,02/28/2027,$256.70,$0.00,Z-US$,sa
+PYMNT000000000169,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Check,03/01/2027,$53.24,$0.00,Z-US$,sa
+PYMNT000000000161,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,03/03/2027,"$7,415.05",$0.00,Z-US$,sa
+PYMNT000000000172,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Check,03/04/2027,$19.90,$0.00,Z-US$,sa
+PYMNT000000000170,MAHLERST0001,Mahler State University,Payment,Processed,Check,03/04/2027,$19.90,$0.00,Z-US$,sa
+PYMNT000000000173,ASTORSUI0001,Astor Suites,Payment,Processed,Check,03/06/2027,$10.65,$0.00,Z-US$,sa
+PYMNT000000000175,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/06/2027,$10.65,$0.00,Z-US$,sa
+PYMNT000000000174,CONTOSOL0001,"Contoso, Ltd.",Payment,Processed,Check,03/10/2027,$128.35,$0.00,Z-US$,sa
+PYMNT000000000178,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,03/10/2027,"$6,013.30",$0.00,Z-US$,sa
+PYMNT000000000176,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Check,03/10/2027,"$3,006.65",$0.00,Z-US$,sa
+PYMNT000000000177,PLAZAONE0001,Plaza One,Payment,Processed,Check,03/10/2027,"$3,006.65",$0.00,Z-US$,sa
+PYMNT000000000179,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Check,03/13/2027,"$6,013.30",$0.00,Z-US$,sa
+PYMNT000000000180,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,03/16/2027,"$2,567.95",$0.00,Z-US$,sa
+PYMNT000000000182,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,03/18/2027,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000184,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,03/19/2027,$10.65,$0.00,Z-US$,sa
+PYMNT000000000171,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Check,03/20/2027,$10.65,$0.00,Z-US$,sa
+PYMNT000000000206,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Cash,04/02/2027,$109.95,$0.00,Z-US$,sa
+PYMNT000000000207,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,04/02/2027,$53.24,$0.00,Z-US$,sa
+PYMNT000000000211,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/03/2027,$235.30,$0.00,Z-US$,sa
+PYMNT000000000208,PLAZAONE0001,Plaza One,Payment,Processed,Cash,04/03/2027,$31.95,$0.00,Z-US$,sa
+PYMNT000000000209,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Cash,04/03/2027,$21.30,$0.00,Z-US$,sa
+PYMNT000000000212,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/04/2027,$170.99,$0.00,Z-US$,sa
+PYMNT000000000213,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,04/05/2027,$21.35,$0.00,Z-US$,sa
+PYMNT000000000214,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Cash,04/06/2027,"$2,867.50",$0.00,Z-US$,sa
+PYMNT000000000215,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,04/07/2027,$609.75,$0.00,Z-US$,sa
+PYMNT000000000216,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,04/08/2027,"$44,458.35",$0.00,Z-US$,sa
+PYMNT000000000217,MAHLERST0001,Mahler State University,Payment,Processed,Cash,04/09/2027,$759.80,$0.00,Z-US$,sa
+PYMNT000000000220,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,04/10/2027,$128.35,$0.00,Z-US$,sa
+PYMNT000000000219,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Cash,04/10/2027,"$1,919.90",$0.00,Z-US$,sa
+PYMNT000000000218,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Cash,04/10/2027,$609.75,$0.00,Z-US$,sa
+PYMNT000000000221,PLAZAONE0001,Plaza One,Payment,Processed,Check,04/11/2027,"$59,277.79",$0.00,Z-US$,sa
+PYMNT000000000273,CENTRALC0001,Central Communications LTD,Payment,Processed,Check,04/12/2027,$375.00,$375.00,Z-US$,sa
+PYMNT000000000222,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Cash,04/12/2027,$352.94,$0.00,Z-US$,sa
+PYMNT000000000224,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/13/2027,$383.29,$0.00,Z-US$,sa
+PYMNT000000000223,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/13/2027,$127.77,$0.00,Z-US$,sa
+PYMNT000000000225,PLAZAONE0001,Plaza One,Payment,Processed,Cash,04/14/2027,$42.59,$0.00,Z-US$,sa
+PYMNT000000000226,CENTRALC0001,Central Communications LTD,Payment,Processed,Cash,04/15/2027,$256.70,$0.00,Z-US$,sa
+PYMNT000000000227,MAGNIFIC0001,Magnificent Office Images,Payment,Processed,Cash,04/16/2027,"$1,176.47",$0.00,Z-US$,sa
+PYMNT000000000228,METROPOL0001,Metropolitan Fiber Systems,Payment,Processed,Cash,04/16/2027,$170.99,$0.00,Z-US$,sa
+PYMNT000000000231,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,04/17/2027,$256.65,$0.00,Z-US$,sa
+PYMNT000000000229,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,04/17/2027,$42.70,$0.00,Z-US$,sa
+PYMNT000000000230,PLAZAONE0001,Plaza One,Payment,Processed,Cash,04/17/2027,"$8,602.49",$0.00,Z-US$,sa
+PYMNT000000000232,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Cash,04/18/2027,"$23,111.52",$0.00,Z-US$,sa
+PYMNT000000000233,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Cash,04/19/2027,$855.47,$0.00,Z-US$,sa
+PYMNT000000000234,MAHLERST0001,Mahler State University,Payment,Processed,Cash,04/20/2027,"$28,799.40",$0.00,Z-US$,sa
+PYMNT000000000235,LAWRENCE0001,Lawrence Telemarketing,Payment,Processed,Cash,04/21/2027,"$5,135.90",$0.00,Z-US$,sa
+PYMNT000000000236,BLUEYOND0001,Blue Yonder Airlines,Payment,Processed,Cash,04/22/2027,$59.95,$0.00,Z-US$,sa
+PYMNT000000000237,ASTORSUI0001,Astor Suites,Payment,Processed,Cash,04/23/2027,$513.18,$0.00,Z-US$,sa
+PYMNT000000000238,PLAZAONE0001,Plaza One,Payment,Processed,Cash,04/24/2027,"$1,433.75",$0.00,Z-US$,sa
+PYMNT000000000239,VANCOUVE0001,Vancouver Resort Hotels,Payment,Processed,Cash,04/25/2027,$448.76,$0.00,Z-US$,sa
+PYMNT000000000240,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/26/2027,$203.25,$0.00,Z-US$,sa
+PYMNT000000000241,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/27/2027,$42.59,$0.00,Z-US$,sa
+PYMNT000000000242,PLAZAONE0001,Plaza One,Payment,Processed,Cash,04/28/2027,$384.89,$0.00,Z-US$,sa
+PYMNT000000000243,AARONFIT0001,Aaron Fitz Electrical,Payment,Processed,Cash,04/29/2027,$609.75,$0.00,Z-US$,sa
+PYMNT000000000244,BREAKTHR0001,Breakthrough Telemarketing,Payment,Processed,Cash,04/30/2027,"$1,305.30",$0.00,Z-US$,sa
+PYMNT000000000245,HOLLINGC0001,Holling Communications Inc.,Payment,Processed,Check,04/30/2027,$117.65,$0.00,Z-US$,sa

@@ -1,0 +1,104 @@
+Customer ID,Name,Active,Email,Copy Email,Currency,Outstanding Balance,Past Due Balance,AutoPay,Users,Payment Terms,Tax Exempt Number,Billing Address Name,Billing Address1,Billing Address2,Billing City,Billing State,Billing Zip,Billing Country,Shipping Address Name,Shipping Address1,Shipping Address2,Shipping City,Shipping State,Shipping Zip,Shipping Country
+AARONFIT0001,Aaron Fitz Electrical,Yes,,,USD,"$26,351.36","$19,410.34",No,1,Net 30,,Bob Fitz,One Microsoft Way,,Redmond,WA,98052-6399,USA,Bob Fitz,11403 45 St. South,,Chicago,IL,60603-0776,USA
+ADAMPARK0001,Adam Park Resort,Yes,,,USD,"$20,703.84","$17,170.36",No,0,Net 30,,Roberta Masouras,P.O. Box 1391,,Indianapolis,IN,46206-1391,USA,Roberta Masouras,Suite 9876,321 Chestnut Drive,Indianapolis,IN,46206-1391,USA
+ADVANCED0001,Advanced Paper Co.,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Manoj Monat,456 19th Street S.,,Chicago,IL,60603-911,USA,Manoj Monat,456 19th Street S.,,Chicago,IL,60603-911,USA
+ALTONMAN0001,Alton Manufacturing,Yes,,,USD,"$68,955.00","$68,955.00",No,0,,,Jennifer Rossini,P.O. Box 3343,,Detroit,MI,48233-3343,USA,Ron Garland,348 23 East Ave,,Detroit,MI,48233,USA
+AMERICAN0001,American Science Museum,Yes,,,USD,"$25,838.97","$25,838.97",No,0,Net 30,,Andrew MacWilliams,789 North Carlton Place,,St. Louis,MO,63115,USA,Andrew MacWilliams,789 North Carlton Place,,St. Louis,MO,63115,USA
+AMERICAN0002,American Electrical Contractor,Yes,,,USD,"$7,800.13","$7,800.13",No,0,Net 30,,Sue Almassy-Wicker,3456 North Calumet Avenue,,Iowa City,IA,52240-1827,USA,Sid Watts,849 89 Ave E,,Iowa City,IA,52240-1827,USA
+ASSOCIAT0001,Associated Insurance Company,Yes,,,USD,"$1,093.04",$397.64,No,0,Net 30,,Dmitry Rodin,Box 3849,,Lincoln,NE,68502-3849,USA,Dmitry Rodin,321 Garden Mall,,Lincoln,NE,68502-3090,USA
+ASTORSUI0001,Astor Suites,Yes,,,USD,"$1,405.87",$0.00,No,0,Net 30,,Business Office,987 West Alaska Ave,,Gary,IN,46401-3455,USA,Pat Turner,436 Mitchell St. N.,,Gary,IN,46401-3455,USA
+ATMORERE0001,Atmore Retirement Center,Yes,,,USD,"$13,104.14","$13,104.14",No,0,Net 30,,Jane Donato,567 W 7th St.,,Bloomington,IL,61701-9392,USA,Jane Donato,567 W 7th St.,,Bloomington,IL,61701-9392,USA
+BAKERSEM0001,Baker's Emporium Inc.,Yes,,,USD,"$9,479.69",$0.00,No,0,Net 30,,Arthur Holmes,789 University Ave,,Fort Wayne,IN,46802-3918,USA,Arthur Holmes,789 University Ave,,Fort Wayne,IN,46802-3918,USA
+BERRYMED0001,Berry Medical Center,Yes,,,USD,"$50,797.10","$50,797.10",No,0,Net 30,,Accounting,Suite 189,2000 West Oak,Fond Du Lac,WI,54935-9990,USA,Development Office,Suite 123,1234 West Oak,Fond Du Lac,WI,54935-9990,USA
+BLUEYOND0001,Blue Yonder Airlines,Yes,,,USD,"$36,646.45","$36,646.45",No,0,Net 30,,,P.O. Box 5415,,Wichita,KS,67201,USA,Lt. James Whitson,P.O. Box 1234,,Wichita,KS,67201,USA
+BOYLESCO0001,Boyle's Country Inn's,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Sarah Parnell,1234 Burke,,Melbourne,VIC,3000,Australia,Sarah Parnell,1234 Burke,,Melbourne,VIC,3000,Australia
+BREAKTHR0001,Breakthrough Telemarketing,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Marie Perry,15 Arbutus St,,Montreal,PQ,H3R 3T2,Canada,Nancy Dutchak,3456 Arbutus St.,,Montreal,PQ,H3R 3T2,Canada
+CASTLEIN0001,Castle Inn Resort,Yes,,,CAD,C$0.00,C$0.00,No,0,,,Helen Cholakis,Box 3873,,Ottawa,ON,K2T 4T2,Canada,Helen Cholakis,234 103 Ave.,,Ottawa,ON,K4T 8W2,Canada
+CELLULAR0001,Cellular Express,Yes,,,USD,"$16,007.78","$14,601.91",No,0,Net 30,,Michael Harjak,5678 Horseshoe Way,,Aurora,IL,60507-3322,USA,Jack Temple,224 R St North,,Aurora,IL,60507,USA
+CENTERSU0001,Center Suite Hotel,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Mitch Payne,8765 51 Ave S,,Minneapolis,MN,55401-7694,USA,Mitch Payne,8765 51 Ave S,,Minneapolis,MN,55401-7694,USA
+CENTRALC0001,Central Communications LTD,Yes,,,USD,$374.42,$374.42,No,0,Net 30,,Phil Watson,1012 Aukland St. West,Dept. A,Chicago,IL,60601-2333,USA,Mary Weist,2345 Aukland St. West,,Chicago,IL,60601-2333,USA
+CENTRALD0001,Central Distributing,Yes,,,USD,"$21,320.53","$19,914.66",No,0,Net 30,,Donald Fox,Suite 13,2345 Westwood Dr.,La Crosse,WI,54601-9975,USA,Jason Paul,727 25 St. N,,La Crosse,WI,54601-9975,USA
+CENTRALI0001,Central Illinois Hospital,Yes,,,USD,"$38,412.31","$38,412.31",No,0,Net 30,,Robert Keith,765 West 24th Street,,Peoria,IL,61601-4542,USA,Robert Keith,765 West 24th Street,,Peoria,IL,61601-4542,USA
+COHOWINE0001,Coho Wintery,Yes,,,USD,"$2,690.69","$2,690.69",No,0,Net 30,,Brian Nypen,234 Hickman St.,,Springfield,IL,62703,USA,Brian Nypen,234 Hickman St.,,Springfield,IL,62703,USA
+COMMUNIC0001,Communication Connections,Yes,,,CAD,C$0.00,C$0.00,No,0,,,Accounting,"Place 23, Suite 6",266 Main Ave.,Winnipeg,MB,R3M 2G6,Canada,Bernard Bakke,"Place 123, Suite 3",234 Main Ave,Winnipeg,MB,R3M 2G6,Canada
+COMMUNIC0002,Communication Connections,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Accounting,Suite 65,25 Main St,Vancouver,BC,V6C 4D2,Canada,Al Reyko,765 Curtis,,Vancouver,BC,V6C 3J9,Canada
+COMPUTEC0001,Compu-Tech Solutions,Yes,,,USD,"$9,836.00","$9,605.95",No,0,Net 30,,Jia Zhou,P.O. Box 2734,,Green Bay,WI,54305-5303,USA,Jia Zhou,23456 Meridan St. N.E.,,Green Bay,WI,54305-5303,USA
+COMPUTER0001,Computerized Phone Systems,Yes,,,USD,"$16,113.89","$15,985.54",No,0,Net 30,,Terrence Strauss,456 17 St S,,Madison,WI,53701-6652,USA,Darryl Elk,125 17 St. S,,Madison,WI,53701-6652,USA
+COMPUTER0002,Computers Unlimited,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Purchasing,9876 Bernard St.,,Edmonton,AB,T5J 2G5,Canada,Emily Vincent,107 19 St,,Edmonton,AB,T7K 5R5,Canada
+COMPUTER0003,Computer Equipment Leasing,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Joan Swift,123 Churchill Rd,,Sydney,NSW,2000,Australia,Alan Stewart,58 Churchill Rd,,Sydney,NSW,2000,Australia
+COMTELPA0001,Comtel-Page Inc.,Yes,,,USD,"$22,124.31","$22,124.31",No,0,,,Joanna Storsved,23456 82 Ave.,,Ames,IA,50010-3976,USA,Joanna Storsved,23456 82 Ave.,,Ames,IA,50010-3976,USA
+CONTINEN0001,Continental Properties,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Robert Hadley,Box 334,,Sydney,NSW,2000,Australia,Robert Hadley,678 Falcon,,Sydney,NSW,2000,Australia
+CONTOSOL0001,"Contoso, Ltd.",Yes,,,USD,"$80,714.12","$12,266.47",No,0,Net 30,,Connie White,2401 Mineral Point Road,Dept A,Omaha,NE,68145-2401,USA,Purchasing,456 Mineral Point Road,,Omaha,NE,68145-2401,USA
+COUNTRYV0001,Country View Estates,Yes,,,NZD,$NZ0.00,$NZ0.00,No,0,Net 30,,Beth Talbot,123 Albert Ave,,Palmerston North,,,New Zealand,Wes Stevens,22 Patterson St.,,Palmerston North,,,New Zealand
+CRAWFORD0001,"Crawfords, Inc.",Yes,,,USD,"$9,514.65","$9,514.65",No,0,Net 30,,Milton Olmstead,321 Park Drive,,Columbia,MO,65201-3322,USA,Milton Olmstead,321 Park Drive,,Columbia,MO,65201-3322,USA
+DATACOMM0001,Data Communications Inc.,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Bill Menec,9876 112 St.,,Edmonton,AB,T5P 1T1,Canada,Bill Menec,9876 112 St.,,Edmonton,AB,T5P 1T1,Canada
+DIALDIRE0001,Dial Direct Paging Inc.,Yes,,,USD,"$2,584.53","$2,584.53",No,0,Net 30,,Ming Zhu,1234 SE Marine,,St. Louis,MO,63155-2343,USA,Ming Zhu,1234 SE Marine,,St. Louis,MO,63155-2343,USA
+DIRECTMA0001,Direct Marketers,Yes,,,USD,"$26,510.00","$26,510.00",No,0,Net 30,,Carlos Romero,8765 9 St. W.,,St. Paul,MN,55101-8011,USA,Carlos Romero,8765 9 St. W.,,St. Paul,MN,55101-8011,USA
+DOLLISCO0001,Dollis Cove Resort,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Martin Duckett,Box 342,,Charlottetown,PE,C3G 3W6,Canada,Phyllis Duckett,765 Kingway,,Charlottetown,PEI,C1A 1W3,Canada
+DOWNTOWN001,Downtown Hotel,Yes,,,USD,"$36,675.42","$36,675.42",No,0,Net 30,,Yolanda Neilson,987 Chestnut Avenue,,Chicago,IL,60618-2991,,Yolanda Neilson,987 Chestnut Avenue,,Chicago,IL,60618-2991,
+EXECUTIV0001,Executive Resources,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Jeff Border,123 Alfred St,,Sydney,NSW,2000,Australia,Jeff Border,123 Alfred St,,Sydney,NSW,2000,Australia
+FABRETURN01,Fabrikam Returns,Yes,,,USD,$0.00,$0.00,No,0,,,Returns Dept.,4277 West Oak Parkway,Receiving Dock,Chicago,IL,60601,United States,Returns Dept.,4277 West Oak Parkway,Receiving Dock,Chicago,IL,60601,United States
+FOURTHCO0001,Fourth Coffee,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Bryce Jones,1035 Main Avenue,,Beatrice,NE,68350-1035,USA,John Thompson,345 Industrial Drive,,Beatrice,NE,68350-1010,USA
+FRANCHIS0001,Franchise Office Machines,Yes,,,USD,"$7,093.12","$6,515.32",No,0,Net 30,,Customer Orders,456 Sherwood Park South,,Arlington Heights,IL,6004-2922,USA,Keiry Lanios,,,Arlington Heights,IL,6004-2922,USA
+GETAWAYI0001,Getaway Inn,Yes,,,USD,"$39,950.00","$39,950.00",No,0,Net 30,,,P.O. Box 34,,Saginaw,MI,48605,USA,Gayle Goodwin,234 E Cannon Ave.,,Saginaw,MI,48605,USA
+GREENWAY0001,Greenway Foods,Yes,,,USD,"$23,030.33","$20,223.72",No,0,Net 30,,Purchasing & Sales,87654 N 19th Avenue,,Chicago,IL,60601-6363,USA,Purchasing & Sales,87654 N 19th Avenue,,Chicago,IL,60601-6363,USA
+HAMPTONV0001,Hampton Village Eatery,Yes,,,USD,"$36,134.74","$36,134.74",No,0,Net 30,,Cheryl Miner,234 Hampton Village,,Springfield,IL,62703-1252,USA,Cheryl Miner,234 Hampton Village,,Springfield,IL,62703-1252,USA
+HEALTHYC0001,Healthy Concepts,Yes,,,USD,"$2,168.89","$2,168.89",No,0,Net 30,,Technical Relations,1234 Westown Road,,West Des Moines,IA,50625-4424,USA,Technical Relations,1234 Westown Road,,West Des Moines,IA,50625-4424,USA
+HEARTLAN0001,Heartland Tower Systems,Yes,,,USD,"$19,110.54","$19,110.54",No,0,Net 30,,Jean Thompson,P.O. Box 8392,,Kansas City,MO,64108,USA,John Matthews,9876 Stevens Street,,Kansas City,MO,64108,USA
+HOLLINGC0001,Holling Communications Inc.,Yes,,,USD,"$31,767.14","$31,767.14",No,0,Net 30,,Ed Holling,123 Sugar Grove,,Columbia,MO,65201-3846,USA,Ed Holling,123 Sugar Grove,,Columbia,MO,65201-3846,USA
+HOMEFURN0001,Home Furnishings Limited,Yes,,,USD,"$24,125.26","$23,140.85",No,0,Net 30,,Manuel Le Hoya,234 Heritage Ave.,,Midland,MI,48640-9392,USA,Chris Long Feather,992 12 St W,,Midland,MI,48640-9392,USA
+HUMONGOU0001,Humongous Insurance,Yes,,,USD,"$47,001.07","$47,001.07",No,0,,,Rose Williams,4509 145th St NW,Accounting Dept.,Omaha,NE,68107-4509,USA,Brian Sweeney,4567 145th St NW,,Omaha,NE,68107-4509,USA
+INTERNAT0001,International Mailing Corp.,Yes,,,USD,$793.24,$793.24,No,0,Net 30,,Virginia O'Connell,8765 58th Street West,,St. Louis,MO,63156-5902,USA,Virginia O'Connell,8765 58th Street West,,St. Louis,MO,63156-5902,USA
+ISNINDUS0001,ISN Industries,Yes,,,USD,"$14,978.34","$14,978.34",No,0,Net 30,,Sheila Crossman,987 Union Circle,,Lockport,IL,60441-2239,USA,Sheila Crossman,987 Union Circle,,Lockport,IL,60441-2239,USA
+JOHNSONK0001,"Johnson, Kimberly",Yes,,,USD,"$47,420.90","$47,420.90",No,0,Net 30,,Rachel White,P.O. Box 374,,Rockford,IL,61125-6755,USA,"Dr. Kimberly Johnson, M.D.",5678 S. 42nd Ave.,,Rockford,IL,61125-6149,USA
+KELLYCON0001,Kelly Consulting,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Elizabeth Talbot,123 Yeo,,Melbourne,VIC,3000,Australia,Elizabeth Talbot,123 Yeo,,Melbourne,VIC,3000,Australia
+KENSINGT0001,Kensington Gardens Resort,Yes,,,USD,"$13,539.50","$13,539.50",No,0,Net 30,,Judy Hopewell,12345 Redmond Rd,,Milwaukee,WI,53204-9900,USA,Judy Hopewell,12345 Redmond Rd,,Milwaukee,WI,53204-9900,USA
+LASERMES0001,Laser Messenger Service,Yes,,,USD,"$17,160.20","$17,160.20",No,0,Net 30,,Dennis Swenson,98765 Crossway Park Dr,,Bloomington,MN,55304-9840,USA,Dennis Swenson,98765 Crossway Park Dr,,Bloomington,MN,55304-9840,USA
+LAWRENCE0001,Lawrence Telemarketing,Yes,,,USD,"$23,642.79","$23,129.29",No,0,Net 30,,Accounting Dept.,1345 21st Ave S,,Lawrence,KS,66208,USA,Rod Williams,12345 21st Ave S,,Lawrence,KS,66208,USA
+LECLERC0001,LeClerc & Associates,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Claire Dionne,Box 1283,,Montreal,PQ,H4Q 6J8,Canada,Claire Dionne,4321 West Broadway,,Montreal,PQ,H4Q 6J8,Canada
+LEISURET0001,Leisure & Travel Consultants,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,Rodney Lawry,City 123,,Sydney,NSW,2000,Australia,Rodney Lawry,City 123,,Sydney,NSW,2000,Australia
+LONDONBE0001,Londonberry Nursing Home,Yes,,,NZD,$NZ0.00,$NZ0.00,No,0,,,Troy Irving,987 Portar Street,,Auckland,,,New Zealand,Troy Irving,987 Portar Street,,Auckland,,,New Zealand
+MAGNIFIC0001,Magnificent Office Images,Yes,,,CAD,C$0.00,C$0.00,No,0,,,Elizabeth Swift,Box 3748,,Winnipeg,MB,R2S 3T4,Canada,Elizabeth Swift,987 45 Ave.,,Winnipeg,MB,R2S 3S7,Canada
+MAHLERST0001,Mahler State University,Yes,,,USD,"$34,289.30","$34,279.40",No,0,Net 30,,Sharon Delbourne,4321 McDaniels Rd,,Minneapolis,MN,55404-4000,USA,Sharon Delbourne,4321 McDaniels Rd,,Minneapolis,MN,55404-4000,USA
+MANCHEST0001,Manchester Suites,Yes,,,USD,"$26,580.50","$26,580.50",No,0,Net 30,,,678 W Orange Ave,,Lafayette,IN,47905-5855,USA,,678 W Orange Ave,,Lafayette,IN,47905-5855,USA
+MARGIEST0001,Margie's Travel,Yes,,,USD,"$9,637.82","$9,637.82",No,0,Net 30,,Ruth Hunter,6789 82 Ave S.,,Minneapolis,MN,55402-1249,USA,Ruth Hunter,6789 82 Ave S.,,Minneapolis,MN,55402-1249,USA
+MENDOTAU0001,Mendota University,Yes,,,USD,"$36,435.54","$36,435.54",No,0,,,Clayton Dean,8765 College Drive,,Grand Rapids,MI,49548-3343,USA,Clayton Dean,8765 College Drive,,Grand Rapids,MI,49548-3343,USA
+METROPOL0001,Metropolitan Fiber Systems,Yes,,,USD,"$32,374.38","$25,823.13",No,0,Net 30,,Sales Dept.,5678 W. Jackson Ave,,Milwaukee,WI,53202-5713,USA,Sales Dept.,5678 W. Jackson Ave,,Milwaukee,WI,53202-5713,USA
+MIDCITYH0001,Mid-City Hospital,Yes,,,USD,"$34,658.44","$34,658.44",No,0,Net 30,,Glen Math,9876 N. Pioneer Road,,Gary,IN,46401-4211,USA,Glen Math,9876 N. Pioneer Road,,Gary,IN,46401-4211,USA
+MIDLANDC0001,Midland Construction,Yes,,,USD,"$4,691.73","$4,691.73",No,0,Net 30,,David Harris,5678 Fraser Ave N.,,Mishawaka,IN,46544,USA,David Harris,5678 Fraser Ave N.,,Mishawaka,IN,46544,USA
+MULTITEC0001,Multitech Office Components,Yes,,,USD,"$6,702.00","$6,702.00",No,0,Net 30,,Sales & Service,1085 Sunlight Place,,Iowa City,IA,52230-1940,USA,Sales & Service,1234 Sunlight Place,,Iowa City,IA,52230-1233,USA
+NATIONAL0001,National Shopping World,Yes,,,USD,"$4,949.68","$4,949.68",No,0,Net 30,,Gary Backer,123 Apple Grove Square,,Indianapolis,IN,46205-2393,USA,Gary Backer,123 Apple Grove Square,,Indianapolis,IN,46205-2393,USA
+NETWORKS0001,Network Solutions,Yes,,,USD,"$23,079.33","$23,079.33",No,0,Net 30,,Roseanne Polk,PO Box 2345,,Lake Zurich,IL,60047-1115,USA,Roseanne Polk,PO Box 2345,,Lake Zurich,IL,60047-1115,USA
+NORTHCOL0001,North College,Yes,,,USD,"$17,587.91","$17,587.91",No,0,Net 30,,Vivian Lang,Business Office,7654 45 Ave N.,Fort Wayne,IN,46802-3313,USA,Vivian Lang,Business Office,7654 45 Ave N.,Fort Wayne,IN,46802-3313,USA
+NORTHERN0001,Northern State College,Yes,,,USD,"$27,111.91","$27,111.91",No,0,Net 30,,Steven Chang,234 Lee Ridge Road,,Chicago,IL,60604-2670,USA,Steven Chang,234 Lee Ridge Road,,Chicago,IL,60604-2670,USA
+NORTHERN0002,Northern Family Hospital,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Ellen McDonald,987 Royal Park Centre,,St. John's,NF,A1C 1K4,Canada,Ellen McDonald,987 Royal Park Centre,,St. John's,NF,A1C 1K4,Canada
+NORTHSTA0001,Northstar Mall,Yes,,,USD,"$23,396.17","$23,396.17",No,0,Net 30,,General Office,5432 Principal Ave.,,Mankato,MN,56001,USA,General Office,5432 Principal Ave.,,Mankato,MN,56001,USA
+NOVASCOT0001,Novia Scotia Tech. Institute,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Stephen Porter,543 Abbot Ave.,,Halifax,NS,B5P 7D7,Canada,Stephen Porter,543 Abbot Ave.,,Halifax,NS,B5P 7D7,Canada
+NOVASYST0001,"Nova Systems, Inc.",Yes,,,USD,"$2,168.49",$962.06,No,0,Net 30,,Fred Wagner,123 W. Nichols Rd,,St. Paul,MN,55104,USA,Fred Wagner,123 W. Nichols Rd,,St. Paul,MN,55104,USA
+OCTAGONM0001,Octagon Marketing Org.,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Dean Johnson,1234 Redwood Trail,,Indianapolis,IN,46206-1099,USA,Dean Johnson,1234 Redwood Trail,,Indianapolis,IN,46206-1099,USA
+OFFICEDE0001,Office Design Systems Ltd,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Bernard Bakke,Place 123 Suite 3,123 Main Ave.,Winnipeg,MB,R3M 2G6,Canada,Vincent Thorne,945 57 St,,Lethbridge,AB,T7M 3J7,Canada
+PACIFICD0001,Pacific Digital,Yes,,,USD,"$24,331.66","$24,331.66",No,0,Net 30,,James Tweed,76543 Commerical Street,,Independence,MO,64501,USA,James Tweed,76543 Commerical Street,,Independence,MO,64501,USA
+PLACEMAD0001,Place & MacDero Associates,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Phillip Stewart,Box 473,,Calgary,AB,T2P 4G7,Canada,Phillip Stewart,9876 Willingdon,,Calgary,AB,T2P 4B9,Canada
+PLACEONE0001,Place One Suites,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Foster Reed,Box 1409,,Vancouver,BC,V6C 3J9,Canada,Roger Bridges,4567 East River Road,,Vancouver,BC,V6C 3J9,Canada
+PLAZAONE0001,Plaza One,Yes,,,USD,"$13,165.09","$13,165.09",No,0,Net 30,,Mike Unjhem,2345 42 St. W,,Woodbury,MN,55119,USA,Mike Unjhem,2345 42 St. W,,Woodbury,MN,55119,USA
+POLKVALL0001,Polk Valley Highway Dept.,Yes,,,USD,"$21,461.08","$21,461.08",No,0,Net 30,,Administration Office,Rural Route 123 Box 45G,,McHenry,IL,60050,USA,Administration Office,Rural Route 123 Box 45G,,McHenry,IL,60050,USA
+PULASKIE0001,Pulaski Enterprises Inc.,Yes,,,USD,"$8,540.28","$8,540.28",No,0,Net 30,,Mary Jo Bancroft,3456 E. Main Parkway,,Duluth,MN,55806,USA,Mary Jo Bancroft,3456 E. Main Parkway,,Duluth,MN,55806,USA
+RAINBOWR0001,Rainbow Research,Yes,,,USD,"$40,568.07","$40,568.07",No,0,Net 30,,Darla Juhl,3456 N. Jupiter St,,St Louis,MO,63156-3427,USA,Darla Juhl,3456 N. Jupiter St,,St Louis,MO,63156-3427,USA
+REDSFOOD0001,Red's Food Market,Yes,,,USD,"$2,560.34","$2,560.34",No,0,,,Bill Polaski,8765 W. Cordoba Way,,Kansas City,MO,64108-1862,USA,Bill Polaski,8765 W. Cordoba Way,,Kansas City,MO,64108-1862,USA
+REYNOLDS0001,Reynolds State College,Yes,,,USD,"$38,555.14","$38,255.00",No,0,Net 30,,Alan Swedburg,456 College Drive,,Benton Harbor,MI,49022-9090,USA,Alan Swedburg,456 College Drive,,Benton Harbor,MI,49022-9090,USA
+RIVERSID0001,Riverside University,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Morgan Bishop,5678 Herman St.,,Vancouver,BC,V6E 3J7,Canada,Morgan Bishop,5678 Herman St.,,Vancouver,BC,V6E 3J7,Canada
+ROSELLEN0001,Rosellen General Hospital,Yes,,,CAD,C$0.00,C$0.00,No,0,,,Charalee Williams,8765 Barclay St.,,Regina,SK,S7K 5C7,Canada,Charalee Williams,8765 Barclay St.,,Regina,SK,S7K 5C7,Canada
+SINCLAIR0001,Sinclair State University,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Victor Gage,SSU Box 123,,Arlington Heights,IL,60004-6122,USA,Victor Gage,SSU Box 123,,Arlington Heights,IL,60004-6122,USA
+SNELLING0001,Snelling Communications Inc.,Yes,,,USD,"$1,831.54","$1,831.54",No,0,Net 30,,Loren Shay,4321 East Wisconsin Ave.,,Chicago,IL,60604-4100,USA,Loren Shay,4321 East Wisconsin Ave.,,Chicago,IL,60604-4100,USA
+SSPROPER0001,S & S Properties,Yes,,,USD,"$28,076.47","$28,076.47",No,0,Net 30,,Kim Lucas,1234 S. Roberts St.,,Detroit,MI,48233-2190,USA,Kim Lucas,1234 S. Roberts St.,,Detroit,MI,48233-2190,USA
+STMARYHO0001,St. Mary's Hospital,Yes,,,USD,$0.00,$0.00,No,0,Net 30,,Service Dept.,2345 N. River Dr.,,Milwaukee,WI,53203-2323,USA,Service Dept.,2345 N. River Dr.,,Milwaukee,WI,53203-2323,USA
+STPATRIC0001,St. Patrick's Hospital,Yes,,,AUD,$A0.00,$A0.00,No,0,Net 30,,AJ Grother,Box 345-A,,Melbourne,VIC,3000,Australia,Anne Bennet,234 Phillip,,Melbourne,VIC,3000,Australia
+SUPERFOO0001,Super Foods Plus,Yes,,,USD,"$1,266.39","$1,266.39",No,0,Net 30,,Isaac Frye,6543 N.E. Pusher Rd.,,Detroit,MI,48233-1232,USA,Isaac Frye,6543 N.E. Pusher Rd.,,Detroit,MI,48233-1232,USA
+SVCRETURN01,Service,Yes,,,USD,$0.00,$0.00,No,0,,,,,,,,,,,,,,,,
+UNIFIEDW0001,Unified Wire and Cable Systems,Yes,,,USD,"$28,916.81","$27,710.38",No,0,Net 30,,Todd Quinn,123 N. Meriam Ave,,Grand Rapids,MI,49548,USA,Todd Quinn,123 N. Meriam Ave,,Grand Rapids,MI,49548,USA
+VANCOUVE0001,Vancouver Resort Hotels,Yes,,,CAD,C$0.00,C$0.00,No,0,Net 30,,Janice Walton,Box 1455,,Vancouver,BC,V6E 3J7,Canada,Wilson Jones,432 12 Ave. North,,Vancouver,BC,V6E 3J7,Canada
+VISIONIN0001,Vision Inc.,Yes,,,USD,"$73,947.65","$73,947.65",No,0,Net 30,,Julius Gochian,123 S.W.  49 Ave,,Indianapolis,IN,46206-1222,USA,Julius Gochian,123 S.W.  49 Ave,,Indianapolis,IN,46206-1222,USA
+VISTATRA0001,Vista Travel,Yes,,,CAD,C$0.00,C$0.00,No,0,,,Kathy Warren,566 Broadway,,Saskatoon,SK,S4S 6W9,Canada,Beth Carr,5678 Broadway,,Saskatoon,SK,S5S 6W9,Canada
+WESTCENT0001,West Central Distributors,Yes,,,USD,$99.75,$99.75,No,0,Net 30,,Service Department,1234 2nd Street,,Rockford,IL,61126-3214,USA,Service Department,1234 2nd Street,,Rockford,IL,61126-3214,USA
+WESTSIDE0001,Westside Cable Service,Yes,,,USD,"$9,265.48","$9,265.48",No,0,Net 30,,Pam Lockwood,123 Domino St. N,,Lansing,MI,48924-9237,USA,Pam Lockwood,123 Domino St. N,,Lansing,MI,48924-9237,USA
+WORLDENT0001,World Enterprises,Yes,,,USD,"$46,899.02","$46,899.02",No,0,Net 30,,Service Center,987 Office Plaza Drive,,Detroit,MI,48233-4832,USA,Service Center,987 Office Plaza Drive,,Detroit,MI,48233-4832,USA
