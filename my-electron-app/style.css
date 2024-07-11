@@ -1,0 +1,16 @@
+#save-confirmation {
+    color: red;
+    transition: opacity 1s ease-out;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }
+
+  #intButton {
+    background-color: greenyellow;
+    font-size: 10px;
+    padding: 6px 10px; 
+    vertical-align: middle;
+    line-height: 1;
+  }

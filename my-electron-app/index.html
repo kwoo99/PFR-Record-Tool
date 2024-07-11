@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="./style.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>PFR Record Tool</title>
+  </head>
+  <body>
+    <h1>Welcome to the PFR Record Tool</h1>
+    <p id="info"></p>
+    <label
+      >Integration Key
+      <input id="intKey" type="text" />
+    </label>
+    <label
+      >Integration Password
+      <input id="intPass" type="password" />
+    </label>
+    <label
+      >Save
+      <button id="intButton"></button>
+    </label>
+    <p id="save-confirmation"></p>
+    <label
+      >Select File
+      <button id="selectedFileName"></button>
+    </label>
+  </body>
+  <script src="./renderer.js"></script>
+</html>
