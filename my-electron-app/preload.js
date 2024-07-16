@@ -27,18 +27,3 @@ contextBridge.exposeInMainWorld("dialog", {
     });
   }
 });
-
-//Functions defined for file selector functionality
-window.addEventListener("DOMContentLoaded", () => {
-  const disableAutofill = () => {
-    const inputs = document.querySelectorAll("input");
-    inputs.forEach((input) => {
-      input.setAttribute("autocomplete", "off");
-      input.setAttribute("autocorrect", "off");
-      input.setAttribute("autocapitalize", "off");
-      input.setAttribute("spellcheck", "false");
-    });
-  };
-
-  disableAutofill();
-});

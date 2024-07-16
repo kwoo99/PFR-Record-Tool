@@ -1,15 +1,34 @@
 const information = document.getElementById("info");
 information.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`;
 
-// Objects defined to link html ids with defined functionality below
+// Objects defined to link HTML ids with defined functionality below
 const keyField = document.getElementById("intKey");
 const passField = document.getElementById("intPass");
 const intButton = document.getElementById("intButton");
 const saveconfirm = document.getElementById("save-confirmation");
 const selectFileButton = document.getElementById("selectFileButton");
 const selectedFileName = document.getElementById("selectedFileName");
+const feed = document.getElementById("feedBox");
 
-let fadeOutTimer = null; // Track the timer ID for the fade-out animation
+let hideTimer = null; // Track the timer ID for clearing the message
+
+// Function to handle clearing the save confirmation message
+function clearSaveConfirmation() {
+  saveconfirm.textContent = "";
+}
+
+// Function to show the save confirmation message and start the hide timer
+function showSaveConfirmation(message) {
+  saveconfirm.textContent = message;
+
+  // Clear any existing hide timer
+  clearTimeout(hideTimer);
+
+  // Start the hide timer after 3 seconds
+  hideTimer = setTimeout(() => {
+    clearSaveConfirmation();
+  }, 3000);
+}
 
 // All actions taken when the Save button is pressed
 intButton.addEventListener("click", () => {
@@ -19,13 +38,17 @@ intButton.addEventListener("click", () => {
   window.int.setPass(passValue);
   window.int.send("button-clicked");
 
-  // If the message is already visible, start the fade-out timer immediately
-  if (saveconfirm.style.opacity === "1") {
-    startFadeOutTimer();
-  }
+  // Show the save confirmation message immediately
+  showSaveConfirmation("Integration Credentials Saved.");
 });
 
-//Will open file selector when button is pressed (work in progress)
+// Receives message returned when index.js receives signal on saveconfirm channel
+window.int.receive("saveconfirm", (message) => {
+  // Show the save confirmation message immediately
+  showSaveConfirmation(message);
+});
+
+// Open file selector when the button is pressed
 selectFileButton.addEventListener("click", () => {
   window.dialog.openFileSelect().then((file) => {
     if (file) {
@@ -38,39 +61,3 @@ selectFileButton.addEventListener("click", () => {
     }
   });
 });
-
-// Receives message returned when index,js receives signal on saveconfirm channel
-window.int.receive("saveconfirm", (message) => {
-  saveconfirm.textContent = message;
-
-
-
-//Code defined for fadeout of save confirmation message 
-  // Ensure the message is fully visible
-  saveconfirm.style.opacity = 1;
-
-  // Clear any existing fade-out timer
-  clearTimeout(fadeOutTimer);
-
-  // Start the fade-out timer after 1 second
-  startFadeOutTimer();
-});
-
-function startFadeOutTimer() {
-  fadeOutTimer = setTimeout(() => {
-    fadeOut(saveconfirm);
-  }, 1000);
-}
-
-function fadeOut(element) {
-  var opacity = 1;
-  var timerId = setInterval(function () {
-    if (opacity <= 0) {
-      clearInterval(timerId);
-      element.classList.add("fade-out");
-    } else {
-      opacity -= 0.05;
-      element.style.opacity = opacity;
-    }
-  }, 100);
-}
