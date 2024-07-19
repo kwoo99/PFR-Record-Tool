@@ -2,13 +2,18 @@ const information = document.getElementById("info");
 information.innerText = `This app is using Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), and Electron (v${versions.electron()})`;
 
 // Objects defined to link HTML ids with defined functionality below
+const portalField = document.getElementById("portalname");
 const keyField = document.getElementById("intKey");
 const passField = document.getElementById("intPass");
-const intButton = document.getElementById("intButton");
+const configButton = document.getElementById("configButton");
 const saveconfirm = document.getElementById("save-confirmation");
 const selectFileButton = document.getElementById("selectFileButton");
-const selectedFileName = document.getElementById("selectedFileName");
+const selectedFileName = document.getElementById("selectedFile");
 const feed = document.getElementById("feedBox");
+const recordButton = document.getElementById("submitButton");
+const recordField = document.getElementById("recordID");
+
+// const feedBase = document.getElementById("feedBase");
 
 let hideTimer = null; // Track the timer ID for clearing the message
 
@@ -31,33 +36,53 @@ function showSaveConfirmation(message) {
 }
 
 // All actions taken when the Save button is pressed
-intButton.addEventListener("click", () => {
+configButton.addEventListener("click", () => {
+  const portalValue = portalField.value;
   const keyValue = keyField.value;
   const passValue = passField.value;
-  window.int.setKey(keyValue);
-  window.int.setPass(passValue);
-  window.int.send("button-clicked");
+  window.config.setPortal(portalValue);
+  window.config.setKey(keyValue);
+  window.config.setPass(passValue);
+  window.config.send("button-clicked");
 
-  // Show the save confirmation message immediately
   showSaveConfirmation("Integration Credentials Saved.");
-});
-
-// Receives message returned when index.js receives signal on saveconfirm channel
-window.int.receive("saveconfirm", (message) => {
-  // Show the save confirmation message immediately
-  showSaveConfirmation(message);
 });
 
 // Open file selector when the button is pressed
 selectFileButton.addEventListener("click", () => {
   window.dialog.openFileSelect().then((file) => {
+    const fileInstance = document.createElement("h5");
+    fileInstance.id = "selectedFileName";
     if (file) {
       console.log(file);
-      selectedFileName.textContent = file.fileName;
+      selectedFileName.textContent = "";
+      fileInstance.textContent = file.fileName;
+      selectedFileName.appendChild(fileInstance);
+      // selectedFileName.textContent = file.fileName;
     } else {
       console.log("No file selected");
       selectedFileName.textContent = "";
       // Optionally handle case where no file is selected
     }
   });
+});
+
+recordButton.addEventListener("click", () => {
+  const customerValue = customerField.value;
+  window.customer.setRecord(customerValue);
+});
+
+// Receives message returned when index.js receives signal on saveconfirm channel
+window.config.receive("saveconfirm", (message) => {
+  showSaveConfirmation(message);
+});
+
+// Receives record ids from index.js and then displays them into the feed box
+window.config.receive("feedBox", (message) => {
+  feed.insertAdjacentHTML('beforeend', `<div>${message}</div>`);
+});
+
+// Clears the feed box before every new file load instance when signal is received from index.js
+window.config.receive("feedBoxClear", () => {
+  feed.textContent = "";
 });

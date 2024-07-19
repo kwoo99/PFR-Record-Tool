@@ -1,18 +1,40 @@
 var fs = require("fs");
-var csv = require("fast-csv");
+var csv = require("@fast-csv/parse");
 
-function readCSVFile(csvFile) {
+function readCSVFile(csvFile, type) {
     return new Promise((resolve, reject) => {
-        var customerIDs = [];
-
+        var recordIDs = [];
+        console.log(type);
         fs.createReadStream(csvFile)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => reject(error))
             .on("data", (row) => {
-                customerIDs.push(row["Customer ID"]);
+                recordIDs.push(row[type]); 
             })
-            .on("end", () => resolve(customerIDs));
+            .on("end", () => resolve(recordIDs));
     });
 }
 
-module.exports = { readCSVFile };
+function getCSVType(csvFile) {
+    return new Promise((resolve, reject) => {
+      let rowType;
+      const stream = fs.createReadStream(csvFile);
+      
+      const csvStream = csv.parseStream(stream)
+        .on("error", (error) => reject(error))
+        .on("data", (row) => {
+          rowType = row[0];
+          csvStream.pause();
+          stream.removeAllListeners('data');
+          resolve(rowType);
+          // console.log(`ROW=${JSON.stringify(row[0])}`);
+        })
+        .on("end", () => {
+            if (rowType === undefined) {
+              reject(new Error("No data found in CSV file"));
+            }
+          });
+    });
+  }
+
+module.exports = { readCSVFile, getCSVType };

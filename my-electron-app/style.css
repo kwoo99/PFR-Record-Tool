@@ -1,44 +1,99 @@
 body {
-  background-color: white;
+  color: #656565;
+  background-color: #F4F4F4;
+  font-family: 'Segoe UI', Helvetica, Garuda, Arial, sans-serif
+;
+}
+
+#configButton {
+  background-color: #1a80c3;
+  color: white;
+  border: 1px solid #3398dc;
+  border-radius: 5px;
+}
+
+#configButton:hover {
+  background-color: #4694c8;
+}
+
+#configButton:active {
+  background-color: #4c81cb;
+}
+
+#recordIDSubmit {
+  display: block;
+  min-height: 50px;
+}
+
+#feedBox {
+  background-color: #f0e7e7;
+  border: 1px solid #525050;
+  font-family: sans-serif;
+  height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  width: 400px;
+  position: fixed;
+}
+
+#fileSelection {
+  display: block;
+  min-height: 40px;
+}
+
+#selectFileButton {
+  display: block;
+  background-color: #1a80c3;
+  color: white;
+  border: 1px solid #3398dc;
+  border-radius: 5px;
+}
+
+#selectFileButton:hover {
+  background-color: #4694c8;
+}
+
+#selectFileButton:active {
+  background-color: #4c81cb;
+}
+
+#selectedFile {
+  display: inline-block;
+  font-family: sans-serif;
+  min-height: 20px;
+  margin: 18px;
+}
+
+#submitButton {
+  background-color: #1a80c3;
+  color: white;
+  border: 1px solid #3398dc;
+  border-radius: 5px;
+}
+
+#submitButton:hover {
+  background-color: #4694c8;
+}
+
+#submitButton:active {
+  background-color: #4c81cb;
+}
+
+#selectedFileName {
+  max-height: 10px;
+  margin: 2px;
+}
+
+#selectedFileLabel {
+  display: inline-block;
+  font-family: sans-serif;
+  min-height: 50px;
 }
 
 #save-confirmation {
   color: rgba(29, 178, 78, 0.842);
+  font-family: sans-serif;
   min-height: 20px;
 }
 
-#intButton {
-  background-color: #1a80c3;
-  border-color: #1a80c3;
-  border-radius: 10%;
-  box-shadow: none;
-  font-size: 10px;
-  padding: 6px 10px;
-  vertical-align: middle;
-  line-height: 1;
-}
 
-#selectFileButton {
-  background-color: #1a80c3;
-  border-color: #1a80c3;
-  border-radius: 10%;
-  box-shadow: none;
-  font-size: 10px;
-  padding: 6px 10px;
-  vertical-align: middle;
-  line-height: 1;
-}
-
-#selectedFileName {
-  background-color: rgb(57, 169, 207);
-  display: inline-block;
-}
-
-#feedBox {
-  width: 600px;
-  height: 300px;
-  border: 1px solid #525050;
-  background-color: #f0e7e7;
-  padding: 10px;
-  overflow: auto;
-}

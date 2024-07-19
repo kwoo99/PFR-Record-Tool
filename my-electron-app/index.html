@@ -18,6 +18,10 @@
     <h1>Welcome to the PFR Record Tool</h1>
     <p id="info"></p>
     <label
+      >Portal Name
+      <input id="portalname" type="text" />
+    </label>
+    <label
       >Integration Key
       <input id="intKey" type="text" />
     </label>
@@ -25,20 +29,21 @@
       >Integration Password
       <input id="intPass" type="password" />
     </label>
-    <label
-      >Save
-      <button id="intButton"></button>
+      <button id="configButton">Save</button>
     </label>
     <p id="save-confirmation"></p>
-    <label
-      >Select Customer CSV File
-      <button id="selectFileButton"></button>
-      <p id="selectedFileName"></p>
+    <label id="recordIDSubmit">
+      Enter Record ID
+      <input id="recordID"/>
+      <button id="submitButton">Submit</button>
     </label>
-   <div id="feedBox">
-    
-   </div>
-
+    <div id="fileSelection">
+      <button id="selectFileButton">Select Record CSV File</button>
+      <p id="selectedFile"></p>
+    </div>
+    <div>
+      <div id="feedBox"></div>
+  </div>
   </body>
   <script src="./renderer.js"></script>
 </html>
