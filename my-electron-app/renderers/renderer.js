@@ -17,12 +17,11 @@ const recordField = document.getElementById("recordID");
 const fileCount = document.getElementById("fileCount");
 const recordOptions = document.getElementById("recordOptions");
 
-// const viewRecordButton = document.createElement("button");
 const changeRecordButton = document.createElement("button");
 const deleteRecordButton = document.createElement("button");
 
 let hideTimer = null; // Track the timer ID for clearing the message
-let targetedRecordId
+let targetedRecordId;
 
 // Function to handle clearing the save confirmation message
 function clearSaveConfirmation() {
@@ -57,28 +56,19 @@ configButton.addEventListener("click", () => {
 // Open file selector when the button is pressed
 selectFileButton.addEventListener("click", () => {
   window.api.dialog.openFileSelect().then((file) => {
-    // const fileInstance = document.createElement("h5");
-    // fileInstance.id = "selectedFileName";
     if (file) {
       console.log(file);
       selectedFile.textContent = "";
       selectedFile.textContent = file.fileName;
-      // selectedFileName.appendChild(fileInstance);
-      // selectedFileName.textContent = file.fileName;
     } else {
       console.log("No file selected");
       selectedFile.textContent = "";
-      // Optionally handle case where no file is selected
     }
   });
 });
 
 window.api.comm.receive("record-Retrieval", (message) => {
   if (message) {
-    // viewRecordButton.id = "viewRecordButton";
-    // viewRecordButton.textContent = "View Record";
-    // recordOptions.appendChild(view_change_RecordButton);
-
     changeRecordButton.id = "changeRecordButton";
     changeRecordButton.textContent = "View/Change Record";
     recordOptions.appendChild(changeRecordButton);
@@ -86,23 +76,17 @@ window.api.comm.receive("record-Retrieval", (message) => {
     deleteRecordButton.id = "deleteRecordButton";
     deleteRecordButton.textContent = "Delete Record";
     recordOptions.appendChild(deleteRecordButton);
-
-  }
-  else {
+  } else {
     recordOptions.textContent = "";
   }
 });
-
-// viewRecordButton.addEventListener("click", () => {
-//   window.api.comm.invoke("view-Record-Button");
-// });
 
 changeRecordButton.addEventListener("click", async () => {
   window.api.comm.invoke("change-Record-Button", targetedRecordId);
 });
 
 deleteRecordButton.addEventListener("click", () => {
-  window.api.comm.invoke("delete-Record-Button", targetedRecordId );
+  window.api.comm.invoke("delete-Record-Button", targetedRecordId);
 });
 
 recordButton.addEventListener("click", () => {
@@ -113,7 +97,7 @@ recordButton.addEventListener("click", () => {
 
 // Receives record ids from index.js and then displays them into the feed box
 window.api.comm.receive("feed-Box", (message) => {
-  feed.insertAdjacentHTML('beforeend', `<div>${message}</div>`);
+  feed.insertAdjacentHTML("beforeend", `<div>${message}</div>`);
 });
 
 // Clears the feed box before every new file load instance when signal is received from index.js
@@ -121,20 +105,16 @@ window.api.comm.receive("feed-Box-Clear", () => {
   feed.textContent = "";
 });
 
-// window.api.comm.receive("error", () => {
-//   create
-// });
+document.getElementById("searchBar").addEventListener("input", function () {
+  const searchTerm = document.getElementById("searchBar").value.toLowerCase();
+  const feedBox = document.getElementById("feedBox");
+  const feedItems = feedBox.getElementsByTagName("div");
 
-document.getElementById('searchBar').addEventListener('input', function() {
-  const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-  const feedBox = document.getElementById('feedBox');
-  const feedItems = feedBox.getElementsByTagName('div');
-
-  Array.from(feedItems).forEach(item => {
+  Array.from(feedItems).forEach((item) => {
     if (item.textContent.toLowerCase().includes(searchTerm)) {
-      item.style.display = '';
+      item.style.display = "";
     } else {
-      item.style.display = 'none';
+      item.style.display = "none";
     }
   });
 });

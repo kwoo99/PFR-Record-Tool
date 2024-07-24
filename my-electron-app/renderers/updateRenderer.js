@@ -1,94 +1,17 @@
+const recordBody = document.getElementById("recordBody-label");
+const updateButton = document.getElementById("updateButton-label");
+const cancelButton = document.getElementById("cancelButton-label");
+
 window.onload = function () {
-  document.getElementById("recordBody-label").value = JSON.stringify(
-    {
-      AddressId: "PRIMARY5",
-      Address1: "1234 Street",
-      Address2: "",
-      Address3: "",
-      Name: "Nodus Technologies",
-      City: "Los Angeles",
-      State: "CA",
-      Zip: "12345",
-      Country: "USA",
-      AddressGuid: "862f9b0e-92cc-ec11-a36a-b0c09018d6d4",
-      isDefhgfhgdultBilling: true,
-      IsDefaultShipping: true,
-      Email: "",
-      Fax: "",
-      Phone: "",
-      AdddfgerteressId: "PRIMARY5",
-      Address1: "1234 Street",
-      Addrertess2: "",
-      Adderteress3: "",
-      Name: "Nodus Technologies",
-      City: "Los Angeles",
-      State: "CA",
-      Zip: "12345",
-      Coundfghtry: "USA",
-      AddressGuid: "862f9b0e-92cc-ec11-a36a-b0c09018d6d4",
-      isDeertfaultBilling: true,
-      IsDefaultShipping: true,
-      Email: "",
-      Faxghdf: "",
-      Phone: "",
-      AddressId: "PRIMARY5",
-      Address1: "1234 Street",
-      Addresfghs2: "",
-      Address3: "",
-      Name: "Nodus Technologies",
-      City: "Los Angeles",
-      State: "CA",
-      Zip: "12345",
-      Country: "USA",
-      AddressGuid: "862f9b0e-92cc-ec11-a36a-b0c09018d6d4",
-      isDefaultBilling: true,
-      IsDefaultShipping: true,
-      Email: "",
-      Fax: "",
-      Phone: "",
-      AddressId: "PRIMARY5",
-      Addressasda1: "1234 Street",
-      Addressgfhf2: "",
-      Addresssd3: "",
-      Name: "Nodus Technologies",
-      City: "Los Angeles",
-      State: "CA",
-      Zip: "12345",
-      Country: "USA",
-      AddressGuid: "862f9b0e-92cc-ec11-a36a-b0c09018d6d4",
-      isDefaultBilling: true,
-      IsDefaultShipping: true,
-      Email: "",
-      Fax: "",
-      Phone: "",
-      AddressId: "PRIMARY5",
-      Address1: "1234 Street",
-      Addresssad2: "",
-      Addressasd3: "",
-      Name: "Nodus Technologies",
-      City: "Los Angeles",
-      State: "CA",
-      Zip: "12345",
-      Country: "USA",
-      AddressGuid: "862f9b0e-92cc-ec11-a36a-b0c09018d6d4",
-      isDefaultBilling: true,
-      IsDefaultShipping: true,
-      Email: "",
-      Fax: "",
-      Phone: "",
-    },
-    null,
-    2
-  );
+  const recordDetails = window.api.comm.invoke("get-Record-Details");
+  recordBody.textContent = recordDetails;
+}
 
-  const updateButton = document.getElementById("updateButton-label");
-  const cancelButton = document.getElementById("cancelButton-label");
+updateButton.addEventListener("click", () => {
+  window.api.comm.invoke("confirm-Update");
+});
 
-  updateButton.addEventListener("click", () => {
-    window.api.comm.invoke("confirmed");
-  });
+cancelButton.addEventListener("click", () => {
+  window.api.comm.invoke("update-Cancel");
+});
 
-  cancelButton.addEventListener("click", () => {
-    window.api.comm.invoke("canceled");
-  });
-};

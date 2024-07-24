@@ -1,11 +1,9 @@
-/* General styles */
 body {
   color: #656565;
   background-color: #F4F4F4;
   font-family: 'Segoe UI', Helvetica, Garuda, Arial, sans-serif;
 }
 
-/* Button styles */
 button {
   background-color: #1a80c3;
   color: white;
@@ -21,15 +19,6 @@ button:active {
   background-color: #4c81cb;
 }
 
-/* Specific button IDs */
-/* #configButton,
-#deleteRecordButton,
-#changeRecordButton,
-#viewRecordButton,
-#submitButton { */
-  /* Uses the general button styles */
-
-
 #recordIDSubmit,
 #fileSelection {
   display: block;
@@ -40,7 +29,6 @@ button:active {
   min-height: 40px;
 }
 
-/* Feed box styles */
 #feedBox {
   background-color: #dfdede;
   border: 1px solid #dfdede;
@@ -53,12 +41,10 @@ button:active {
   position: fixed;
 }
 
-/* Focus styles for inputs */
 input:focus {
   outline-color: #1a80c3;
 }
 
-/* Selected file styles */
 #selectedFile {
   display: inline-block;
   font-family: sans-serif;
@@ -75,7 +61,6 @@ input:focus {
   min-height: 20px;
 }
 
-/* Save confirmation styles */
 #save-confirmation {
   color: rgba(29, 178, 78, 0.842);
   font-family: sans-serif;
@@ -85,7 +70,6 @@ input:focus {
 
 #searchBarContainer {
   display: flex;
-  /* justify-content: center; */
   margin-bottom: 10px;
 }
 
@@ -93,7 +77,6 @@ input:focus {
   width: 200px;
   height: 3px;
   padding: 10px;
-  /* border: none; */
   border-radius: 5px;
   border: solid 1px;
   margin-right: 10px;
@@ -104,6 +87,5 @@ input:focus {
   justify-content: center;
   margin: 0;
   align-items: center;
-  /* padding: 0 10px; */
   font-size: 15px;
 }

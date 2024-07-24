@@ -12,7 +12,6 @@ button {
   color: white;
   border: 1px solid #1a80c3;
   border-radius: 5px;
-  /* display: block; */
   margin: auto;
 }
 
@@ -28,7 +27,6 @@ button:active {
     display: block;
     margin-right: auto;
     margin-left: auto;
-    /* text-align: center; */
 }
 
 .wrapper {

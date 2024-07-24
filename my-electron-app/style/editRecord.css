@@ -3,7 +3,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
   margin: 0;
   color: #656565;
   background-color: #f4f4f4;
@@ -51,5 +50,4 @@ button:active {
   margin-right: auto;
   margin-left: auto;
   margin: 10px;
-  /* text-align: center; */
 }

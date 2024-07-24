@@ -16,7 +16,7 @@ const EVENTS = {
   FEED_BOX_CLEAR: "feed-Box-Clear",
   FEED_BOX: "feed-Box",
   SELECTED_FILE_COUNT: "record-Count",
-  CUSTOMER_INFO: "customer-Info"
+  RECORD_INFO: "get-Record-Details"
 };
 
 // Variables to hold state
@@ -91,6 +91,84 @@ function createPopupWindow(html, mode, title) {
   });
 }
 
+function createConfirmationWindow(html) {
+
+  const parentWindow = BrowserWindow.getFocusedWindow();
+
+  confirmationWindow = new BrowserWindow({
+    width: 400,
+    height: 150,
+    parent: parentWindow,
+    modal: true,
+    show: false,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
+
+  confirmationWindow.loadFile(html);
+
+  confirmationWindow.webContents.on('did-finish-load', () => {
+    confirmationWindow.webContents.executeJavaScript(`
+      new Promise((resolve) => {
+        const wrapper = document.querySelector('.wrapper');
+        const width = Math.max(wrapper.scrollWidth, 400); // Minimum width
+        const height = Math.max(wrapper.scrollHeight, 150); // Minimum height
+        resolve({ width, height });
+      });
+    `).then(({ width, height }) => {
+      confirmationWindow.setContentSize(width, height);
+      confirmationWindow.center(); // Optional: to re-center the window after resizing
+      confirmationWindow.show(); // Show the window after resizing
+    });
+  });
+
+  confirmationWindow.on('closed', () => {
+    confirmationWindow = null;
+  });
+}
+
+function createResponsenWindow(html, mode, title) {
+  const parentWindow = BrowserWindow.getFocusedWindow();
+
+  responseWindow = new BrowserWindow({
+    width: 400,
+    height: 150,
+    parent: parentWindow,
+    modal: false,
+    show: false,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
+
+  responseWindow.loadFile(html);
+
+  responseWindow.webContents.on('did-finish-load', () => {
+    responseWindow.webContents.executeJavaScript(`
+      new Promise((resolve) => {
+        const wrapper = document.querySelector('.wrapper');
+        const width = Math.max(wrapper.scrollWidth, 400); // Minimum width
+        const height = Math.max(wrapper.scrollHeight, 150); // Minimum height
+        resolve({ width, height });
+      });
+    `).then(({ width, height }) => {
+      responseWindow.setContentSize(width, height);
+      responseWindow.center(); // Optional: to re-center the window after resizing
+      responseWindow.show(); // Show the window after resizing
+    });
+  });
+
+  responseWindow.on('closed', () => {
+    responseWindow = null;
+  });
+}
+
+
 
 // Load data from a CSV file
 async function loadData(csvFile) {
@@ -127,7 +205,7 @@ function setupIPCHandlers() {
 
   ipcMain.handle(EVENTS.SET_RECORD, (_event, value) => { 
     submittedRecord = value;
-    if(value != '') { // ADD LOGIC TO CHECK WITH API CALL IF RECORD EXISTS
+    if(value != '') { // REPLACE '' LOGIC TO CHECK WITH API CALL IF RECORD EXISTS
       console.log("Record Submitted:", submittedRecord);
       mainWindow.webContents.send(EVENTS.RECORD_RETRIEVE, true);
     } 
@@ -136,22 +214,16 @@ function setupIPCHandlers() {
     }
   });
 
-  // ipcMain.handle(EVENTS.VIEW_RECORD, async () => {
-  //   console.log("VIEW RECORD");
-  // });
 
   ipcMain.handle(EVENTS.CHANGE_RECORD, async (_event, value) => {
-    console.log("CHANGE RECORD");
     const htmlPath = path.join(__dirname, "./html/editRecord.html");
     const windowTitle = "VIEW/UPDATE " + value;
     createPopupWindow(htmlPath, false, windowTitle);
   });
 
   ipcMain.handle(EVENTS.DELETE_RECORD, async (_event, value) => {
-    console.log("DELETE RECORD");
     const htmlPath = path.join(__dirname, "./html/deleteConfirm.html");
-    const windowTitle = "DELETE " + value;
-    createPopupWindow(htmlPath, true, windowTitle);
+    createConfirmationWindow(htmlPath);
   });
 
   ipcMain.handle(EVENTS.OPEN_FILE_DIALOG, async () => {
@@ -170,21 +242,40 @@ function setupIPCHandlers() {
     }
   });
 
-  ipcMain.handle("confirmed", () => {
-    // ADD API CALL TO DELETE RECORD
-    submittedRecord = '';
-    popupWindow.close()
-  })
-
-  ipcMain.handle("canceled", () => {
-    popupWindow.close();
+  ipcMain.handle("confirm-Update", () => {
+    console.log("CONFIRM UPDATE.");
+    const htmlPath = path.join(__dirname, "./html/updateConfirm.html");
+    createConfirmationWindow(htmlPath)
   });
 
-  // ipcMain.handle(EVENTS.CUSTOMER_INFO, async () => { //CREATE API CALL TO GET CUSTOMER INFO
-  //   // const response = 
-  //   const customerData = [response.]
-  //   return customerData;
-  // });
+  ipcMain.handle("update-Confirmed", () => {
+    // ADD API CALL TO UPDATE RECORD USING submittedRecord
+    console.log("UPDATE SUCCESSFUL.");
+    submittedRecord = '';
+    popupWindow.close()
+  });
+
+  ipcMain.handle("delete-Confirmed", () => {
+    // ADD API CALL TO DELETE RECORD USING submittedRecord
+    console.log("DELETE SUCCESSFUL.");
+    submittedRecord = '';
+    confirmationWindow.close()
+  });
+
+  ipcMain.handle("update-Cancel", () => {
+    console.log("UPDATE CANCELED.");
+    confirmationWindow.close();
+  });
+
+  ipcMain.handle("delete-Cancel", () => {
+    console.log("DELETE CANCELED.");
+    confirmationWindow.close();
+  })
+
+  ipcMain.handle(EVENTS.CUSTOMER_INFO, async () => { 
+    const customerData = ''; // REPLACE '' WITH API CALL TO GET CUSTOMER INFO
+    return customerData;
+  });
 
 }
 
