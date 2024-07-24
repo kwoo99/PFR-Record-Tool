@@ -1,0 +1,109 @@
+/* General styles */
+body {
+  color: #656565;
+  background-color: #F4F4F4;
+  font-family: 'Segoe UI', Helvetica, Garuda, Arial, sans-serif;
+}
+
+/* Button styles */
+button {
+  background-color: #1a80c3;
+  color: white;
+  border: 1px solid #1a80c3;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #4694c8;
+}
+
+button:active {
+  background-color: #4c81cb;
+}
+
+/* Specific button IDs */
+/* #configButton,
+#deleteRecordButton,
+#changeRecordButton,
+#viewRecordButton,
+#submitButton { */
+  /* Uses the general button styles */
+
+
+#recordIDSubmit,
+#fileSelection {
+  display: block;
+  min-height: 50px;
+}
+
+#fileSelection {
+  min-height: 40px;
+}
+
+/* Feed box styles */
+#feedBox {
+  background-color: #dfdede;
+  border: 1px solid #dfdede;
+  border-radius: 5px;
+  font-family: sans-serif;
+  height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  width: 400px;
+  position: fixed;
+}
+
+/* Focus styles for inputs */
+input:focus {
+  outline-color: #1a80c3;
+}
+
+/* Selected file styles */
+#selectedFile {
+  display: inline-block;
+  font-family: sans-serif;
+}
+
+#selectedFileLabel {
+  display: inline-block;
+  font-family: sans-serif;
+  min-height: 50px;
+}
+
+#selectedFileButton {
+  display: block;
+  min-height: 20px;
+}
+
+/* Save confirmation styles */
+#save-confirmation {
+  color: rgba(29, 178, 78, 0.842);
+  font-family: sans-serif;
+  min-height: 20px;
+}
+
+
+#searchBarContainer {
+  display: flex;
+  /* justify-content: center; */
+  margin-bottom: 10px;
+}
+
+#searchBar {
+  width: 200px;
+  height: 3px;
+  padding: 10px;
+  /* border: none; */
+  border-radius: 5px;
+  border: solid 1px;
+  margin-right: 10px;
+}
+
+#fileCount {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  align-items: center;
+  /* padding: 0 10px; */
+  font-size: 15px;
+}

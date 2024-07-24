@@ -1,6 +1,9 @@
 import {readCSVFile} from './csvParser.cjs';
 
 //Define variables for Receivables portal and credentials
+var portalName = "Gorilla";
+var integrationKey = "Gorilla_JMl0qPu";
+var integrationPass = "%Hr9<US";
 var tokenInfo;
 // host url for production
 var hostURLProd = `https://www.payfabric.com`;
@@ -75,7 +78,7 @@ async function getCustomers(customers) {
 // authentication
 
 // function to delete customer
-async function deleteCustomers(customers, hostURL, portalName) {
+async function deleteCustomers(customers) {
   var deleteCount = 0;
   for (let i = 0; i < customers.length; i++){
     var url = hostURL + "/receivables/sync/api/" + portalName + `/api/customers?id=${customers[i]}`;

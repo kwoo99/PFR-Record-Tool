@@ -1,6 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "fast-csv": "^5.0.1"
-  }
-}

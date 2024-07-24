@@ -1,0 +1,55 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  margin: 0;
+  color: #656565;
+  background-color: #f4f4f4;
+  font-family: "Segoe UI", Helvetica, Garuda, Arial, sans-serif;
+  text-align: center;
+}
+
+#wrapper {
+  display: block;
+  margin: 30px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 500px;
+  overflow-y: auto;
+  width: 800px;
+  background-color: #dfdede;
+  color: #656565;
+  display: block;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 80px;
+  height: 30px;
+  background-color: #1a80c3;
+  color: white;
+  border: 1px solid #1a80c3;
+  border-radius: 5px;
+  margin: auto;
+}
+
+button:hover {
+  background-color: #4694c8;
+}
+
+button:active {
+  background-color: #4c81cb;
+}
+
+#choice-label {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin: 10px;
+  /* text-align: center; */
+}

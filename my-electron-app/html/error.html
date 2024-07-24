@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="../style/popup.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>ERROR</title>
+  </head>
+  <body>
+    <h3 id="errorDetails-label"></h3>
+        <button id="confirmButton-label">OK</button>
+  </body>
+  <script src="../renderers/confirmRenderer.js"></script>
+</html>

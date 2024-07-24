@@ -4,7 +4,6 @@ var csv = require("@fast-csv/parse");
 function readCSVFile(csvFile, type) {
     return new Promise((resolve, reject) => {
         var recordIDs = [];
-        console.log(type);
         fs.createReadStream(csvFile)
             .pipe(csv.parse({ headers: true }))
             .on("error", (error) => reject(error))
@@ -27,7 +26,6 @@ function getCSVType(csvFile) {
           csvStream.pause();
           stream.removeAllListeners('data');
           resolve(rowType);
-          // console.log(`ROW=${JSON.stringify(row[0])}`);
         })
         .on("end", () => {
             if (rowType === undefined) {
