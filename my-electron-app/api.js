@@ -1,9 +1,13 @@
-import {readCSVFile} from './csvParser.cjs';
+// import {readCSVFile} from './csvParser.cjs';
 
 //Define variables for Receivables portal and credentials
-var portalName = "Gorilla";
-var integrationKey = "Gorilla_JMl0qPu";
-var integrationPass = "%Hr9<US";
+// var portalName = "Gorilla";
+// var integrationKey = "Gorilla_JMl0qPu";
+// var integrationPass = "%Hr9<US";
+
+var portalName = "";
+var integrationKey = "";
+var integrationPass = "";
 var tokenInfo;
 // host url for production
 var hostURLProd = `https://www.payfabric.com`;
@@ -11,16 +15,27 @@ var hostURLProd = `https://www.payfabric.com`;
 var hostURLSan = `https://sandbox.payfabric.com`;
 
 // Determine host url
-var isTest = true;
-var hostURL;
+// var isTest = true;
+let hostURL;
+// let hostURL = hostURLSan;
 
-if (isTest) {
-  hostURL = hostURLSan;
-} else {
-  hostURL = hostURLProd;
+function config(mode, portal, key, pass) {
+  if (mode) {
+    hostURL = hostURLSan;
+  } else {
+    hostURL = hostURLProd;
+  }
+
+  portalName = portal;
+  integrationKey = key;
+  integrationPass = pass;
+
+  console.log("Is Sandbox: " + mode);
+  console.log(portalName);
+  console.log(integrationKey);
+  console.log(integrationPass);
+
 }
-
-var customerList = 'Customers.csv';
 
 // function to grab invoices
 function getInvoices() {
@@ -67,6 +82,29 @@ async function getCustomers(customers) {
     }
   }
   return customerList;
+}
+
+async function getRecord(customer, recordType) {
+    console.log("Customer confirmed: " + customer);
+    let customerInfo;
+    tokenInfo = await generateToken();
+    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?id=${customer}`;
+    var request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${tokenInfo}`,
+      },
+    };
+    try {
+      var response = await fetch(url, request);
+      var json = await response.json();
+      customerInfo = await json;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  return JSON.stringify(customerInfo, null, 2);
 }
 
 // function to delete invoices
@@ -132,11 +170,15 @@ async function generateToken() {
   }
 }
 
-async function main() {
-  var customers = await readCSVFile(customerList);
-  tokenInfo = await generateToken();
-  deleteCustomers(customers)
-  console.log(customers);
-}
+module.exports = { config, getRecord };
 
-main();
+// async function main() {
+//   // var customers = await readCSVFile(customerList);
+//   tokenInfo = await generateToken();
+//   // deleteCustomers(customers)
+//   var customer = await getCustomer("AARONFIT0001");
+//   console.log(customer);
+
+// }
+
+// main();

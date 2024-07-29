@@ -35,7 +35,12 @@
     <label id="recordIDSubmit">
       Enter Record ID
       <input id="recordID"/>
-      <button id="submitButton">Submit</button>
+      <button id="recordSubmit">Submit</button>
+      <select id="recordType">
+        <option value="customers">Customer</option>
+        <option value="invoices">Invoice</option>
+        <option value="payments">Payment</option>
+        </select>
       <div id="recordOptions"></div>
     </label>
     <div id="fileSelection">
@@ -45,10 +50,13 @@
     <div>
       <div id="searchBarContainer">
         <input id="searchBar" type="text" placeholder="Search for Record..." />
-        <p id="fileCount"></p>
+        <p id="filesDisplayed"></p>
+        <p id="fileCount" value="0"></p>
       </div>
-      <div id="feedBox"></div>
-  </div>
-  </body>
+    </div>
+    <div id="feedBox">
+    </div>
+    <p id="deleteRecordOptions"></p>
+  </body> 
   <script src="../renderers/renderer.js"></script>
 </html>

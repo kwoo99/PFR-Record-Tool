@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="../style/popup.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title></title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h3 id="deleteConfirm-label">
+        Are you sure you want to delete the record(s)?
+      </h3>
+      <div id="choice-label">
+        <button id="confirmButton-label">Confirm</button>
+        <button id="cancelButton-label">Cancel</button>
+      </div>
+    </div>
+  </body>
+  <script src="../renderers/deleteAllRenderer.js"></script>
+</html>

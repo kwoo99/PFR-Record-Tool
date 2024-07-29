@@ -1,39 +1,54 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const { readCSVFile, getCSVType } = require("./csvParser.cjs");
-// const {} = require("./api.js"); //import api functions 
+const { config, getRecord } = require("./api.js");
 const path = require("path");
 
 // Constants for event names
 const EVENTS = {
-  SET_PORTAL: "portal-Name",
-  SET_KEY: "integration-Key",
-  SET_PASS: "integration-Pass",
-  SET_RECORD: "record",
-  CHANGE_RECORD: "change-Record-Button",
-  DELETE_RECORD: "delete-Record-Button",
-  RECORD_RETRIEVE: "record-Retrieval",
-  OPEN_FILE_DIALOG: "open-File-Dialog",
-  FEED_BOX_CLEAR: "feed-Box-Clear",
-  FEED_BOX: "feed-Box",
-  SELECTED_FILE_COUNT: "record-Count",
-  RECORD_INFO: "get-Record-Details"
+  SET_PORTAL: "PORTAL-NAME",
+  SET_KEY: "INTEGRATION-KEY",
+  SET_PASS: "INTEGRATION-PASS",
+  SET_RECORD: "RECORD",
+  CHANGE_RECORD: "CHANGE-RECORD-BUTTON",
+  DELETE_RECORD: "DELETE-RECORD-BUTTON",
+  RECORD_RETRIEVE: "RECORD-RETRIEVAL",
+  OPEN_FILE_DIALOG: "OPEN-FILE-DIALOG",
+  FEED_BOX_CLEAR: "FEED-BOX-CLEAR",
+  FEED_BOX: "FEED-BOX",
+  SELECTED_FILE_COUNT: "RECORD-COUNT",
+  RECORD_INFO: "GET-RECORD-DETAILS",
+  CONFIRM_UPDATE: "CONFIRM-UPDATE",
+  UPDATE_CONFIRM: "UPDATE-CONFIRM",
+  DELETE_CONFIRM: "DELETE-CONFIRM",
+  UPDATE_CANCEL: "UPDATE-CANCEL",
+  CONFIRMATION_CANCEL: "CONFIRMATION-CANCEL",
+  DELETE_ALL: "DELETE-ALL",
+  DELETE_ALL_CONFIRM: "DELETE-ALL-CONFIRM",
+  DELETE_DISPLAYED: "DELETE-DISPLAYED",
+  DELETE_DISPLAYED_CONFIRM: "DELETE-DISPLAYED-CONFIRM",
 };
 
 // Variables to hold state
 let mainWindow;
 let popupWindow;
+let confirmationWindow;
+let portalName = "";
+let integrationKey = "";
+let integrationPass = "";
+let fileName = "";
+let submittedRecord = "";
+let submittedRecordType = "";
+let recordList = [];
+let displayedRecords = [];
 
-let portalName = '';
-let integrationKey = '';
-let integrationPass = '';
-let fileName = '';
-let submittedRecord = '';
+// Initial configuration
+config(true, portalName, integrationKey, integrationPass);
 
 // Create the main window
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    width: 840,
-    height: 695,
+    width: 880,
+    height: 700,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -43,12 +58,12 @@ function createMainWindow() {
 
   mainWindow.loadFile("./html/index.html");
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     mainWindow = null;
   });
 }
 
-// Create the popup window
+// Create a popup window
 function createPopupWindow(html, mode, title) {
   if (popupWindow) {
     popupWindow.focus();
@@ -71,28 +86,30 @@ function createPopupWindow(html, mode, title) {
   popupWindow.loadFile(html);
   popupWindow.setTitle(title);
 
-  popupWindow.webContents.on('did-finish-load', () => {
-    popupWindow.webContents.executeJavaScript(`
-      new Promise((resolve) => {
-        const wrapper = document.querySelector('.wrapper');
-        const width = Math.max(wrapper.scrollWidth, 400); // Minimum width
-        const height = Math.max(wrapper.scrollHeight, 150); // Minimum height
-        resolve({ width, height });
+  popupWindow.webContents.on("did-finish-load", () => {
+    popupWindow.webContents
+      .executeJavaScript(`
+        new Promise((resolve) => {
+          const wrapper = document.querySelector('.wrapper');
+          const width = Math.max(wrapper.scrollWidth, 400);
+          const height = Math.max(wrapper.scrollHeight, 150);
+          resolve({ width, height });
+        });
+      `)
+      .then(({ width, height }) => {
+        popupWindow.setContentSize(width, height);
+        popupWindow.center();
+        popupWindow.show();
       });
-    `).then(({ width, height }) => {
-      popupWindow.setContentSize(width, height);
-      popupWindow.center(); // Optional: to re-center the window after resizing
-      popupWindow.show(); // Show the window after resizing
-    });
   });
 
-  popupWindow.on('closed', () => {
+  popupWindow.on("closed", () => {
     popupWindow = null;
   });
 }
 
+// Create a confirmation window
 function createConfirmationWindow(html) {
-
   const parentWindow = BrowserWindow.getFocusedWindow();
 
   confirmationWindow = new BrowserWindow({
@@ -110,30 +127,33 @@ function createConfirmationWindow(html) {
 
   confirmationWindow.loadFile(html);
 
-  confirmationWindow.webContents.on('did-finish-load', () => {
-    confirmationWindow.webContents.executeJavaScript(`
-      new Promise((resolve) => {
-        const wrapper = document.querySelector('.wrapper');
-        const width = Math.max(wrapper.scrollWidth, 400); // Minimum width
-        const height = Math.max(wrapper.scrollHeight, 150); // Minimum height
-        resolve({ width, height });
+  confirmationWindow.webContents.on("did-finish-load", () => {
+    confirmationWindow.webContents
+      .executeJavaScript(`
+        new Promise((resolve) => {
+          const wrapper = document.querySelector('.wrapper');
+          const width = Math.max(wrapper.scrollWidth, 400);
+          const height = Math.max(wrapper.scrollHeight, 150);
+          resolve({ width, height });
+        });
+      `)
+      .then(({ width, height }) => {
+        confirmationWindow.setContentSize(width, height);
+        confirmationWindow.center();
+        confirmationWindow.show();
       });
-    `).then(({ width, height }) => {
-      confirmationWindow.setContentSize(width, height);
-      confirmationWindow.center(); // Optional: to re-center the window after resizing
-      confirmationWindow.show(); // Show the window after resizing
-    });
   });
 
-  confirmationWindow.on('closed', () => {
+  confirmationWindow.on("closed", () => {
     confirmationWindow = null;
   });
 }
 
-function createResponsenWindow(html, mode, title) {
+// Create a response window
+function createResponseWindow(html, mode, title) {
   const parentWindow = BrowserWindow.getFocusedWindow();
 
-  responseWindow = new BrowserWindow({
+  const responseWindow = new BrowserWindow({
     width: 400,
     height: 150,
     parent: parentWindow,
@@ -148,39 +168,39 @@ function createResponsenWindow(html, mode, title) {
 
   responseWindow.loadFile(html);
 
-  responseWindow.webContents.on('did-finish-load', () => {
-    responseWindow.webContents.executeJavaScript(`
-      new Promise((resolve) => {
-        const wrapper = document.querySelector('.wrapper');
-        const width = Math.max(wrapper.scrollWidth, 400); // Minimum width
-        const height = Math.max(wrapper.scrollHeight, 150); // Minimum height
-        resolve({ width, height });
+  responseWindow.webContents.on("did-finish-load", () => {
+    responseWindow.webContents
+      .executeJavaScript(`
+        new Promise((resolve) => {
+          const wrapper = document.querySelector('.wrapper');
+          const width = Math.max(wrapper.scrollWidth, 400);
+          const height = Math.max(wrapper.scrollHeight, 150);
+          resolve({ width, height });
+        });
+      `)
+      .then(({ width, height }) => {
+        responseWindow.setContentSize(width, height);
+        responseWindow.center();
+        responseWindow.show();
       });
-    `).then(({ width, height }) => {
-      responseWindow.setContentSize(width, height);
-      responseWindow.center(); // Optional: to re-center the window after resizing
-      responseWindow.show(); // Show the window after resizing
-    });
   });
 
-  responseWindow.on('closed', () => {
+  responseWindow.on("closed", () => {
     responseWindow = null;
   });
 }
-
-
 
 // Load data from a CSV file
 async function loadData(csvFile) {
   try {
     const recordType = await getCSVType(csvFile);
-    const recordList = await readCSVFile(csvFile, recordType);
+    recordList = await readCSVFile(csvFile, recordType);
     let recordCount = 0;
     for (const record of recordList) {
       mainWindow.webContents.send(EVENTS.FEED_BOX, record);
       recordCount++;
     }
-    mainWindow.webContents.send(EVENTS.SELECTED_FILE_COUNT, `${recordCount} records loaded.`);
+    mainWindow.webContents.send(EVENTS.SELECTED_FILE_COUNT, recordCount);
   } catch (error) {
     console.error("Failed to load data:", error);
   }
@@ -191,38 +211,41 @@ function setupIPCHandlers() {
   ipcMain.handle(EVENTS.SET_PORTAL, (_event, value) => {
     portalName = value;
     console.log("Portal Name set to:", portalName);
+    config(true, portalName, integrationKey, integrationPass);
   });
 
   ipcMain.handle(EVENTS.SET_KEY, (_event, value) => {
     integrationKey = value;
     console.log("Integration key set to:", integrationKey);
+    config(true, portalName, integrationKey, integrationPass);
   });
 
   ipcMain.handle(EVENTS.SET_PASS, (_event, value) => {
     integrationPass = value;
     console.log("Integration password set to:", integrationPass);
+    config(true, portalName, integrationKey, integrationPass);
   });
 
-  ipcMain.handle(EVENTS.SET_RECORD, (_event, value) => { 
-    submittedRecord = value;
-    if(value != '') { // REPLACE '' LOGIC TO CHECK WITH API CALL IF RECORD EXISTS
+  ipcMain.handle(EVENTS.SET_RECORD, (_event, record) => {
+    submittedRecord = record.targetId;
+    submittedRecordType = record.targetType;
+    if (record.targetId != "") {
       console.log("Record Submitted:", submittedRecord);
+      console.log("Record Type:", submittedRecordType);
       mainWindow.webContents.send(EVENTS.RECORD_RETRIEVE, true);
-    } 
-    else {
+    } else {
       mainWindow.webContents.send(EVENTS.RECORD_RETRIEVE, false);
     }
   });
 
-
   ipcMain.handle(EVENTS.CHANGE_RECORD, async (_event, value) => {
-    const htmlPath = path.join(__dirname, "./html/editRecord.html");
+    const htmlPath = path.join(__dirname, "./html/updateRecord.html");
     const windowTitle = "VIEW/UPDATE " + value;
     createPopupWindow(htmlPath, false, windowTitle);
   });
 
-  ipcMain.handle(EVENTS.DELETE_RECORD, async (_event, value) => {
-    const htmlPath = path.join(__dirname, "./html/deleteConfirm.html");
+  ipcMain.handle(EVENTS.DELETE_RECORD, (_event) => {
+    const htmlPath = path.join(__dirname, "./html/delete.html");
     createConfirmationWindow(htmlPath);
   });
 
@@ -237,62 +260,80 @@ function setupIPCHandlers() {
       return fileName;
     } else {
       mainWindow.webContents.send(EVENTS.FEED_BOX_CLEAR);
-      mainWindow.webContents.send(EVENTS.SELECTED_FILE_COUNT, '');
+      mainWindow.webContents.send(EVENTS.SELECTED_FILE_COUNT, "");
       return null;
     }
   });
 
-  ipcMain.handle("confirm-Update", () => {
+  ipcMain.handle(EVENTS.CONFIRM_UPDATE, () => {
     console.log("CONFIRM UPDATE.");
     const htmlPath = path.join(__dirname, "./html/updateConfirm.html");
-    createConfirmationWindow(htmlPath)
+    createConfirmationWindow(htmlPath);
   });
 
-  ipcMain.handle("update-Confirmed", () => {
-    // ADD API CALL TO UPDATE RECORD USING submittedRecord
-    console.log("UPDATE SUCCESSFUL.");
-    submittedRecord = '';
-    popupWindow.close()
+  ipcMain.handle(EVENTS.UPDATE_CONFIRM, () => {
+    console.log("UPDATE RECORD."); // CREATE API CALL TO UPDATE RECORD USING submittedRecord, submittedRecordType VARIABLES 
+    submittedRecord = "";
+    popupWindow.close();
   });
 
-  ipcMain.handle("delete-Confirmed", () => {
-    // ADD API CALL TO DELETE RECORD USING submittedRecord
-    console.log("DELETE SUCCESSFUL.");
-    submittedRecord = '';
-    confirmationWindow.close()
+  ipcMain.handle(EVENTS.DELETE_CONFIRM, () => {
+    console.log("DELETE RECORD."); // CREATE API CALL TO DELETE RECORD USING submittedRecord, submittedRecordType VARIABLES 
+    submittedRecord = "";
+    confirmationWindow.close();
   });
 
-  ipcMain.handle("update-Cancel", () => {
+  ipcMain.handle(EVENTS.UPDATE_CANCEL, () => {
     console.log("UPDATE CANCELED.");
+    popupWindow.close();
+  });
+
+  ipcMain.handle(EVENTS.CONFIRMATION_CANCEL, () => {
+    console.log("CONFIRMATION CANCELED.");
     confirmationWindow.close();
   });
 
-  ipcMain.handle("delete-Cancel", () => {
-    console.log("DELETE CANCELED.");
-    confirmationWindow.close();
-  })
-
-  ipcMain.handle(EVENTS.CUSTOMER_INFO, async () => { 
-    const customerData = ''; // REPLACE '' WITH API CALL TO GET CUSTOMER INFO
-    return customerData;
+  ipcMain.handle(EVENTS.RECORD_INFO, async () => {
+    const recordData = await getRecord(submittedRecord, submittedRecordType);
+    return recordData;
   });
 
+  ipcMain.handle(EVENTS.DELETE_ALL_CONFIRM, () => {
+    console.log(recordList); // CREATE API CALL TO DELETE ALL RECORDS USING recordList ARRAY
+    confirmationWindow.close();
+  });
+
+  ipcMain.handle(EVENTS.DELETE_DISPLAYED_CONFIRM, () => {
+    console.log(displayedRecords); // CREATE API CALL TO DELETE DISPLAYED RECORDS USING displayedRecords ARRAY
+    confirmationWindow.close();
+  });
+
+  ipcMain.handle(EVENTS.DELETE_ALL, () => {
+    const htmlPath = path.join(__dirname, "./html/deleteAll.html");
+    createConfirmationWindow(htmlPath);
+  });
+
+  ipcMain.handle(EVENTS.DELETE_DISPLAYED, (_event, Records) => {
+    displayedRecords = Records;
+    const htmlPath = path.join(__dirname, "./html/deleteDisplayed.html");
+    createConfirmationWindow(htmlPath);
+  });
 }
 
 // App event listeners
-app.on('ready', () => {
+app.on("ready", () => {
   createMainWindow();
   setupIPCHandlers();
 });
 
-app.on('activate', () => {
+app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
   }
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });

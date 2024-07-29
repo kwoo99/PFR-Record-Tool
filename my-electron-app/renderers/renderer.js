@@ -1,9 +1,8 @@
+// Displaying application versions
 const information = document.getElementById("info");
 information.innerText = `This app is using Chrome (v${api.versions.chrome()}), Node.js (v${api.versions.node()}), and Electron (v${api.versions.electron()})`;
 
-// Objects defined to link HTML ids with defined functionality below
-
-//Main Window Objects
+// Main Window Objects
 const portalField = document.getElementById("portalName");
 const keyField = document.getElementById("intKey");
 const passField = document.getElementById("intPass");
@@ -12,16 +11,52 @@ const saveconfirm = document.getElementById("save-confirmation");
 const selectFileButton = document.getElementById("selectFileButton");
 const selectedFileName = document.getElementById("selectedFile");
 const feed = document.getElementById("feedBox");
-const recordButton = document.getElementById("submitButton");
+const recordButton = document.getElementById("recordSubmit");
 const recordField = document.getElementById("recordID");
 const fileCount = document.getElementById("fileCount");
+const filesDisplayed = document.getElementById("filesDisplayed");
 const recordOptions = document.getElementById("recordOptions");
+const searchBar = document.getElementById("searchBar");
+const recordType = document.getElementById("recordType");
+const deletionOptions = document.getElementById("deleteRecordOptions");
 
+// Buttons
 const changeRecordButton = document.createElement("button");
 const deleteRecordButton = document.createElement("button");
+const deleteAllRecords = document.createElement("button");
+const deleteDisplayed = document.createElement("button");
 
-let hideTimer = null; // Track the timer ID for clearing the message
-let targetedRecordId;
+// Variables
+let hideTimer = null;
+let targetId;
+let targetType = "customers";
+let displayedRecords = [];
+let allRecords = [];
+
+// Event names
+const EVENTS = {
+  SET_PORTAL: "PORTAL-NAME",
+  SET_KEY: "INTEGRATION-KEY",
+  SET_PASS: "INTEGRATION-PASS",
+  SET_RECORD: "RECORD",
+  CHANGE_RECORD: "CHANGE-RECORD-BUTTON",
+  DELETE_RECORD: "DELETE-RECORD-BUTTON",
+  RECORD_RETRIEVE: "RECORD-RETRIEVAL",
+  OPEN_FILE_DIALOG: "OPEN-FILE-DIALOG",
+  FEED_BOX_CLEAR: "FEED-BOX-CLEAR",
+  FEED_BOX: "FEED-BOX",
+  SELECTED_FILE_COUNT: "RECORD-COUNT",
+  RECORD_INFO: "GET-RECORD-DETAILS",
+  CONFIRM_UPDATE: "CONFIRM-UPDATE",
+  UPDATE_CONFIRM: "UPDATE-CONFIRM",
+  DELETE_CONFIRM: "DELETE-CONFIRM",
+  UPDATE_CANCEL: "UPDATE-CANCEL",
+  CONFIRMATION_CANCEL: "CONFIRMATION-CANCEL",
+  DELETE_ALL: "DELETE-ALL",
+  DELETE_ALL_CONFIRM: "DELETE-ALL-CONFIRM",
+  DELETE_DISPLAYED: "DELETE-DISPLAYED",
+  DELETE_DISPLAYED_CONFIRM: "DELETE-DISPLAYED-CONFIRM",
+};
 
 // Function to handle clearing the save confirmation message
 function clearSaveConfirmation() {
@@ -31,35 +66,31 @@ function clearSaveConfirmation() {
 // Function to show the save confirmation message and start the hide timer
 function showSaveConfirmation(message) {
   saveconfirm.textContent = message;
-
-  // Clear any existing hide timer
-  clearTimeout(hideTimer);
-
-  // Start the hide timer after 3 seconds
-  hideTimer = setTimeout(() => {
-    clearSaveConfirmation();
-  }, 3000);
+  clearTimeout(hideTimer); // Clear any existing hide timer
+  hideTimer = setTimeout(clearSaveConfirmation, 3000); // Start the hide timer after 3 seconds
 }
 
-// All actions taken when the Save button is pressed
+// Save button click handler
 configButton.addEventListener("click", () => {
   const portalValue = portalField.value;
   const keyValue = keyField.value;
   const passValue = passField.value;
-  window.api.comm.invoke("portal-Name", portalValue);
-  window.api.comm.invoke("integration-Key", keyValue);
-  window.api.comm.invoke("integration-Pass", passValue);
+  window.api.comm.invoke(EVENTS.SET_PORTAL, portalValue);
+  window.api.comm.invoke(EVENTS.SET_KEY, keyValue);
+  window.api.comm.invoke(EVENTS.SET_PASS, passValue);
 
   showSaveConfirmation("Integration Credentials Saved.");
 });
 
-// Open file selector when the button is pressed
+// Open file selector button click handler
 selectFileButton.addEventListener("click", () => {
   window.api.dialog.openFileSelect().then((file) => {
     if (file) {
       console.log(file);
-      selectedFile.textContent = "";
       selectedFile.textContent = file.fileName;
+      deleteAllRecords.id = "deleteAllRecords";
+      deleteAllRecords.textContent = "Delete All";
+      deletionOptions.appendChild(deleteAllRecords);
     } else {
       console.log("No file selected");
       selectedFile.textContent = "";
@@ -67,7 +98,8 @@ selectFileButton.addEventListener("click", () => {
   });
 });
 
-window.api.comm.receive("record-Retrieval", (message) => {
+// Receiving record retrieval event
+window.api.comm.receive(EVENTS.RECORD_RETRIEVE, (message) => {
   if (message) {
     changeRecordButton.id = "changeRecordButton";
     changeRecordButton.textContent = "View/Change Record";
@@ -81,45 +113,78 @@ window.api.comm.receive("record-Retrieval", (message) => {
   }
 });
 
-changeRecordButton.addEventListener("click", async () => {
-  window.api.comm.invoke("change-Record-Button", targetedRecordId);
+// Change and delete record button click handlers
+changeRecordButton.addEventListener("click", () => {
+  window.api.comm.invoke(EVENTS.CHANGE_RECORD, targetId);
 });
 
 deleteRecordButton.addEventListener("click", () => {
-  window.api.comm.invoke("delete-Record-Button", targetedRecordId);
+  window.api.comm.invoke(EVENTS.DELETE_RECORD, targetId);
 });
 
+// Record button click handler
 recordButton.addEventListener("click", () => {
-  const recordValue = recordField.value;
-  targetedRecordId = recordValue;
-  window.api.comm.invoke("record", recordValue);
+  targetId = recordField.value;
+  window.api.comm.invoke(EVENTS.SET_RECORD, { targetId, targetType });
 });
 
-// Receives record ids from index.js and then displays them into the feed box
-window.api.comm.receive("feed-Box", (message) => {
+// Record type change handler
+recordType.addEventListener("change", () => {
+  targetType = recordType.value;
+  console.log(targetType);
+});
+
+// Receiving feed box and feed box clear events
+window.api.comm.receive(EVENTS.FEED_BOX, (message) => {
   feed.insertAdjacentHTML("beforeend", `<div>${message}</div>`);
 });
 
-// Clears the feed box before every new file load instance when signal is received from index.js
-window.api.comm.receive("feed-Box-Clear", () => {
+window.api.comm.receive(EVENTS.FEED_BOX_CLEAR, () => {
   feed.textContent = "";
 });
 
-document.getElementById("searchBar").addEventListener("input", function () {
-  const searchTerm = document.getElementById("searchBar").value.toLowerCase();
-  const feedBox = document.getElementById("feedBox");
-  const feedItems = feedBox.getElementsByTagName("div");
+// Search bar input handler
+searchBar.addEventListener("input", () => {
+  const searchTerm = searchBar.value.toLowerCase();
+  const feedItems = feed.getElementsByTagName("div");
+  let displayCount = 0;
+  let currentDisplayed = [];
 
   Array.from(feedItems).forEach((item) => {
-    if (item.textContent.toLowerCase().includes(searchTerm)) {
+    if (item.textContent.toLowerCase().indexOf(searchTerm) !== -1) {
       item.style.display = "";
+      displayCount++;
+      currentDisplayed.push(item.textContent);
     } else {
       item.style.display = "none";
     }
   });
+
+  displayedRecords = currentDisplayed;
+
+  filesDisplayed.textContent = displayCount != fileCount.value ? displayCount + "/" : "";
+
+  if (displayCount != fileCount.value && displayCount > 0) {
+    deleteDisplayed.id = "deleteDisplayed";
+    deleteDisplayed.textContent = "Delete Displayed";
+    deletionOptions.appendChild(deleteDisplayed);
+  } else {
+    deletionOptions.textContent = "";
+    deletionOptions.appendChild(deleteAllRecords);
+  }
 });
 
-window.api.comm.receive("record-Count", (value) => {
-  fileCount.textContent = "";
-  fileCount.textContent = value;
+// Delete all and delete displayed records button click handlers
+deleteAllRecords.addEventListener("click", () => {
+  window.api.comm.invoke(EVENTS.DELETE_ALL);
+});
+
+deleteDisplayed.addEventListener("click", () => {
+  window.api.comm.invoke(EVENTS.DELETE_DISPLAYED, displayedRecords);
+});
+
+// Receiving selected file count event
+window.api.comm.receive(EVENTS.SELECTED_FILE_COUNT, (value) => {
+  fileCount.textContent = value ? value + " records loaded" : "";
+  fileCount.value = value;
 });

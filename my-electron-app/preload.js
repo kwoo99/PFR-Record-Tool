@@ -19,7 +19,7 @@ contextBridge.exposeInMainWorld("api", {
   // Dialog
   dialog: {
     openFileSelect: () => {
-      return ipcRenderer.invoke("open-File-Dialog").then((filePath) => {
+      return ipcRenderer.invoke("OPEN-FILE-DIALOG").then((filePath) => {
         if (filePath) return { filePath, fileName: path.basename(filePath) }; // Return the filePath object if it exists
       }).catch((error) => {
         console.error("Error in openFileSelect:", error);

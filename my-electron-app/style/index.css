@@ -19,6 +19,11 @@ button:active {
   background-color: #4c81cb;
 }
 
+select {
+  color: #656565;
+  outline-color: #1a80c3;
+}
+
 #recordIDSubmit,
 #fileSelection {
   display: block;
@@ -38,10 +43,16 @@ button:active {
   overflow-y: auto;
   padding: 10px;
   width: 400px;
-  position: fixed;
+  display: block;
+}
+
+
+input {
+  color: #656565;
 }
 
 input:focus {
+  color: #656565;
   outline-color: #1a80c3;
 }
 
@@ -82,10 +93,17 @@ input:focus {
   margin-right: 10px;
 }
 
-#fileCount {
+#fileCount, #filesDisplayed {
   display: flex;
   justify-content: center;
   margin: 0;
   align-items: center;
-  font-size: 15px;
+  font-size: 14px;
+}
+
+#deleteRecordOptions {
+  display: block;
+  margin: 5px;
+  position: bottom;
+  bottom: 0;
 }
