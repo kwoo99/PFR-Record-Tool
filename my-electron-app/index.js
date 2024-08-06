@@ -59,7 +59,7 @@ function createMainWindow() {
   mainWindow.loadFile("./html/index.html");
 
   mainWindow.on("closed", () => {
-    mainWindow = null;
+    app.quit();
   });
 }
 
