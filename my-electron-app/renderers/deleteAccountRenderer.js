@@ -4,9 +4,10 @@ const confirmButton = document.getElementById("confirmButton-label");
 const cancelButton = document.getElementById("cancelButton-label");
 
 confirmButton.addEventListener("click", () => {
-    window.api.comm.invoke(CHANNELS.UPDATE_CONFIRM);
+    window.api.comm.invoke(CHANNELS.DELETE_ACCOUNT_CONFIRM);
 });
 
 cancelButton.addEventListener("click", () => {
     window.api.comm.invoke(CHANNELS.CONFIRMATION_CANCEL);
 });
+

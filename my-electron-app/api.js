@@ -25,28 +25,22 @@ function config(mode, portal, key, pass) {
   } else {
     hostURL = hostURLProd;
   }
-
   portalName = portal;
   integrationKey = key;
   integrationPass = pass;
-
-  console.log("Is Sandbox: " + mode);
-  console.log(portalName);
-  console.log(integrationKey);
-  console.log(integrationPass);
-
 }
 
 // function to grab invoices
 function getInvoices() {
   // build endpoint url for invoice request
-  var url = hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
+  var url =
+    hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
   // create request
   var request = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "integration",
+      Authorization: "integration",
     },
   };
   // create fetch to send out request
@@ -64,12 +58,16 @@ async function getCustomers(customers) {
   var customerList = [];
   for (let i = 0; i < customers.length; i++) {
     // build endpoint url for invoice request
-    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/customers?id=${customers[i]}`;
+    var url =
+      hostURL +
+      "/receivables/sync/api/" +
+      portalName +
+      `/api/customers?id=${customers[i]}`;
     var request = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${tokenInfo}`,
+        Authorization: `Bearer ${tokenInfo}`,
       },
     };
     try {
@@ -84,27 +82,35 @@ async function getCustomers(customers) {
   return customerList;
 }
 
-async function getRecord(customer, recordType) {
-    console.log("Customer confirmed: " + customer);
-    let customerInfo;
-    tokenInfo = await generateToken();
-    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?id=${customer}`;
-    var request = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${tokenInfo}`,
-      },
-    };
-    try {
-      var response = await fetch(url, request);
-      var json = await response.json();
-      customerInfo = await json;
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
-  return JSON.stringify(customerInfo, null, 2);
+
+async function getRecord(recordId, recordType) {
+  console.log("Record confirmed: " + recordId);
+  tokenInfo = await generateToken();
+  var url =
+    hostURL +
+    "/receivables/sync/api/" +
+    portalName +
+    `/api/${recordType}?id=${recordId}`;
+  var request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${tokenInfo}`,
+    },
+  };
+  try {
+    var response = await fetch(url, request);
+    console.log("debug");
+    // console.log(response);
+    data = await response.json();
+    // console.log(response);
+    console.log("Sending response");
+    return { data: data, error: null, status: response.status };
+  } catch (error) {
+    // console.error(error);
+    console.log("Returning error")
+    return { data: null, error: error.message, status: response.status };
+  }
 }
 
 // function to delete invoices
@@ -118,13 +124,17 @@ async function getRecord(customer, recordType) {
 // function to delete customer
 async function deleteCustomers(customers) {
   var deleteCount = 0;
-  for (let i = 0; i < customers.length; i++){
-    var url = hostURL + "/receivables/sync/api/" + portalName + `/api/customers?id=${customers[i]}`;
+  for (let i = 0; i < customers.length; i++) {
+    var url =
+      hostURL +
+      "/receivables/sync/api/" +
+      portalName +
+      `/api/customers?id=${customers[i]}`;
     var request = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${tokenInfo}`,
+        Authorization: `Bearer ${tokenInfo}`,
       },
     };
     fetch(url, request)
@@ -132,7 +142,7 @@ async function deleteCustomers(customers) {
       .then(() => console.log(customers[i]))
       .catch((error) => console.error(error));
   }
-  console.log(deleteCount + ' Customers deleted');
+  console.log(deleteCount + " Customers deleted");
 }
 // build endpoint url for delete request
 // authentication
@@ -162,6 +172,7 @@ async function generateToken() {
   // create fetch to send out request passing in request and url
   try {
     var response = await fetch(url, request);
+    console.log(response);
     var json = await response.json();
     return json.access_token;
   } catch (error) {

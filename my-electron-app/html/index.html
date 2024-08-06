@@ -15,11 +15,18 @@
     <title>PFR Record Tool</title>
   </head>
   <body>
-    <h1>Welcome to the PFR Record Tool</h1>
+    <h1 id="title">Welcome to the PFR Record Tool</h1>
+    <div id="mode">
+      <label id="mode-Label">Sandbox</label>
+      <label class="mode" for="mode-Switch">
+    <input class="mode-Input" type="checkbox" id="mode-Switch">
+    <div class="mode-Fill"></div>
+  </label>
+    </div>
     <h5 id="info"></h5>
     <label
       >Portal Name
-      <input id="portalName" type="text" />
+      <input id="portalName" type="text"/>
     </label>
     <label
       >Integration Key
@@ -41,6 +48,7 @@
         <option value="invoices">Invoice</option>
         <option value="payments">Payment</option>
         </select>
+        <p id="record-Approval"></p>
       <div id="recordOptions"></div>
     </label>
     <div id="fileSelection">
@@ -58,5 +66,5 @@
     </div>
     <p id="deleteRecordOptions"></p>
   </body> 
-  <script src="../renderers/renderer.js"></script>
+  <script src="../renderers/indexRenderer.js"></script>
 </html>

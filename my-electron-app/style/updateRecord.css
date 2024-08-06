@@ -25,6 +25,7 @@ textarea {
   display: block;
   margin: 10px;
   box-sizing: border-box;
+  outline-color: #1a80c3;
 }
 
 button {
@@ -32,6 +33,7 @@ button {
   height: 30px;
   background-color: #1a80c3;
   color: white;
+  outline-color: #b4d7f7;
   border: 1px solid #1a80c3;
   border-radius: 5px;
   margin: auto;
