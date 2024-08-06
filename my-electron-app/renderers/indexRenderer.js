@@ -114,7 +114,7 @@ recordButton.addEventListener("click", async () => {
   switch (result.status) {
     case 200:
       console.log(200);
-      showRecordValidated("Valid record detected.");
+      showRecordValidated("Submission successful.");
       changeRecordButton.id = "changeRecordButton";
       changeRecordButton.textContent = "View/Change Record";
       recordOptions.appendChild(changeRecordButton);
@@ -134,32 +134,45 @@ recordButton.addEventListener("click", async () => {
     case 400:
       console.log(400);
       recordOptions.textContent = "";
-      showRecordValidated(result.data.Message);
+      showRecordValidated("Submission failed.");
+      alert(result.data.Message);
       break;
     case 401:
       console.log(401);
       recordOptions.textContent = "";
-      showRecordValidated(result.data.Message);
+      showRecordValidated("Submission failed.");
+      alert(result.data.Message);
       break;
     case 404:
       console.log(404);
       recordOptions.textContent = "";
-      showRecordValidated(result.error);
+      showRecordValidated("Submission failed.");
+      alert(result.error);
       break;
     case 405:
       console.log(405);
       recordOptions.textContent = "";
-      showRecordValidated(result.data.Message);
+      showRecordValidated("Submission failed.");
+      alert(result.data.Message);
+      break;
+    case 500:
+      console.log(500);
+      recordOptions.textContent = "";
+      showRecordValidated("Submission failed.");
+      // alert(result.data.Message);
       break;
     case undefined:
       console.log(undefined);
       recordOptions.textContent = "";
-      showRecordValidated("No record detected.");
+      showRecordValidated("Submission failed.");
+      alert("No record detected.");
       break;
     default:
       console.log("Unknown error");
       recordOptions.textContent = "";
-      showRecordValidated("Unknown error. Please try again.");
+      showRecordValidated();
+      showRecordValidated("Submission failed.");
+      alert("Unknown error. Please try again.");
       break;
   }
 });

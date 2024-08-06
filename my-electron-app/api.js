@@ -101,13 +101,10 @@ async function getRecord(recordId, recordType) {
   try {
     var response = await fetch(url, request);
     console.log("debug");
-    // console.log(response);
     data = await response.json();
-    // console.log(response);
     console.log("Sending response");
     return { data: data, error: null, status: response.status };
   } catch (error) {
-    // console.error(error);
     console.log("Returning error")
     return { data: null, error: error.message, status: response.status };
   }

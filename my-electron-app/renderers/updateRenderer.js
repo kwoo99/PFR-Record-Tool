@@ -8,6 +8,15 @@ let recordType;
 let submittedId;
 let origId;
 
+function isValidJson(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 window.onload = async function () {
   const recordDetails = await window.api.comm.invoke(CHANNELS.RECORD_INFO);
 
@@ -33,6 +42,12 @@ window.onload = async function () {
 };
 
 updateButton.addEventListener("click", () => {
+  if (!isValidJson(recordBody.value)) {
+    alert("Invalid JSON syntax. Please correct the errors and try again.");
+    return;
+  }
+
+
   const updatedRecordData = JSON.parse(recordBody.value); // Parse the textarea value as JSON
 
   switch (recordType) {
@@ -50,6 +65,10 @@ updateButton.addEventListener("click", () => {
       break;
   }
 
+  if (!submittedId) {
+    alert("Record Id field not detected. Please try again.");
+    return;
+  }
   const isNewId = origId == submittedId;
   console.log(origId);
   console.log(submittedId);
