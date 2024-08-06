@@ -3,6 +3,7 @@ body {
   background-color: #f4f4f4;
   font-family: "Segoe UI", Helvetica, Garuda, Arial, sans-serif;
   text-align: center;
+  overflow: hidden;
 }
 
 button {
@@ -30,8 +31,11 @@ button:active {
 }
 
 .wrapper {
-  display: block;
-  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
   box-sizing: border-box;
 }
 

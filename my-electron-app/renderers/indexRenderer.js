@@ -1,3 +1,4 @@
+const { CHANNELS } = window.api.comm;
 // Displaying application versions
 const information = document.getElementById("info");
 information.innerText = `This app is using Chrome (v${api.versions.chrome()}), Node.js (v${api.versions.node()}), and Electron (v${api.versions.electron()})`;
@@ -9,7 +10,6 @@ const passField = document.getElementById("intPass");
 const configButton = document.getElementById("configButton");
 const saveconfirm = document.getElementById("save-confirmation");
 const selectFileButton = document.getElementById("selectFileButton");
-const selectedFileName = document.getElementById("selectedFile");
 const feed = document.getElementById("feedBox");
 const recordButton = document.getElementById("recordSubmit");
 const recordField = document.getElementById("recordID");
@@ -19,44 +19,24 @@ const recordOptions = document.getElementById("recordOptions");
 const searchBar = document.getElementById("searchBar");
 const recordType = document.getElementById("recordType");
 const deletionOptions = document.getElementById("deleteRecordOptions");
+const modeSwitch = document.getElementById("mode-Switch");
+const modeLabel = document.getElementById("mode-Label");
+const recordApproval = document.getElementById("record-Approval");
 
 // Buttons
 const changeRecordButton = document.createElement("button");
 const deleteRecordButton = document.createElement("button");
 const deleteAllRecords = document.createElement("button");
 const deleteDisplayed = document.createElement("button");
+const deleteAccountButton = document.createElement("button");
 
 // Variables
-let hideTimer = null;
+let saveTimer = null;
+let submitTimer = null;
 let targetId;
-let targetType = "customers";
+let targetType = recordType.value;
 let displayedRecords = [];
 let allRecords = [];
-
-// Event names
-const EVENTS = {
-  SET_PORTAL: "PORTAL-NAME",
-  SET_KEY: "INTEGRATION-KEY",
-  SET_PASS: "INTEGRATION-PASS",
-  SET_RECORD: "RECORD",
-  CHANGE_RECORD: "CHANGE-RECORD-BUTTON",
-  DELETE_RECORD: "DELETE-RECORD-BUTTON",
-  RECORD_RETRIEVE: "RECORD-RETRIEVAL",
-  OPEN_FILE_DIALOG: "OPEN-FILE-DIALOG",
-  FEED_BOX_CLEAR: "FEED-BOX-CLEAR",
-  FEED_BOX: "FEED-BOX",
-  SELECTED_FILE_COUNT: "RECORD-COUNT",
-  RECORD_INFO: "GET-RECORD-DETAILS",
-  CONFIRM_UPDATE: "CONFIRM-UPDATE",
-  UPDATE_CONFIRM: "UPDATE-CONFIRM",
-  DELETE_CONFIRM: "DELETE-CONFIRM",
-  UPDATE_CANCEL: "UPDATE-CANCEL",
-  CONFIRMATION_CANCEL: "CONFIRMATION-CANCEL",
-  DELETE_ALL: "DELETE-ALL",
-  DELETE_ALL_CONFIRM: "DELETE-ALL-CONFIRM",
-  DELETE_DISPLAYED: "DELETE-DISPLAYED",
-  DELETE_DISPLAYED_CONFIRM: "DELETE-DISPLAYED-CONFIRM",
-};
 
 // Function to handle clearing the save confirmation message
 function clearSaveConfirmation() {
@@ -66,8 +46,18 @@ function clearSaveConfirmation() {
 // Function to show the save confirmation message and start the hide timer
 function showSaveConfirmation(message) {
   saveconfirm.textContent = message;
-  clearTimeout(hideTimer); // Clear any existing hide timer
+  clearTimeout(saveTimer); // Clear any existing hide timer
   hideTimer = setTimeout(clearSaveConfirmation, 3000); // Start the hide timer after 3 seconds
+}
+
+function clearRecordValidated() {
+  recordApproval.textContent = "";
+}
+
+function showRecordValidated(message) {
+  recordApproval.textContent = message;
+  clearTimeout(submitTimer);
+  hideTimer = setTimeout(clearRecordValidated, 3000);
 }
 
 // Save button click handler
@@ -75,9 +65,9 @@ configButton.addEventListener("click", () => {
   const portalValue = portalField.value;
   const keyValue = keyField.value;
   const passValue = passField.value;
-  window.api.comm.invoke(EVENTS.SET_PORTAL, portalValue);
-  window.api.comm.invoke(EVENTS.SET_KEY, keyValue);
-  window.api.comm.invoke(EVENTS.SET_PASS, passValue);
+  window.api.comm.invoke(CHANNELS.SET_PORTAL, portalValue);
+  window.api.comm.invoke(CHANNELS.SET_KEY, keyValue);
+  window.api.comm.invoke(CHANNELS.SET_PASS, passValue);
 
   showSaveConfirmation("Integration Credentials Saved.");
 });
@@ -86,7 +76,7 @@ configButton.addEventListener("click", () => {
 selectFileButton.addEventListener("click", () => {
   window.api.dialog.openFileSelect().then((file) => {
     if (file) {
-      console.log(file);
+      // console.log(file);
       selectedFile.textContent = file.fileName;
       deleteAllRecords.id = "deleteAllRecords";
       deleteAllRecords.textContent = "Delete All";
@@ -98,34 +88,80 @@ selectFileButton.addEventListener("click", () => {
   });
 });
 
-// Receiving record retrieval event
-window.api.comm.receive(EVENTS.RECORD_RETRIEVE, (message) => {
-  if (message) {
-    changeRecordButton.id = "changeRecordButton";
-    changeRecordButton.textContent = "View/Change Record";
-    recordOptions.appendChild(changeRecordButton);
-
-    deleteRecordButton.id = "deleteRecordButton";
-    deleteRecordButton.textContent = "Delete Record";
-    recordOptions.appendChild(deleteRecordButton);
-  } else {
-    recordOptions.textContent = "";
-  }
-});
-
 // Change and delete record button click handlers
 changeRecordButton.addEventListener("click", () => {
-  window.api.comm.invoke(EVENTS.CHANGE_RECORD, targetId);
+  window.api.comm.invoke(CHANNELS.CHANGE_RECORD, { targetId, targetType });
 });
 
 deleteRecordButton.addEventListener("click", () => {
-  window.api.comm.invoke(EVENTS.DELETE_RECORD, targetId);
+  window.api.comm.invoke(CHANNELS.DELETE_RECORD, targetId);
 });
 
 // Record button click handler
-recordButton.addEventListener("click", () => {
+recordButton.addEventListener("click", async () => {
   targetId = recordField.value;
-  window.api.comm.invoke(EVENTS.SET_RECORD, { targetId, targetType });
+  const result = await window.api.comm.invoke(CHANNELS.SET_RECORD, {
+    targetId,
+    targetType,
+  });
+
+  console.log(result.data);
+
+  console.log(result.status);
+
+  console.log(typeof(result.status));
+
+  switch (result.status) {
+    case 200:
+      console.log(200);
+      showRecordValidated("Valid record detected.");
+      changeRecordButton.id = "changeRecordButton";
+      changeRecordButton.textContent = "View/Change Record";
+      recordOptions.appendChild(changeRecordButton);
+
+      deleteRecordButton.id = "deleteRecordButton";
+      deleteRecordButton.textContent = "Delete Record";
+      recordOptions.appendChild(deleteRecordButton);
+      if (targetType == "customers") {
+        deleteAccountButton.id = "deleteAccountButton";
+        deleteAccountButton.textContent = "Delete Account";
+        recordOptions.append(deleteAccountButton);
+      } else {
+        console.log("REMOVING DELETE ACCOUNT BUTTON.");
+        deleteAccountButton.remove();
+      }
+      break;
+    case 400:
+      console.log(400);
+      recordOptions.textContent = "";
+      showRecordValidated(result.data.Message);
+      break;
+    case 401:
+      console.log(401);
+      recordOptions.textContent = "";
+      showRecordValidated(result.data.Message);
+      break;
+    case 404:
+      console.log(404);
+      recordOptions.textContent = "";
+      showRecordValidated(result.error);
+      break;
+    case 405:
+      console.log(405);
+      recordOptions.textContent = "";
+      showRecordValidated(result.data.Message);
+      break;
+    case undefined:
+      console.log(undefined);
+      recordOptions.textContent = "";
+      showRecordValidated("No record detected.");
+      break;
+    default:
+      console.log("Unknown error");
+      recordOptions.textContent = "";
+      showRecordValidated("Unknown error. Please try again.");
+      break;
+  }
 });
 
 // Record type change handler
@@ -134,12 +170,12 @@ recordType.addEventListener("change", () => {
   console.log(targetType);
 });
 
-// Receiving feed box and feed box clear events
-window.api.comm.receive(EVENTS.FEED_BOX, (message) => {
+// Receiving feed box and feed box clear CHANNELS
+window.api.comm.receive(CHANNELS.FEED_BOX, (message) => {
   feed.insertAdjacentHTML("beforeend", `<div>${message}</div>`);
 });
 
-window.api.comm.receive(EVENTS.FEED_BOX_CLEAR, () => {
+window.api.comm.receive(CHANNELS.FEED_BOX_CLEAR, () => {
   feed.textContent = "";
 });
 
@@ -162,7 +198,8 @@ searchBar.addEventListener("input", () => {
 
   displayedRecords = currentDisplayed;
 
-  filesDisplayed.textContent = displayCount != fileCount.value ? displayCount + "/" : "";
+  filesDisplayed.textContent =
+    displayCount != fileCount.value ? displayCount + "/" : "";
 
   if (displayCount != fileCount.value && displayCount > 0) {
     deleteDisplayed.id = "deleteDisplayed";
@@ -176,15 +213,26 @@ searchBar.addEventListener("input", () => {
 
 // Delete all and delete displayed records button click handlers
 deleteAllRecords.addEventListener("click", () => {
-  window.api.comm.invoke(EVENTS.DELETE_ALL);
+  window.api.comm.invoke(CHANNELS.DELETE_ALL);
 });
 
 deleteDisplayed.addEventListener("click", () => {
-  window.api.comm.invoke(EVENTS.DELETE_DISPLAYED, displayedRecords);
+  window.api.comm.invoke(CHANNELS.DELETE_DISPLAYED, displayedRecords);
 });
 
 // Receiving selected file count event
-window.api.comm.receive(EVENTS.SELECTED_FILE_COUNT, (value) => {
+window.api.comm.receive(CHANNELS.SELECTED_FILE_COUNT, (value) => {
   fileCount.textContent = value ? value + " records loaded" : "";
   fileCount.value = value;
+});
+
+// Change mode between sandbox and live when switch is clicked
+modeSwitch.addEventListener("change", (event) => {
+  window.api.comm.invoke(CHANNELS.TOGGLE_MODE, event.target.checked);
+  console.log(event.target.checked);
+  modeLabel.textContent = event.target.checked ? "Production" : "Sandbox";
+});
+
+deleteAccountButton.addEventListener("click", () => {
+  window.api.comm.invoke(CHANNELS.DELETE_ACCOUNT);
 });
