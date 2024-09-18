@@ -1,6 +1,6 @@
 const { ipcMain, dialog } = require("electron");
 const path = require("path");
-const { config, getRecord } = require("./api.js");
+const { config, getRecord, deleteRecord, updateRecord } = require("./api.js");
 const {
   createPopupWindow,
   createConfirmationWindow,
@@ -18,9 +18,11 @@ let submittedRecord = "";
 let submittedRecordType = "";
 let submittedResponse = null;
 let recordList = [];
-let recordListType;
 let displayedRecords = [];
 let isTest = true;
+let deleteType = "Partial";
+let deleteCount = 0;
+let submittedRecordBody;
 
 function setupIPCHandlers(mainWindow) {
   ipcMain.handle(CHANNELS.SET_PORTAL, (_event, value) => {
@@ -55,7 +57,6 @@ function setupIPCHandlers(mainWindow) {
       response = await getRecord(submittedRecord, submittedRecordType);
       console.log("Received response");
       submittedResponse = response;
-      // console.log(response);
       return submittedResponse;
     } else {
       submittedResponse = "";
@@ -78,23 +79,29 @@ function setupIPCHandlers(mainWindow) {
     const response = await dialog.showOpenDialog(mainWindow, {
       properties: ["openFile"],
     });
-    if (!response.canceled) {
-      fileName = response.filePaths[0];
-      mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
-      const data = await loadData(fileName, mainWindow);
-      recordList = data.recordList;
-      recordListType = data.recordType;
-      return fileName;
-    } else {
-      mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
-      mainWindow.webContents.send(CHANNELS.SELECTED_FILE_COUNT, "");
-      return null;
-    }
+      if (!response.canceled) {
+        if (path.extname(response.filePaths[0]) != '.csv') {
+          mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
+          mainWindow.webContents.send(CHANNELS.SELECTED_FILE_COUNT, "");
+          return null;
+        } 
+        fileName = response.filePaths[0];
+        mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
+        const data = await loadData(fileName, mainWindow);
+        recordList = data.recordList;
+        recordListType = data.recordType;
+        return fileName;
+      } else {
+        mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
+        mainWindow.webContents.send(CHANNELS.SELECTED_FILE_COUNT, "");
+        return null;
+      }
   });
 
-  ipcMain.handle(CHANNELS.CONFIRM_UPDATE, (_event, newId) => {
+  ipcMain.handle(CHANNELS.CONFIRM_UPDATE, (_event, recordBody) => {
     console.log("CONFIRM UPDATE.");
-    if (!newId) {
+    submittedRecordBody = recordBody.data;
+    if (!recordBody.isNewId) {
       console.log("NEW RECORD DETECTED.");
       const htmlPath = path.join(__dirname, "./html/createConfirm.html");
       createConfirmationWindow(htmlPath);
@@ -104,8 +111,13 @@ function setupIPCHandlers(mainWindow) {
     }
   });
 
-  ipcMain.handle(CHANNELS.UPDATE_CONFIRM, () => {
+  ipcMain.handle(CHANNELS.UPDATE_CONFIRM, async (_event, ) => {
     console.log("UPDATE RECORD."); // CREATE API CALL TO UPDATE RECORD USING submittedRecord, submittedRecordType VARIABLES
+    const response = await updateRecord(JSON.stringify(JSON.parse(submittedRecordBody)), submittedRecordType);
+    // console.log(response);
+    const rawResponse = await response.json();
+    console.log(rawResponse);
+    submittedRecordBody = "";
     submittedRecord = "";
     closePopupWindow();
   });
@@ -130,14 +142,42 @@ function setupIPCHandlers(mainWindow) {
     return { submittedResponse, submittedRecordType};
   });
 
-  ipcMain.handle(CHANNELS.DELETE_ALL_CONFIRM, () => {
-    console.log(recordList); // CREATE API CALL TO DELETE ALL RECORDS USING recordList ARRAY AND recordListType VARIABLE
+  ipcMain.handle(CHANNELS.DELETE_ALL_CONFIRM, async () => {
     closeConfirmationWindow();
+    mainWindow.webContents.send(CHANNELS.CLEAR_DELETE_OPTIONS, true);
+    mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
+    for (let i = 0; i < recordList.length; i++){
+      const result = await deleteRecord(recordList[i], deleteType);
+      if (result.status == 200) {
+        deleteMessage = `${recordList[i]} deleted successfully`;
+        deleteCount++;
+      } else {
+        deleteMessage = `Failed to delete ${recordList[i]}`;
+      }
+      mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
+      mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
+    }
+    deleteCount = 0;
+    recordList = "";
   });
 
-  ipcMain.handle(CHANNELS.DELETE_DISPLAYED_CONFIRM, () => {
-    console.log(displayedRecords); // CREATE API CALL TO DELETE DISPLAYED RECORDS USING displayedRecords ARRAY AND recordListType VARIABLE
+  ipcMain.handle(CHANNELS.DELETE_DISPLAYED_CONFIRM, async () => {
     closeConfirmationWindow();
+    mainWindow.webContents.send(CHANNELS.CLEAR_DELETE_OPTIONS, true);
+    mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
+    for (let i = 0; i < displayedRecords.length; i++){
+      const result = await deleteRecord(displayedRecords[i], deleteType);
+      if (result.status == 200) {
+        deleteMessage = `${displayedRecords[i]} deleted successfully`;
+        deleteCount++;
+      } else {
+        deleteMessage = `Failed to delete ${displayedRecords[i]}`;
+      }
+      mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
+      mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
+    }
+    deleteCount = 0;
+    displayedRecords = "";
   });
 
   ipcMain.handle(CHANNELS.DELETE_ALL, () => {
@@ -157,6 +197,15 @@ function setupIPCHandlers(mainWindow) {
     config(isTest, portalName, integrationKey, integrationPass);
   });
 
+  ipcMain.handle(CHANNELS.TOGGLE_DELETE, (_event) => {
+    if (deleteType == "Partial") {
+      deleteType = "Full";
+    } else {
+      deleteType = "Partial";
+    }
+    console.log(deleteType);
+  });
+
   ipcMain.handle(CHANNELS.DELETE_ACCOUNT, () =>{
     const htmlPath = path.join(__dirname, "./html/deleteAccount.html");
     createConfirmationWindow(htmlPath);
@@ -165,6 +214,7 @@ function setupIPCHandlers(mainWindow) {
   ipcMain.handle(CHANNELS.DELETE_ACCOUNT_CONFIRM, () => {
     console.log("ACCOUNT: " + submittedRecord + " DELETED."); // CREATE API CALL TO DELETE ACCOUNT USING submittedRecord VARIABLE
     closeConfirmationWindow();
+    deleteRecord(submittedRecord, "Full");
   });
 }
 

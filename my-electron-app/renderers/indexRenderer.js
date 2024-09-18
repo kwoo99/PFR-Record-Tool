@@ -22,6 +22,8 @@ const deletionOptions = document.getElementById("deleteRecordOptions");
 const modeSwitch = document.getElementById("mode-Switch");
 const modeLabel = document.getElementById("mode-Label");
 const recordApproval = document.getElementById("record-Approval");
+const deleteSwitch = document.getElementById("deleteType-Switch");
+const deleteTypeLabel = document.getElementById("deleteType-Label");
 
 // Buttons
 const changeRecordButton = document.createElement("button");
@@ -75,14 +77,15 @@ configButton.addEventListener("click", () => {
 // Open file selector button click handler
 selectFileButton.addEventListener("click", () => {
   window.api.dialog.openFileSelect().then((file) => {
+    console.log(file);
     if (file) {
-      // console.log(file);
       selectedFile.textContent = file.fileName;
       deleteAllRecords.id = "deleteAllRecords";
       deleteAllRecords.textContent = "Delete All";
       deletionOptions.appendChild(deleteAllRecords);
     } else {
-      console.log("No file selected");
+      deletionOptions.textContent = "";
+      console.log("Invalid file");
       selectedFile.textContent = "";
     }
   });
@@ -94,7 +97,11 @@ changeRecordButton.addEventListener("click", () => {
 });
 
 deleteRecordButton.addEventListener("click", () => {
-  window.api.comm.invoke(CHANNELS.DELETE_RECORD, targetId);
+  if(targetType == 'customers') {
+    window.api.comm.invoke(CHANNELS.DELETE_RECORD, targetId);
+  } else {
+    alert("Invalid record type. Cannot delete.");
+  }
 });
 
 // Record button click handler
@@ -137,7 +144,7 @@ recordButton.addEventListener("click", async () => {
       showRecordValidated(result.data.Message);
       break;
     case 401:
-      console.log(401);
+      console.log(401); 
       recordOptions.textContent = "";
       showRecordValidated(result.data.Message);
       break;
@@ -149,7 +156,14 @@ recordButton.addEventListener("click", async () => {
     case 405:
       console.log(405);
       recordOptions.textContent = "";
-      showRecordValidated(result.data.Message);
+      showRecordValidated("Submission failed.");
+      alert(result.data.Message);
+      break;
+    case 500:
+      console.log(500);
+      recordOptions.textContent = "";
+      showRecordValidated("Submission failed.");
+      alert(result.error);
       break;
     case undefined:
       console.log(undefined);
@@ -198,8 +212,7 @@ searchBar.addEventListener("input", () => {
 
   displayedRecords = currentDisplayed;
 
-  filesDisplayed.textContent =
-    displayCount != fileCount.value ? displayCount + "/" : "";
+  filesDisplayed.textContent = displayCount != fileCount.value ? displayCount + "/" : "";
 
   if (displayCount != fileCount.value && displayCount > 0) {
     deleteDisplayed.id = "deleteDisplayed";
@@ -221,9 +234,14 @@ deleteDisplayed.addEventListener("click", () => {
 });
 
 // Receiving selected file count event
-window.api.comm.receive(CHANNELS.SELECTED_FILE_COUNT, (value) => {
-  fileCount.textContent = value ? value + " records loaded" : "";
-  fileCount.value = value;
+window.api.comm.receive(CHANNELS.SELECTED_FILE_COUNT, (count) => {
+    fileCount.textContent = fileCount ? count + " records loaded" : "";
+    fileCount.value = count;
+});
+
+window.api.comm.receive(CHANNELS.DELETED_FILE_COUNT, (count) => {
+  fileCount.textContent = fileCount ? count + " records deleted" : "";
+  fileCount.value = count;
 });
 
 // Change mode between sandbox and live when switch is clicked
@@ -233,6 +251,18 @@ modeSwitch.addEventListener("change", (event) => {
   modeLabel.textContent = event.target.checked ? "Production" : "Sandbox";
 });
 
+deleteSwitch.addEventListener("change", (event) => {
+  window.api.comm.invoke(CHANNELS.TOGGLE_DELETE);
+  console.log(event.target.checked);
+  deleteTypeLabel.textContent = event.target.checked ? "Delete Account" : "Delete Customer";
+});
+
 deleteAccountButton.addEventListener("click", () => {
   window.api.comm.invoke(CHANNELS.DELETE_ACCOUNT);
+});
+
+window.api.comm.receive(CHANNELS.CLEAR_DELETE_OPTIONS, (cleared) => {
+  console.log("Clearing");
+  if (cleared) deletionOptions.textContent = "";
+  filesDisplayed.textContent = "";
 });

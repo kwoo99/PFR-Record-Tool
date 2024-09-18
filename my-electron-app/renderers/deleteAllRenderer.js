@@ -10,4 +10,3 @@ confirmButton.addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
     window.api.comm.invoke(CHANNELS.CONFIRMATION_CANCEL);
 });
-

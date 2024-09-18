@@ -130,6 +130,66 @@ button:active {
   transform: translateX(var(--height));
 }
 
+/* Delete Type Styles */
+#deleteType {
+  display: inline;
+  float: right;
+}
+
+#deleteType-Label {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.deleteType {
+  align-items: center;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  margin: 1px;
+  vertical-align: middle;
+  --width: 45px;
+  --height: calc(var(--width) / 2);
+  --border-radius: calc(var(--height) / 2);
+}
+
+.deleteType-Input {
+  display: none;
+  justify-content: center;
+  margin: 1px;
+  vertical-align: middle;
+}
+
+.deleteType-Input:checked ~ .mode-Fill {
+  background-color: #1a80c3;
+}
+
+.deleteType-Fill {
+  background-color: #dfdede;
+  border-radius: var(--border-radius);
+  height: var(--height);
+  position: relative;
+  transition: background 0.2s;
+  width: var(--width);
+}
+
+.deleteType-Fill::after {
+  background-color: #f4f4f4;
+  border-radius: var(--border-radius);
+  content: "";
+  height: var(--height);
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: transform 0.2s;
+  width: var(--height);
+}
+
+.deleteType-Input:checked ~ .deleteType-Fill::after {
+  transform: translateX(var(--height));
+}
+
 /* Delete Record Options Styles */
 #deleteRecordOptions {
   bottom: 0;
@@ -163,6 +223,25 @@ button:active {
   margin: 0;
 }
 
+/* Records populated in the feedbox */
+.record-button {
+  float: right;
+  width: 20px;
+  height: 13px;
+  background-color: #1a80c3;
+  border: 1px solid #1a80c3;
+  border-radius: 5px;
+  outline-color: #b4d7f7;
+  color: white;
+}
+
+.record-button:hover {
+  background-color: #4694c8;
+}
+
+.record-button:active {
+  background-color: #4c81cb;
+}
 /* Save Confirmation Styles */
 #save-confirmation {
   color: rgba(29, 178, 78, 0.842);

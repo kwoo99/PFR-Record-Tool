@@ -92,47 +92,6 @@ function createConfirmationWindow(html) {
   });
 }
 
-function createResponseWindow(html, mode, title) {
-  const parentWindow = BrowserWindow.getFocusedWindow();
-
-  const responseWindow = new BrowserWindow({
-    width: 400,
-    height: 150,
-    parent: parentWindow,
-    modal: false,
-    show: false,
-    webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
-
-  responseWindow.loadFile(html);
-
-  responseWindow.webContents.on("did-finish-load", () => {
-    responseWindow.webContents
-      .executeJavaScript(
-        `
-        new Promise((resolve) => {
-          const wrapper = document.querySelector('.wrapper');
-          const width = Math.max(wrapper.scrollWidth, 400);
-          const height = Math.max(wrapper.scrollHeight, 150);
-          resolve({ width, height });
-        });
-      `
-      )
-      .then(({ width, height }) => {
-        responseWindow.setContentSize(width, height);
-        responseWindow.center();
-        responseWindow.show();
-      });
-  });
-
-  responseWindow.on("closed", () => {
-    responseWindow = null;
-  });
-}
 
 function closePopupWindow() {
   if (popupWindow) {

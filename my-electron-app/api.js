@@ -1,10 +1,6 @@
 // import {readCSVFile} from './csvParser.cjs';
 
 //Define variables for Receivables portal and credentials
-// var portalName = "Gorilla";
-// var integrationKey = "Gorilla_JMl0qPu";
-// var integrationPass = "%Hr9<US";
-
 var portalName = "";
 var integrationKey = "";
 var integrationPass = "";
@@ -17,9 +13,10 @@ var hostURLSan = `https://sandbox.payfabric.com`;
 // Determine host url
 // var isTest = true;
 let hostURL;
+let recordIdType;
 // let hostURL = hostURLSan;
 
-function config(mode, portal, key, pass) {
+async function config(mode, portal, key, pass) {
   if (mode) {
     hostURL = hostURLSan;
   } else {
@@ -28,69 +25,28 @@ function config(mode, portal, key, pass) {
   portalName = portal;
   integrationKey = key;
   integrationPass = pass;
+  tokenInfo = await generateToken();
 }
-
-// function to grab invoices
-function getInvoices() {
-  // build endpoint url for invoice request
-  var url =
-    hostURL + "/receivables/api/" + portalName + "/api/reports/payments";
-  // create request
-  var request = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "integration",
-    },
-  };
-  // create fetch to send out request
-}
-
-// function to grab payments
-function getPayments() {
-  // build endpoint url for invoice request
-  var url =
-    hostURL + "/receivables/sync/api/" + portalName + "/api/reports/payments";
-  // authentication
-}
-// function to grab customers
-async function getCustomers(customers) {
-  var customerList = [];
-  for (let i = 0; i < customers.length; i++) {
-    // build endpoint url for invoice request
-    var url =
-      hostURL +
-      "/receivables/sync/api/" +
-      portalName +
-      `/api/customers?id=${customers[i]}`;
-    var request = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenInfo}`,
-      },
-    };
-    try {
-      var response = await fetch(url, request);
-      var json = await response.json();
-      customerList.push(json.CustomerId);
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
-  return customerList;
-}
-
 
 async function getRecord(recordId, recordType) {
-  console.log("Record confirmed: " + recordId);
   tokenInfo = await generateToken();
-  var url =
-    hostURL +
-    "/receivables/sync/api/" +
-    portalName +
-    `/api/${recordType}?id=${recordId}`;
+  console.log("Record confirmed: " + recordId);
+  // tokenInfo = await generateToken();
+  switch(recordType){
+    case "customers":
+      var url =
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?id=${recordId}`;
+      break;
+    case "invoices":
+      var url =
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?identity=${recordId}`;
+      break;
+    case "payments":
+      var url =
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}/byId?id=${recordId}`;
+      break;
+  }
+    console.log(url);
   var request = {
     method: "GET",
     headers: {
@@ -100,54 +56,130 @@ async function getRecord(recordId, recordType) {
   };
   try {
     var response = await fetch(url, request);
-    console.log("debug");
-    // console.log(response);
     data = await response.json();
-    // console.log(response);
-    console.log("Sending response");
     return { data: data, error: null, status: response.status };
   } catch (error) {
-    // console.error(error);
-    console.log("Returning error")
     return { data: null, error: error.message, status: response.status };
   }
 }
 
-// function to delete invoices
-// build endpoint url for invoice request
-// authentication
-
-// function to delete payments
-// build endpoint url for delete request
-// authentication
-
-// function to delete customer
-async function deleteCustomers(customers) {
-  var deleteCount = 0;
-  for (let i = 0; i < customers.length; i++) {
-    var url =
-      hostURL +
-      "/receivables/sync/api/" +
-      portalName +
-      `/api/customers?id=${customers[i]}`;
-    var request = {
+// function to delete customers
+async function deleteRecord(record, deleteType) {
+    const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${record}`;
+    console.log(deleteType);
+    // console.log(url);
+    const request = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${tokenInfo}`,
       },
+      body:{
+        "Scope": deleteType
+      }
     };
-    fetch(url, request)
-      .then((response) => response.text())
-      .then(() => console.log(customers[i]))
-      .catch((error) => console.error(error));
-  }
-  console.log(deleteCount + " Customers deleted");
-}
-// build endpoint url for delete request
-// authentication
 
-// function to run deletion function for specified record type
+    try {
+      const response = await fetch(url, request);
+      return response;
+      // console.log(response);
+    //   if (response.ok) {
+    //     console.log(`Record ${record} deleted successfully.`);
+    //     return response;
+    //   } else {
+    //     console.error(`Failed to delete record ${record}.`);
+    //     return response;
+    } catch (error) {
+      console.error(`Error deleting record ${recordList[i]}: `, error);
+      return response;
+    }
+}
+
+async function updateRecord(recordBody, recordType) {
+  console.log(recordBody);
+  let url;
+  let request;
+  switch(recordType){
+    case 'customers':
+      url = `${hostURL}/receivables/sync/api/${portalName}/api/${recordType}`;
+      request = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokenInfo}`,
+          "Content-Type": "application/json"
+        },
+        body: recordBody
+      }
+      break;
+    case 'invoices':
+      url = `${hostURL}/receivables/sync/api/${portalName}/api/${recordType}?identity=${recordBody.InvoiceId}`;
+      request = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${tokenInfo}`,
+          "Content-Type": "application/json"
+        },
+        body: recordBody
+      }
+      break;
+    case 'payments':
+      url = `${hostURL}/receivables/sync/api/${portalName}/api/${recordType}`;
+      request = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${tokenInfo}`,
+          "Content-Type": "application/json"
+        },
+        body: recordBody
+      }
+      break;
+  }
+
+
+  try{
+    const response = await fetch(url, request);
+    return response;
+  } catch {
+    console.error(`Error updating record`);
+    return response;
+  }
+}
+
+// async function deleteRecords(recordList) {
+//   tokenInfo = await generateToken();
+//   let recordsDeleted = [];
+//   let deleteCount = 0;
+
+//   for (let i = 0; i < recordList.length; i++) {
+//     const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${recordList[i]}`;
+//     const request = {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${tokenInfo}`,
+//       },
+//       body: {
+//         "Scope":"Full"
+//       }
+//     };
+
+//     try {
+//       const response = await fetch(url, request);
+//       if (response.ok) {
+//         deleteCount++;
+//         console.log(`Record ${recordList[i]} deleted successfully.`);
+//         recordsDeleted.push(recordList[i]);
+//       } else {
+//         console.error(`Failed to delete record ${recordList[i]}.`);
+//       }
+//     } catch (error) {
+//       console.error(`Error deleting record ${recordList[i]}: `, error);
+//     }
+//   }
+//   console.log(recordsDeleted);
+//   console.log(`${deleteCount} records deleted.`);
+//   return {recordsDeleted, deleteCount}; // Return the count of successfully deleted records
+// }
 
 // function to generate security token for authenticating api calls
 async function generateToken() {
@@ -181,15 +213,4 @@ async function generateToken() {
   }
 }
 
-module.exports = { config, getRecord };
-
-// async function main() {
-//   // var customers = await readCSVFile(customerList);
-//   tokenInfo = await generateToken();
-//   // deleteCustomers(customers)
-//   var customer = await getCustomer("AARONFIT0001");
-//   console.log(customer);
-
-// }
-
-// main();
+module.exports = { config, getRecord, deleteRecord, updateRecord };

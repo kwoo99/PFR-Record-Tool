@@ -53,8 +53,10 @@ updateButton.addEventListener("click", () => {
   const isNewId = origId == submittedId;
   console.log(origId);
   console.log(submittedId);
-  console.log(recordBody.value);
-  window.api.comm.invoke(CHANNELS.CONFIRM_UPDATE, isNewId);
+  // console.log(recordBody.value);
+  // const data = recordBody.textContent;
+  const data = recordBody.value;
+  window.api.comm.invoke(CHANNELS.CONFIRM_UPDATE, {isNewId, data});
 });
 
 cancelButton.addEventListener("click", () => {
