@@ -266,3 +266,7 @@ window.api.comm.receive(CHANNELS.CLEAR_DELETE_OPTIONS, (cleared) => {
   if (cleared) deletionOptions.textContent = "";
   filesDisplayed.textContent = "";
 });
+
+window.api.comm.receive(CHANNELS.ACTION_RESPONSE, (message) => {
+  alert(message);
+});

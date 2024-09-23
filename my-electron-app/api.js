@@ -81,6 +81,7 @@ async function deleteRecord(record, deleteType) {
 
     try {
       const response = await fetch(url, request);
+      console.log(response);
       return response;
       // console.log(response);
     //   if (response.ok) {
@@ -96,7 +97,6 @@ async function deleteRecord(record, deleteType) {
 }
 
 async function updateRecord(recordBody, recordType) {
-  console.log(recordBody);
   let url;
   let request;
   switch(recordType){
@@ -138,48 +138,13 @@ async function updateRecord(recordBody, recordType) {
 
   try{
     const response = await fetch(url, request);
+    console.log(response);
     return response;
   } catch {
     console.error(`Error updating record`);
     return response;
   }
 }
-
-// async function deleteRecords(recordList) {
-//   tokenInfo = await generateToken();
-//   let recordsDeleted = [];
-//   let deleteCount = 0;
-
-//   for (let i = 0; i < recordList.length; i++) {
-//     const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${recordList[i]}`;
-//     const request = {
-//       method: "DELETE",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${tokenInfo}`,
-//       },
-//       body: {
-//         "Scope":"Full"
-//       }
-//     };
-
-//     try {
-//       const response = await fetch(url, request);
-//       if (response.ok) {
-//         deleteCount++;
-//         console.log(`Record ${recordList[i]} deleted successfully.`);
-//         recordsDeleted.push(recordList[i]);
-//       } else {
-//         console.error(`Failed to delete record ${recordList[i]}.`);
-//       }
-//     } catch (error) {
-//       console.error(`Error deleting record ${recordList[i]}: `, error);
-//     }
-//   }
-//   console.log(recordsDeleted);
-//   console.log(`${deleteCount} records deleted.`);
-//   return {recordsDeleted, deleteCount}; // Return the count of successfully deleted records
-// }
 
 // function to generate security token for authenticating api calls
 async function generateToken() {

@@ -112,18 +112,29 @@ function setupIPCHandlers(mainWindow) {
   });
 
   ipcMain.handle(CHANNELS.UPDATE_CONFIRM, async (_event, ) => {
-    console.log("UPDATE RECORD."); // CREATE API CALL TO UPDATE RECORD USING submittedRecord, submittedRecordType VARIABLES
+    console.log("UPDATE RECORD.");
     const response = await updateRecord(JSON.stringify(JSON.parse(submittedRecordBody)), submittedRecordType);
-    // console.log(response);
     const rawResponse = await response.json();
     console.log(rawResponse);
     submittedRecordBody = "";
     submittedRecord = "";
+    console.log(response.status);
+    if(response.status == 200){
+      console.log("Sending Success");
+      mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Update Successful");
+    }
+    else {
+      console.log("Sending Failure");
+      mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, response.statusText);
+    }
     closePopupWindow();
   });
 
-  ipcMain.handle(CHANNELS.DELETE_CONFIRM, () => {
-    console.log("DELETE RECORD."); // CREATE API CALL TO DELETE RECORD USING submittedRecord, submittedRecordType VARIABLES
+  ipcMain.handle(CHANNELS.DELETE_CONFIRM, async () => {
+    console.log("DELETE RECORD.");
+    const result = await deleteRecord(submittedRecord, deleteType);
+    console.log(result);
+    mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Record Deleted");
     submittedRecord = "";
     closeConfirmationWindow();
   });
@@ -157,6 +168,7 @@ function setupIPCHandlers(mainWindow) {
       mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
       mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
     }
+    mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Records Deleted");
     deleteCount = 0;
     recordList = "";
   });
@@ -176,6 +188,7 @@ function setupIPCHandlers(mainWindow) {
       mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
       mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
     }
+    mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Records Deleted");
     deleteCount = 0;
     displayedRecords = "";
   });
@@ -215,6 +228,7 @@ function setupIPCHandlers(mainWindow) {
     console.log("ACCOUNT: " + submittedRecord + " DELETED."); // CREATE API CALL TO DELETE ACCOUNT USING submittedRecord VARIABLE
     closeConfirmationWindow();
     deleteRecord(submittedRecord, "Full");
+    mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Account Deleted");
   });
 }
 
