@@ -4,20 +4,24 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    osxSign: {},
-    // ...
-    osxNotarize: {
-      tool: 'notarytool',
-      appleId: process.env.APPLE_ID,
-      appleIdPassword: process.env.APPLE_PASSWORD,
-      teamId: process.env.APPLE_TEAM_ID
+    osxSign: {
+      "identity": "Kyle Woo",
+      "hardenedruntime": true,
+      "entitlements": "",
+      "entitlementsInherit": ""
     }
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {authors: 'Kyle Woo'},
+      config: {
+        name: "PFR Record Tool",
+        authors: "Kyle Woo",
+        description: "This app is used to manage and modify records of a PayFabric Receivables Portal created by the Nodus Technologies division of Global Payments.",
+        setupIcon: "./public/Windows.ico",
+        iconUrl
+      },
     },
     {
       name: '@electron-forge/maker-zip',
