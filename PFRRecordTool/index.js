@@ -4,7 +4,7 @@ const { setupIPCHandlers } = require("./ipcHandlers.js");
 const { config } = require("./api.js");
 
 let mainWindow
-config(true, "Gorilla", "Gorilla_JMl0qPu", "%Hr9<US");
+config(true, "", "", "");
 
 function createMainWindow() {
    mainWindow = new BrowserWindow({

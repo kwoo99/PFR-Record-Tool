@@ -20,7 +20,8 @@ module.exports = {
         authors: "Kyle Woo",
         description: "This app is used to manage and modify records of a PayFabric Receivables Portal created by the Nodus Technologies division of Global Payments.",
         setupIcon: "./public/Windows.ico",
-        iconUrl
+        iconURL: "https://github.com/kwoo99/PFR-Record-Tool/blob/main/PFRRecordTool/public/Windows.ico",
+        setupExe: "PFRRecordTool.exe"
       },
     },
     {
