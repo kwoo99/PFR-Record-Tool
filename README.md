@@ -1,2 +1,16 @@
-# About this application
-This application serves as a tool to fetch, manage, and modify Accounts Receivables records that belong to a PayFabric Receivables Portal created by Nodus Technologies. This tool is capable of reading in csv files with AR data and deleting/modifying the data read in from the file. This tool is for internal use by employees of Nodus Technologies. 
+# PFR Record Tool  
+
+## Overview  
+The **PFR Record Tool** is an internal application designed for managing **Accounts Receivable (AR) records** within a **PayFabric Receivables (PFR) Portal** developed by **Nodus Technologies**. This tool streamlines the process of fetching, modifying, and deleting AR records, enhancing operational efficiency for internal users.  
+
+## Features  
+- 🔹 **Fetch AR Records** – Retrieve AR data directly from the PayFabric Receivables Portal.  
+- 🔹 **Modify Records** – Update specific AR records based on CSV input.  
+- 🔹 **Delete Records** – Remove AR entries efficiently using batch processing.  
+- 🔹 **CSV Integration** – Supports importing AR data from CSV files for bulk modifications.  
+
+## Intended Use  
+🚀 **Internal Use Only**: This tool is designed exclusively for employees of **Nodus Technologies** to manage AR records efficiently. It is **not** for public distribution or external use.  
+
+#License
+⚠️ Proprietary & Confidential: This tool is proprietary and restricted for internal use. Unauthorized distribution or modification is prohibited.
