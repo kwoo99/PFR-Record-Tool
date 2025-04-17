@@ -29,21 +29,22 @@ async function config(mode, portal, key, pass) {
 }
 
 async function getRecord(recordId, recordType) {
+  const encodedRecordId = encodeURIComponent(recordId);
   tokenInfo = await generateToken();
-  console.log("Record confirmed: " + recordId);
+  console.log("Record confirmed: " + encodedRecordId);
   // tokenInfo = await generateToken();
   switch(recordType){
     case "customers":
       var url =
-      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?id=${recordId}`;
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?id=${encodedRecordId}`;
       break;
     case "invoices":
       var url =
-      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?identity=${recordId}`;
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}?identity=${encodedRecordId}`;
       break;
     case "payments":
       var url =
-      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}/byId?id=${recordId}`;
+      hostURL + "/receivables/sync/api/" + portalName + `/api/${recordType}/byId?id=${encodedRecordId}`;
       break;
   }
     console.log(url);
@@ -65,7 +66,8 @@ async function getRecord(recordId, recordType) {
 
 // function to delete customers
 async function deleteRecord(record, deleteType) {
-    const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${record}`;
+    const encodedRecord = encodeURIComponent(record);
+    const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${encodedRecord}`;
     console.log(deleteType);
     // console.log(url);
     const request = {
@@ -74,9 +76,9 @@ async function deleteRecord(record, deleteType) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${tokenInfo}`,
       },
-      body:{
+      body: JSON.stringify({
         "Scope": deleteType
-      }
+      })
     };
 
     try {
