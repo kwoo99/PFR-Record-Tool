@@ -26,7 +26,8 @@ const CHANNELS = { // Different channels defined in CHANNELS list used for ipc c
     TOGGLE_DELETE: "TOGGLE-DELETE",
     DELETED_FILE_COUNT: "DELETE-COUNT",
     CLEAR_DELETE_OPTIONS: "CLEAR_DELETE_OPTIONS",
-    ACTION_RESPONSE:"ACTION-RESPONSE"
+    ACTION_RESPONSE:"ACTION-RESPONSE",
+    BULK_DELETE_RECORD: "bulk-delete-record",
   };
   
   module.exports = CHANNELS;

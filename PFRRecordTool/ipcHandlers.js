@@ -25,6 +25,27 @@ let deleteCount = 0;
 let submittedRecordBody;
 
 function setupIPCHandlers(mainWindow) {
+
+  ipcMain.handle(CHANNELS.BULK_DELETE_RECORD, async (_event, { ids, deleteType: bulkDeleteType }) => {
+  const results = [];
+  for (const id of ids) {
+    try {
+      const result = await deleteRecord(id, bulkDeleteType ?? deleteType);
+      const success = result.status === 200;
+      const message = success
+        ? `${id}: Deleted successfully.`
+        : `${id}: Delete failed (status ${result.status}).`;
+      mainWindow.webContents.send(CHANNELS.FEED_BOX, message);
+      results.push({ id, ok: success, status: result.status });
+    } catch (error) {
+      const message = `${id}: Delete error — ${error.message}`;
+      mainWindow.webContents.send(CHANNELS.FEED_BOX, message);
+      results.push({ id, ok: false, status: null });
+    }
+  }
+  return results;
+});
+
   ipcMain.handle(CHANNELS.SET_PORTAL, (_event, value) => {
     portalName = value;
     console.log("Portal Name set to:", portalName);

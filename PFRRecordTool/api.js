@@ -66,6 +66,7 @@ async function getRecord(recordId, recordType) {
 
 // function to delete customers
 async function deleteRecord(record, deleteType) {
+    tokenInfo = await generateToken();
     const encodedRecord = encodeURIComponent(record);
     const url = `${hostURL}/receivables/sync/api/${portalName}/api/customers?id=${encodedRecord}`;
     console.log(deleteType);

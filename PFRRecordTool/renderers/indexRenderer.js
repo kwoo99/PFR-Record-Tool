@@ -270,3 +270,153 @@ window.api.comm.receive(CHANNELS.CLEAR_DELETE_OPTIONS, (cleared) => {
 window.api.comm.receive(CHANNELS.ACTION_RESPONSE, (message) => {
   alert(message);
 });
+
+// ------------------------------------
+
+// Bulk Record Section
+const bulkInput = document.getElementById("bulkRecordInput");
+const bulkRecordType = document.getElementById("bulkRecordType");
+const bulkFetchButton = document.getElementById("bulkFetchButton");
+const bulkDeleteButton = document.getElementById("bulkDeleteButton");
+const bulkChangeButton = document.getElementById("bulkChangeButton");
+const bulkStatus = document.getElementById("bulkStatus");
+
+// Parse IDs from the textarea, splitting on semicolons
+function parseBulkIds() {
+  return bulkInput.value
+    .split(";")
+    .map((id) => id.trim())
+    .filter((id) => id.length > 0);
+}
+
+// Helper to append a result line to the feed box
+function feedBulkResult(id, message) {
+  feed.insertAdjacentHTML(
+    "beforeend",
+    `<div><strong>${id}:</strong> ${message}</div>`
+  );
+  feed.scrollTop = feed.scrollHeight;
+}
+
+// Fetch each ID and report status in the feed box
+bulkFetchButton.addEventListener("click", async () => {
+  const ids = parseBulkIds();
+  if (ids.length === 0) {
+    bulkStatus.textContent = "No IDs entered.";
+    return;
+  }
+
+  const type = bulkRecordType.value;
+  bulkStatus.textContent = `Fetching ${ids.length} record(s)...`;
+  let succeeded = 0;
+  let failed = 0;
+
+  for (const id of ids) {
+    const result = await window.api.comm.invoke(CHANNELS.SET_RECORD, {
+      targetId: id,
+      targetType: type,
+    });
+
+    switch (result.status) {
+      case 200:
+        feedBulkResult(id, "Found.");
+        succeeded++;
+        break;
+      case 400:
+      case 401:
+        feedBulkResult(id, `Error: ${result.data?.Message ?? "Bad request."}`);
+        failed++;
+        break;
+      case 404:
+        feedBulkResult(id, `Not found: ${result.error}`);
+        failed++;
+        break;
+      case 500:
+        feedBulkResult(id, `Server error: ${result.error}`);
+        failed++;
+        break;
+      default:
+        feedBulkResult(id, `Unknown response (status ${result.status}).`);
+        failed++;
+        break;
+    }
+  }
+
+  bulkStatus.textContent = `Done. ${succeeded} succeeded, ${failed} failed.`;
+});
+
+// Fetch then delete each ID
+bulkDeleteButton.addEventListener("click", async () => {
+  const ids = parseBulkIds();
+  console.log("Bulk delete clicked, IDs:", ids);
+  if (ids.length === 0) {
+    bulkStatus.textContent = "No IDs entered.";
+    return;
+  }
+
+  const type = bulkRecordType.value;
+  if (type !== "customers") {
+    alert("Bulk delete is only supported for Customers.");
+    return;
+  }
+
+  bulkStatus.textContent = `Deleting ${ids.length} record(s)...`;
+  console.log("Invoking BULK_DELETE_RECORD:", CHANNELS.BULK_DELETE_RECORD); 
+
+  const results = await window.api.comm.invoke(CHANNELS.BULK_DELETE_RECORD, {
+    ids,
+  });
+
+  const succeeded = results.filter((r) => r.ok).length;
+  const failed = results.length - succeeded;
+  bulkStatus.textContent = `Done. ${succeeded} deleted, ${failed} failed.`;
+
+  feed.scrollTop = feed.scrollHeight;
+});
+
+// Fetch then change each ID
+bulkChangeButton.addEventListener("click", async () => {
+  const ids = parseBulkIds();
+  if (ids.length === 0) {
+    bulkStatus.textContent = "No IDs entered.";
+    return;
+  }
+
+  const type = bulkRecordType.value;
+  bulkStatus.textContent = `Processing ${ids.length} record(s)...`;
+  let succeeded = 0;
+  let failed = 0;
+
+  for (const id of ids) {
+    // Validate first
+    const fetchResult = await window.api.comm.invoke(CHANNELS.SET_RECORD, {
+      targetId: id,
+      targetType: type,
+    });
+
+    if (fetchResult.status !== 200) {
+      feedBulkResult(id, `Skipped (not found or error).`);
+      failed++;
+      continue;
+    }
+
+    // Invoke the change
+    const changeResult = await window.api.comm.invoke(CHANNELS.CHANGE_RECORD, {
+      targetId: id,
+      targetType: type,
+    });
+
+    if (changeResult && changeResult.ok) {
+      feedBulkResult(id, "Changed successfully.");
+      succeeded++;
+    } else {
+      feedBulkResult(
+        id,
+        `Change failed (status ${changeResult?.status ?? "unknown"}).`
+      );
+      failed++;
+    }
+  }
+
+  bulkStatus.textContent = `Done. ${succeeded} changed, ${failed} failed.`;
+});

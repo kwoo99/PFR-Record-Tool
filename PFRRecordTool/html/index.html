@@ -62,16 +62,36 @@
         <p id="fileCount" value="0"></p>
       </div>
     </div>
-    <div id="feedBox">
+
+  <!-- ------------------------------ -->
+
+ <div id="feedAndBulkContainer">
+    <div id="feedBox"></div>
+
+    <div id="bulkRecordSection">
+      <label id="bulkRecordLabel">Bulk Record IDs (semicolon-separated)</label>
+      <textarea id="bulkRecordInput" placeholder="e.g. CUST001;CUST002;CUST003"></textarea>
+      <div id="bulkRecordControls">
+        <select id="bulkRecordType">
+          <option value="customers">Customer</option>
+          <option value="invoices">Invoice</option>
+          <option value="payments">Payment</option>
+        </select>
+        <button id="bulkFetchButton">Fetch Records</button>
+        <button id="bulkDeleteButton">Delete Records</button>
+        <button id="bulkChangeButton">View/Change Records</button>
+      </div>
+      <p id="bulkStatus"></p>
     </div>
-    <div id="deleteType">
-      <label id="deleteType-Label">Delete Customer</label>
-      <label class="deleteType" for="deleteType-Switch">
-    <input class="deleteType-Input" type="checkbox" id="deleteType-Switch">
-    <div class="deleteType-Fill"></div>
-  </label>
-    </div>
-    <p id="deleteRecordOptions"></p>
-  </body> 
-  <script src="../renderers/indexRenderer.js"></script>
+  </div>
+  <div id="deleteType">
+    <label id="deleteType-Label">Delete Customer</label>
+    <label class="deleteType" for="deleteType-Switch">
+      <input class="deleteType-Input" type="checkbox" id="deleteType-Switch">
+      <div class="deleteType-Fill"></div>
+    </label>
+  </div>
+  <p id="deleteRecordOptions"></p>
+</body>
+<script src="../renderers/indexRenderer.js"></script>
 </html>

@@ -4,6 +4,7 @@ const { setupIPCHandlers } = require("./ipcHandlers.js");
 const { config } = require("./api.js");
 
 let mainWindow
+
 config(true, "", "", "");
 
 function createMainWindow() {
@@ -18,6 +19,7 @@ function createMainWindow() {
   });
 
   mainWindow.loadFile("./html/index.html");
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on("closed", () => {
     app.quit();
