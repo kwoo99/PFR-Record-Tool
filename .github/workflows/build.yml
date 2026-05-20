@@ -8,6 +8,9 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: PFRRecordTool
 
     steps:
       - name: Checkout code
@@ -28,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
-          path: out/make/squirrel.windows/x64/
+          path: PFRRecordTool/out/make/squirrel.windows/x64/
