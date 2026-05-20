@@ -1,7 +1,7 @@
 {
   "name": "pfr-record-tool",
   "version": "1.0.0",
-  "description": "PFR Record Tool",
+  "description": "PFRRecordTool",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
