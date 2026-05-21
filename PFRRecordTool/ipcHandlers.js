@@ -23,12 +23,20 @@ let isTest = true;
 let deleteType = "Partial";
 let deleteCount = 0;
 let submittedRecordBody;
+let cancelDeletion = false;
 
 function setupIPCHandlers(mainWindow) {
 
   ipcMain.handle(CHANNELS.BULK_DELETE_RECORD, async (_event, { ids, deleteType: bulkDeleteType }) => {
+  cancelDeletion = false;
   const results = [];
   for (const id of ids) {
+    await new Promise(resolve => setImmediate(resolve));
+    
+    if (cancelDeletion) {
+      mainWindow.webContents.send(CHANNELS.FEED_BOX, "Deletion stopped by user.");
+      break;
+    }
     try {
       const result = await deleteRecord(id, bulkDeleteType ?? deleteType);
       const success = result.status === 200;
@@ -176,15 +184,21 @@ function setupIPCHandlers(mainWindow) {
 
   ipcMain.handle(CHANNELS.DELETE_ALL_CONFIRM, async () => {
     closeConfirmationWindow();
+    cancelDeletion = false; 
     mainWindow.webContents.send(CHANNELS.CLEAR_DELETE_OPTIONS, true);
     mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
     for (let i = 0; i < recordList.length; i++){
+      await new Promise(resolve => setImmediate(resolve));
+      if(cancelDeletion) {
+        mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Deletion Cancelled");
+        break;
+      }
       const result = await deleteRecord(recordList[i], deleteType);
       if (result.status == 200) {
         deleteMessage = `${recordList[i]} deleted successfully`;
         deleteCount++;
       } else {
-        deleteMessage = `Failed to delete ${recordList[i]}`;
+        deleteMessage = `Failed to delete ${recordList[i]} (status ${result.status})`;
       }
       mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
       mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
@@ -196,15 +210,21 @@ function setupIPCHandlers(mainWindow) {
 
   ipcMain.handle(CHANNELS.DELETE_DISPLAYED_CONFIRM, async () => {
     closeConfirmationWindow();
+    cancelDeletion = false;
     mainWindow.webContents.send(CHANNELS.CLEAR_DELETE_OPTIONS, true);
     mainWindow.webContents.send(CHANNELS.FEED_BOX_CLEAR);
     for (let i = 0; i < displayedRecords.length; i++){
+      await new Promise(resolve => setImmediate(resolve));
+      if(cancelDeletion) {
+        mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Deletion Cancelled");
+        break;
+      }
       const result = await deleteRecord(displayedRecords[i], deleteType);
       if (result.status == 200) {
         deleteMessage = `${displayedRecords[i]} deleted successfully`;
         deleteCount++;
       } else {
-        deleteMessage = `Failed to delete ${displayedRecords[i]}`;
+        deleteMessage = `Failed to delete ${recordList[i]} (status ${result.status})`;
       }
       mainWindow.webContents.send(CHANNELS.FEED_BOX, deleteMessage);
       mainWindow.webContents.send(CHANNELS.DELETED_FILE_COUNT, deleteCount);
@@ -251,6 +271,12 @@ function setupIPCHandlers(mainWindow) {
     deleteRecord(submittedRecord, "Full");
     mainWindow.webContents.send(CHANNELS.ACTION_RESPONSE, "Account Deleted");
   });
+
+  ipcMain.on(CHANNELS.CANCEL_DELETION, () => {
+  cancelDeletion = true;
+  console.log("Deletion cancelled.");
+});
 }
+
 
 module.exports = { setupIPCHandlers };

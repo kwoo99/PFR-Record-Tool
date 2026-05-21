@@ -19,7 +19,7 @@ function createMainWindow() {
   });
 
   mainWindow.loadFile("./html/index.html");
-  mainWindow.webContents.openDevTools();
+
 
   mainWindow.on("closed", () => {
     app.quit();

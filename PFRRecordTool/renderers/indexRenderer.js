@@ -31,6 +31,14 @@ const deleteRecordButton = document.createElement("button");
 const deleteAllRecords = document.createElement("button");
 const deleteDisplayed = document.createElement("button");
 const deleteAccountButton = document.createElement("button");
+const cancelDeletionButton = document.createElement("button");
+cancelDeletionButton.textContent = "Stop Deletion";
+cancelDeletionButton.id = "cancelDeletionButton";
+cancelDeletionButton.addEventListener("click", () => {
+  window.api.comm.send(CHANNELS.CANCEL_DELETION);
+  cancelDeletionButton.remove();
+  console.log("Deletion cancelled, flag set to:", cancelDeletion);
+});
 
 // Variables
 let saveTimer = null;
@@ -48,8 +56,8 @@ function clearSaveConfirmation() {
 // Function to show the save confirmation message and start the hide timer
 function showSaveConfirmation(message) {
   saveconfirm.textContent = message;
-  clearTimeout(saveTimer); // Clear any existing hide timer
-  hideTimer = setTimeout(clearSaveConfirmation, 3000); // Start the hide timer after 3 seconds
+  clearTimeout(saveTimer);
+  hideTimer = setTimeout(clearSaveConfirmation, 3000);
 }
 
 function clearRecordValidated() {
@@ -70,7 +78,6 @@ configButton.addEventListener("click", () => {
   window.api.comm.invoke(CHANNELS.SET_PORTAL, portalValue);
   window.api.comm.invoke(CHANNELS.SET_KEY, keyValue);
   window.api.comm.invoke(CHANNELS.SET_PASS, passValue);
-
   showSaveConfirmation("Integration Credentials Saved.");
 });
 
@@ -113,9 +120,7 @@ recordButton.addEventListener("click", async () => {
   });
 
   console.log(result.data);
-
   console.log(result.status);
-
   console.log(typeof(result.status));
 
   switch (result.status) {
@@ -125,7 +130,6 @@ recordButton.addEventListener("click", async () => {
       changeRecordButton.id = "changeRecordButton";
       changeRecordButton.textContent = "View/Change Record";
       recordOptions.appendChild(changeRecordButton);
-
       deleteRecordButton.id = "deleteRecordButton";
       deleteRecordButton.textContent = "Delete Record";
       recordOptions.appendChild(deleteRecordButton);
@@ -144,7 +148,7 @@ recordButton.addEventListener("click", async () => {
       showRecordValidated(result.data.Message);
       break;
     case 401:
-      console.log(401); 
+      console.log(401);
       recordOptions.textContent = "";
       showRecordValidated(result.data.Message);
       break;
@@ -211,7 +215,6 @@ searchBar.addEventListener("input", () => {
   });
 
   displayedRecords = currentDisplayed;
-
   filesDisplayed.textContent = displayCount != fileCount.value ? displayCount + "/" : "";
 
   if (displayCount != fileCount.value && displayCount > 0) {
@@ -227,16 +230,18 @@ searchBar.addEventListener("input", () => {
 // Delete all and delete displayed records button click handlers
 deleteAllRecords.addEventListener("click", () => {
   window.api.comm.invoke(CHANNELS.DELETE_ALL);
+  deletionOptions.appendChild(cancelDeletionButton);
 });
 
 deleteDisplayed.addEventListener("click", () => {
   window.api.comm.invoke(CHANNELS.DELETE_DISPLAYED, displayedRecords);
+  deletionOptions.appendChild(cancelDeletionButton);
 });
 
 // Receiving selected file count event
 window.api.comm.receive(CHANNELS.SELECTED_FILE_COUNT, (count) => {
-    fileCount.textContent = fileCount ? count + " records loaded" : "";
-    fileCount.value = count;
+  fileCount.textContent = fileCount ? count + " records loaded" : "";
+  fileCount.value = count;
 });
 
 window.api.comm.receive(CHANNELS.DELETED_FILE_COUNT, (count) => {
@@ -263,12 +268,16 @@ deleteAccountButton.addEventListener("click", () => {
 
 window.api.comm.receive(CHANNELS.CLEAR_DELETE_OPTIONS, (cleared) => {
   console.log("Clearing");
-  if (cleared) deletionOptions.textContent = "";
+  if (cleared) {
+    deletionOptions.textContent = "";
+    deletionOptions.appendChild(cancelDeletionButton);
+  }
   filesDisplayed.textContent = "";
 });
 
 window.api.comm.receive(CHANNELS.ACTION_RESPONSE, (message) => {
   alert(message);
+  cancelDeletionButton.remove();
 });
 
 // ------------------------------------
@@ -280,6 +289,15 @@ const bulkFetchButton = document.getElementById("bulkFetchButton");
 const bulkDeleteButton = document.getElementById("bulkDeleteButton");
 const bulkChangeButton = document.getElementById("bulkChangeButton");
 const bulkStatus = document.getElementById("bulkStatus");
+
+// Bulk cancel button
+const bulkCancelButton = document.createElement("button");
+bulkCancelButton.textContent = "Stop Deletion";
+bulkCancelButton.id = "bulkCancelButton";
+bulkCancelButton.addEventListener("click", () => {
+  window.api.comm.send(CHANNELS.CANCEL_DELETION);
+  bulkCancelButton.remove();
+});
 
 // Parse IDs from the textarea, splitting on semicolons
 function parseBulkIds() {
@@ -361,16 +379,16 @@ bulkDeleteButton.addEventListener("click", async () => {
   }
 
   bulkStatus.textContent = `Deleting ${ids.length} record(s)...`;
-  console.log("Invoking BULK_DELETE_RECORD:", CHANNELS.BULK_DELETE_RECORD); 
+  bulkStatus.appendChild(bulkCancelButton);
 
   const results = await window.api.comm.invoke(CHANNELS.BULK_DELETE_RECORD, {
     ids,
   });
 
+  bulkCancelButton.remove();
   const succeeded = results.filter((r) => r.ok).length;
   const failed = results.length - succeeded;
   bulkStatus.textContent = `Done. ${succeeded} deleted, ${failed} failed.`;
-
   feed.scrollTop = feed.scrollHeight;
 });
 
@@ -384,39 +402,23 @@ bulkChangeButton.addEventListener("click", async () => {
 
   const type = bulkRecordType.value;
   bulkStatus.textContent = `Processing ${ids.length} record(s)...`;
-  let succeeded = 0;
-  let failed = 0;
 
   for (const id of ids) {
-    // Validate first
     const fetchResult = await window.api.comm.invoke(CHANNELS.SET_RECORD, {
       targetId: id,
       targetType: type,
     });
 
     if (fetchResult.status !== 200) {
-      feedBulkResult(id, `Skipped (not found or error).`);
-      failed++;
+      feedBulkResult(id, `Skipped — not found or error.`);
       continue;
     }
 
-    // Invoke the change
-    const changeResult = await window.api.comm.invoke(CHANNELS.CHANGE_RECORD, {
+    await window.api.comm.invoke(CHANNELS.CHANGE_RECORD, {
       targetId: id,
       targetType: type,
     });
-
-    if (changeResult && changeResult.ok) {
-      feedBulkResult(id, "Changed successfully.");
-      succeeded++;
-    } else {
-      feedBulkResult(
-        id,
-        `Change failed (status ${changeResult?.status ?? "unknown"}).`
-      );
-      failed++;
-    }
   }
 
-  bulkStatus.textContent = `Done. ${succeeded} changed, ${failed} failed.`;
+  bulkStatus.textContent = `Done processing ${ids.length} record(s).`;
 });
