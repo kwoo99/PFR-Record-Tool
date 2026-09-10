@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="./index.css" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title></title>
+  </head>
+  <body data-confirm-channel="DELETE_ACCOUNT_CONFIRM">
+    <div class="wrapper">
+      <h3 id="deleteConfirm-label">Delete this customer’s full account?</h3>
+      <p id="confirmation-description">
+        All account data for this customer will be permanently deleted.
+      </p>
+      <div id="choice-label">
+        <button id="confirmButton-label">Delete full account</button>
+        <button id="cancelButton-label">Cancel</button>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>

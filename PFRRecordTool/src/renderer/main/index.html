@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>PFR Record Tool</title>
+  </head>
+  <body>
+    <!-- App identity and environment mode; configuration.js controls the switch. -->
+    <header class="app-header">
+      <div>
+        <h1 id="title">PFR Record Tool</h1>
+        <p id="info"></p>
+      </div>
+      <div id="mode" class="toggle-control">
+        <span id="mode-Label">Sandbox</span>
+        <span class="help-tip help-tip--align-end help-tip--below">
+          <button
+            class="help-tip__trigger"
+            type="button"
+            aria-label="About Sandbox and Production modes"
+            aria-describedby="mode-help"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              width="16"
+              height="16"
+            >
+              <circle cx="10" cy="10" r="7.75"></circle>
+              <path d="M10 8.5v5"></path>
+              <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+            </svg>
+          </button>
+          <span id="mode-help" class="help-tip__content" role="tooltip">
+            Sandbox uses test data. Production actions affect live portal
+            records.
+          </span>
+        </span>
+        <label class="switch" for="mode-Switch">
+          <input class="switch-input" type="checkbox" id="mode-Switch" />
+          <span class="switch-track" aria-hidden="true"></span>
+          <span class="sr-only">Use production mode</span>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <!-- Connection fields are controlled by configuration.js. -->
+      <section class="configuration" aria-labelledby="configuration-title">
+        <div class="section-heading">
+          <h2 id="configuration-title">Portal connection</h2>
+          <p>
+            Credentials remain in this session and are used for PayFabric
+            requests.
+          </p>
+        </div>
+        <div class="configuration-fields">
+          <label>
+            Portal name
+            <input id="portalName" type="text" autocomplete="off" />
+          </label>
+          <label>
+            Integration key
+            <input id="intKey" type="text" autocomplete="off" />
+          </label>
+          <label>
+            Integration password
+            <input id="intPass" type="password" autocomplete="off" />
+          </label>
+          <button id="configButton" type="button">Save connection</button>
+        </div>
+        <p id="save-confirmation" class="inline-status" aria-live="polite"></p>
+      </section>
+
+      <!-- Lookup results and record actions are controlled by single-record.js. -->
+      <section class="record-lookup" aria-labelledby="record-lookup-title">
+        <div class="section-heading">
+          <h2 id="record-lookup-title">Single record</h2>
+          <p>
+            Find one customer, invoice, or payment by ID to view or change it.
+            Customer results also include customer-only and full-account delete
+            actions.
+          </p>
+        </div>
+        <div id="recordIDSubmit" class="record-fields">
+          <label>
+            Record ID
+            <input id="recordID" type="text" autocomplete="off" />
+          </label>
+          <label>
+            Record type
+            <select id="recordType">
+              <option value="customers">Customer</option>
+              <option value="invoices">Invoice</option>
+              <option value="payments">Payment</option>
+            </select>
+          </label>
+          <button id="recordSubmit" type="button">Find record</button>
+          <div id="recordOptions" class="button-row"></div>
+        </div>
+        <p id="record-Approval" class="inline-status" aria-live="polite"></p>
+      </section>
+
+      <!-- CSV controls: csv-deletion.js; pasted IDs: bulk-records.js. -->
+      <section class="bulk-workspace" aria-labelledby="bulk-workspace-title">
+        <div class="section-heading">
+          <h2 id="bulk-workspace-title">Bulk records</h2>
+          <p>
+            Choose a CSV, fetch portal customers, or paste semicolon-separated
+            record IDs.
+          </p>
+        </div>
+
+        <div id="fileSelection" class="file-selection">
+          <button id="selectFileButton" type="button">Choose CSV file</button>
+          <button id="fetchPortalCustomersButton" type="button">
+            Fetch all Customers from Portal
+          </button>
+          <span class="help-tip">
+            <button
+              class="help-tip__trigger"
+              type="button"
+              aria-label="About fetching portal customers"
+              aria-describedby="portal-fetch-help"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                width="16"
+                height="16"
+              >
+                <circle cx="10" cy="10" r="7.75"></circle>
+                <path d="M10 8.5v5"></path>
+                <circle
+                  class="help-tip__dot"
+                  cx="10"
+                  cy="5.75"
+                  r="0.8"
+                ></circle>
+              </svg>
+            </button>
+            <span
+              id="portal-fetch-help"
+              class="help-tip__content"
+              role="tooltip"
+            >
+              Loads customer IDs into this workspace. It does not delete or
+              change any customers.
+            </span>
+          </span>
+          <span id="selectedFile" class="selected-file">No list loaded</span>
+        </div>
+        <p
+          id="portalCustomerFetchStatus"
+          class="source-status"
+          aria-live="polite"
+        ></p>
+
+        <div id="searchBarContainer" class="search-row">
+          <label class="search-field">
+            <span class="sr-only">Filter loaded records</span>
+            <input
+              id="searchBar"
+              type="search"
+              placeholder="Filter loaded records"
+            />
+          </label>
+          <span class="help-tip">
+            <button
+              class="help-tip__trigger"
+              type="button"
+              aria-label="About filtering loaded records"
+              aria-describedby="record-filter-help"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 20 20"
+                width="16"
+                height="16"
+              >
+                <circle cx="10" cy="10" r="7.75"></circle>
+                <path d="M10 8.5v5"></path>
+                <circle
+                  class="help-tip__dot"
+                  cx="10"
+                  cy="5.75"
+                  r="0.8"
+                ></circle>
+              </svg>
+            </button>
+            <span
+              id="record-filter-help"
+              class="help-tip__content"
+              role="tooltip"
+            >
+              Search checks the full loaded list. Delete filtered records
+              affects every match, including matches not currently shown.
+            </span>
+          </span>
+          <p id="filesDisplayed"></p>
+          <p id="fileCount">0 records loaded</p>
+        </div>
+
+        <div class="deletion-toolbar">
+          <div id="deleteType" class="toggle-control">
+            <span id="deleteType-Label">Delete customer only</span>
+            <span class="help-tip">
+              <button
+                class="help-tip__trigger"
+                type="button"
+                aria-label="About customer deletion scope"
+                aria-describedby="delete-scope-help"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  width="16"
+                  height="16"
+                >
+                  <circle cx="10" cy="10" r="7.75"></circle>
+                  <path d="M10 8.5v5"></path>
+                  <circle
+                    class="help-tip__dot"
+                    cx="10"
+                    cy="5.75"
+                    r="0.8"
+                  ></circle>
+                </svg>
+              </button>
+              <span
+                id="delete-scope-help"
+                class="help-tip__content"
+                role="tooltip"
+              >
+                Customer only removes the customer record. Full account removes
+                its associated account data. This setting applies to every bulk
+                delete action.
+              </span>
+            </span>
+            <label class="switch" for="deleteType-Switch">
+              <input
+                class="switch-input"
+                type="checkbox"
+                id="deleteType-Switch"
+              />
+              <span class="switch-track" aria-hidden="true"></span>
+              <span class="sr-only">Delete the full customer account</span>
+            </label>
+          </div>
+          <div id="deleteRecordOptions" class="button-row"></div>
+        </div>
+
+        <!-- This panel renders deletion-manager snapshots via deletion-progress.js. -->
+        <section
+          id="deletionProgress"
+          class="deletion-progress"
+          aria-labelledby="deletion-progress-title"
+          hidden
+        >
+          <div class="progress-heading">
+            <div>
+              <h3 id="deletion-progress-title">Deletion progress</h3>
+              <p id="deletionProgressSummary" aria-live="polite"></p>
+            </div>
+            <span id="deletionProgressState" class="status-badge"
+              >Preparing</span
+            >
+          </div>
+
+          <progress
+            id="deletionProgressBar"
+            max="100"
+            value="0"
+            aria-label="Deletion progress"
+          ></progress>
+
+          <dl class="progress-counts">
+            <div>
+              <dt>Deleted</dt>
+              <dd id="deletionSucceeded">0</dd>
+            </div>
+            <div>
+              <dt>Failed</dt>
+              <dd id="deletionFailed">0</dd>
+            </div>
+            <div>
+              <dt>Remaining</dt>
+              <dd id="deletionRemaining">0</dd>
+            </div>
+          </dl>
+
+          <div class="progress-footer">
+            <p id="deletionWorkerCount"></p>
+            <div class="button-row">
+              <button id="pauseDeletionButton" type="button">
+                Pause deletion
+              </button>
+              <button id="resumeDeletionButton" type="button" hidden>
+                Continue remaining
+              </button>
+              <button id="retryDeletionButton" type="button" hidden>
+                Retry failed
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Shared activity output and the semicolon-separated ID workspace. -->
+        <div id="feedAndBulkContainer">
+          <section class="activity-panel" aria-labelledby="activity-title">
+            <div class="activity-heading">
+              <h3 id="activity-title">Recent activity</h3>
+              <span id="feedSourceBadge" class="source-badge">No source</span>
+            </div>
+            <p id="feedSourceDetail">Load a CSV, portal list, or text list.</p>
+            <p id="feedDisplaySummary" aria-live="polite"></p>
+            <div id="feedBox" role="log" aria-live="polite"></div>
+          </section>
+
+          <section id="bulkRecordSection" aria-labelledby="bulkRecordLabel">
+            <div class="bulk-record-heading">
+              <label id="bulkRecordLabel" for="bulkRecordInput">
+                Paste record IDs
+              </label>
+              <span class="help-tip help-tip--align-end">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About pasted record ID actions"
+                  aria-describedby="pasted-record-help"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 20 20"
+                    width="16"
+                    height="16"
+                  >
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle
+                      class="help-tip__dot"
+                      cx="10"
+                      cy="5.75"
+                      r="0.8"
+                    ></circle>
+                  </svg>
+                </button>
+                <span
+                  id="pasted-record-help"
+                  class="help-tip__content"
+                  role="tooltip"
+                >
+                  Fetch and Delete use every pasted ID. View/change opens only
+                  the first ID.
+                </span>
+              </span>
+            </div>
+            <textarea
+              id="bulkRecordInput"
+              placeholder="CUST001; CUST002; CUST003"
+            ></textarea>
+            <div id="bulkRecordControls">
+              <select id="bulkRecordType" aria-label="Bulk record type">
+                <option value="customers">Customer</option>
+                <option value="invoices">Invoice</option>
+                <option value="payments">Payment</option>
+              </select>
+              <button id="bulkFetchButton" type="button">Fetch records</button>
+              <button id="bulkDeleteButton" type="button">
+                Delete records
+              </button>
+              <button id="bulkChangeButton" type="button">
+                View/change first ID
+              </button>
+            </div>
+            <p class="bulk-help">
+              View/change opens only the first ID in the text box.
+            </p>
+            <p id="bulkStatus" aria-live="polite"></p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Main-screen controllers are split by workflow to keep edits local. -->
+    <script src="./configuration.js"></script>
+    <script src="./single-record.js"></script>
+    <script src="./feed-workspace.js"></script>
+    <script src="./csv-deletion.js"></script>
+    <script src="./bulk-records.js"></script>
+    <script src="./deletion-progress.js"></script>
+  </body>
+</html>

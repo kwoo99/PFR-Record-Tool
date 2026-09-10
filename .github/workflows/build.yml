@@ -1,12 +1,15 @@
+# Windows release pipeline: test, build the installer, and upload it as an artifact.
 name: Build Windows
 
 on:
+  # Main-branch pushes build automatically; workflow_dispatch supports manual runs.
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   build-windows:
+    # Electron Forge creates the Windows installer on a native Windows runner.
     runs-on: windows-latest
     defaults:
       run:
@@ -19,10 +22,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.14.0'
+          node-version: "20.14.0"
+          cache: npm
+          cache-dependency-path: PFRRecordTool/package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
 
       - name: Make Windows build
         run: npm run make
@@ -31,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-build
-          path: PFRRecordTool/out/make/squirrel.windows/x64/
+          path: PFRRecordTool/out/make/squirrel.windows/x64/*.exe
