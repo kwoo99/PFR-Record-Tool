@@ -66,7 +66,7 @@ async function renderConfirmation(target, deleteType) {
 test("loaded-customer confirmation distinguishes Full from Partial", async () => {
   const full = await renderConfirmation("loaded", "Full");
   assert.deepEqual(full, {
-    button: "Delete full accounts",
+    button: "Delete Full Accounts",
     description:
       "All account data for every loaded customer will be permanently deleted.",
     title: "Delete full accounts for all loaded customers?",
@@ -74,7 +74,7 @@ test("loaded-customer confirmation distinguishes Full from Partial", async () =>
 
   const partial = await renderConfirmation("loaded", "Partial");
   assert.deepEqual(partial, {
-    button: "Delete customers",
+    button: "Delete Customers",
     description:
       "Only the loaded customer records will be deleted. Full account deletion is not selected.",
     title: "Delete all loaded customer records?",

@@ -1,15 +1,15 @@
 /* Shared layout and actions for every confirmation dialog. */
 body {
-  background-color: #f4f4f4;
-  color: #263746;
+  background-color: var(--background);
+  color: var(--text);
   font-family: "Segoe UI", Helvetica, Garuda, Arial, sans-serif;
   overflow: hidden;
   text-align: center;
 }
 
 button {
-  background-color: #1a80c3;
-  border: 1px solid #1a80c3;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 5px;
   color: white;
   cursor: pointer;
@@ -21,29 +21,31 @@ button {
 }
 
 button:hover {
-  background-color: #4694c8;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 button:active {
-  background-color: #4c81cb;
+  background-color: var(--primary-active);
+  border-color: var(--primary-active);
 }
 
 button:focus-visible {
-  outline: 3px solid rgba(26, 128, 195, 0.3);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
 body[data-delete-target] #confirmButton-label,
 body[data-confirm-channel="DELETE_ACCOUNT_CONFIRM"] #confirmButton-label {
-  background: #b42318;
-  border-color: #b42318;
+  background: var(--danger);
+  border-color: var(--danger);
 }
 
 body[data-delete-target] #confirmButton-label:hover,
 body[data-confirm-channel="DELETE_ACCOUNT_CONFIRM"]
   #confirmButton-label:hover {
-  background: #8f1c13;
-  border-color: #8f1c13;
+  background: var(--danger-hover);
+  border-color: var(--danger-hover);
 }
 
 #choice-label {
@@ -54,14 +56,14 @@ body[data-confirm-channel="DELETE_ACCOUNT_CONFIRM"]
 }
 
 #deleteConfirm-label {
-  color: #1b2b3a;
+  color: var(--text);
   font-size: 18px;
   margin: 0;
   max-width: 38ch;
 }
 
 #confirmation-description {
-  color: #526779;
+  color: var(--text-muted);
   font-size: 14px;
   margin: 8px 0 18px;
   max-width: 48ch;

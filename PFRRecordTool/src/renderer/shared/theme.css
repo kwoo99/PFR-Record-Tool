@@ -1,0 +1,34 @@
+/*
+ * Shared PayFabric visual tokens.
+ * Brand colors follow the public PayFabric website; action shades are kept dark
+ * enough for readable white labels in the desktop application.
+ */
+:root {
+  color-scheme: light;
+  --brand-blue: #1a80c3;
+  --brand-blue-deep: #007eb6;
+  --brand-green: #58b53b;
+  --background: #ececec;
+  --surface: #ffffff;
+  --surface-subtle: #f7f7f7;
+  --border: #d2d2d2;
+  --border-strong: #b8b8b8;
+  --text: #363636;
+  --text-muted: #5d5d5d;
+  --primary: #197cbd;
+  --primary-hover: #007eb6;
+  --primary-active: #126fa8;
+  --primary-soft: #e6f3fa;
+  --success: #3a7a2b;
+  --success-soft: #eaf6e6;
+  --warning: #8a4b00;
+  --warning-soft: #fff3de;
+  --danger: #c5173c;
+  --danger-hover: #9f1230;
+  --danger-soft: #fde8ed;
+  --data-surface: #363636;
+  --data-border: #5d5d5d;
+  --data-text: #ffffff;
+  --focus-ring: rgba(26, 128, 195, 0.3);
+  --shadow: 0 8px 24px rgba(54, 54, 54, 0.1);
+}

@@ -5,11 +5,27 @@
 const Module = require("node:module");
 const path = require("node:path");
 
-function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
+function createIPCHarness({
+  autopayContracts = {},
+  autopayCustomers = [],
+  autopayDeleteResult = { data: true, error: null, status: 200 },
+  autopayPaymentMethods = {},
+  customerIds = [],
+  deleteRecordResult = { status: 200, statusText: "OK" },
+  portalTimezone = null,
+  portalTimezoneError = null,
+  selectedFilePath,
+  selectedSaveFilePath,
+} = {}) {
   const handlers = new Map();
   const messages = [];
+  const autopayListRequests = [];
   const deletionStarts = [];
   const directDeletes = [];
+  const autopayDeletes = [];
+  const contractLookupRequests = [];
+  const walletLookupRequests = [];
+  let helpOpenCount = 0;
   const ipcMain = {
     handle: (channel, handler) => handlers.set(channel, handler),
     on: (channel, handler) => handlers.set(channel, handler),
@@ -22,10 +38,41 @@ function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
         configure: () => {},
         deleteRecord: async (id, deleteType) => {
           directDeletes.push({ id, deleteType });
-          return { status: 200 };
+          return deleteRecordResult;
         },
         getRecord: async () => ({ status: 200 }),
+        getAutoPayContract: async (customerId) => {
+          contractLookupRequests.push(customerId);
+          return Object.hasOwn(autopayContracts, customerId)
+            ? autopayContracts[customerId]
+            : { data: null, status: 404 };
+        },
+        getDefaultPaymentMethod: async (customerId, currencyCode) => {
+          walletLookupRequests.push({ currencyCode, customerId });
+          return Object.hasOwn(autopayPaymentMethods, customerId)
+            ? autopayPaymentMethods[customerId]
+            : {
+                data: { PaymentMethodGuid: "wallet-guid" },
+                status: 200,
+              };
+        },
+        getPortalTimezone: async () => {
+          if (portalTimezoneError) throw portalTimezoneError;
+          return portalTimezone;
+        },
+        createAutoPayContract: async () => ({ data: true, status: 200 }),
+        updateAutoPayContract: async () => ({ data: true, status: 200 }),
+        deleteAutoPayContract: async (customerId) => {
+          autopayDeletes.push(customerId);
+          return autopayDeleteResult;
+        },
+        listAutoPayTemplates: async () => ({ data: [], status: 200 }),
+        listCustomers: async (request) => {
+          autopayListRequests.push(request);
+          return autopayCustomers;
+        },
         listCustomerIds: async () => customerIds,
+        saveAutoPayTemplate: async () => ({ data: true, status: 200 }),
         updateRecord: async () => ({ status: 200 }),
       },
     ],
@@ -53,6 +100,9 @@ function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
         closeConfirmation: () => {},
         closeRecordEditor: () => {},
         openConfirmation: () => {},
+        openHelpWindow: () => {
+          helpOpenCount++;
+        },
         openRecordEditor: () => {},
       },
     ],
@@ -66,6 +116,10 @@ function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
             selectedFilePath
               ? { canceled: false, filePaths: [selectedFilePath] }
               : { canceled: true, filePaths: [] },
+          showSaveDialog: async () =>
+            selectedSaveFilePath
+              ? { canceled: false, filePath: selectedSaveFilePath }
+              : { canceled: true },
         },
         ipcMain,
       };
@@ -80,10 +134,15 @@ function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
 
   let setupIPCHandlers;
   try {
+    const autoPayHandlerPath = path.join(
+      projectRoot,
+      "src/main/ipc/register-autopay-handlers.js",
+    );
     const handlerPath = path.join(
       projectRoot,
       "src/main/ipc/register-handlers.js",
     );
+    delete require.cache[autoPayHandlerPath];
     delete require.cache[handlerPath];
     ({ setupIPCHandlers } = require(handlerPath));
   } finally {
@@ -96,7 +155,17 @@ function createIPCHarness({ customerIds = [], selectedFilePath } = {}) {
     },
   });
 
-  return { deletionStarts, directDeletes, handlers, messages };
+  return {
+    autopayDeletes,
+    autopayListRequests,
+    contractLookupRequests,
+    deletionStarts,
+    directDeletes,
+    handlers,
+    helpOpenCount: () => helpOpenCount,
+    messages,
+    walletLookupRequests,
+  };
 }
 
 module.exports = { createIPCHarness };

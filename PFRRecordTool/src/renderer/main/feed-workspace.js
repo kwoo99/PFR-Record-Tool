@@ -127,7 +127,37 @@
     }
   }
 
-  window.feedWorkspace = Object.freeze({ appendRecordResult, filter });
+  function captureState() {
+    return {
+      entries: [...entries],
+      searchTerm,
+      source: {
+        badge: sourceBadge.textContent,
+        dataset: sourceBadge.dataset.source,
+        detail: sourceDetail.textContent,
+        selection: selectedFile.textContent,
+      },
+    };
+  }
+
+  function restoreState(snapshot = {}) {
+    entries = Array.isArray(snapshot.entries) ? snapshot.entries.map(String) : [];
+    searchTerm = snapshot.searchTerm || "";
+    searchBar.value = searchTerm;
+    sourceBadge.textContent = snapshot.source?.badge || "No Source";
+    sourceBadge.dataset.source = snapshot.source?.dataset || "no-source";
+    sourceDetail.textContent =
+      snapshot.source?.detail || "Load a CSV, portal list, or text list.";
+    selectedFile.textContent = snapshot.source?.selection || "No List Loaded";
+    return renderMatchingEntries();
+  }
+
+  window.feedWorkspace = Object.freeze({
+    appendRecordResult,
+    captureState,
+    filter,
+    restoreState,
+  });
   window.api.comm.receive(CHANNELS.FEED_BOX, appendText);
   window.api.comm.receive(CHANNELS.FEED_BOX_CLEAR, clear);
   window.api.comm.receive(CHANNELS.FEED_RECORDS_REPLACE, replaceRecords);

@@ -1,5 +1,6 @@
 {
   "name": "pfr-record-tool",
+  "productName": "PFR Record Tool",
   "version": "1.0.0",
   "description": "Internal desktop tool for managing PayFabric Receivables records.",
   "main": "src/main/index.js",
@@ -7,7 +8,11 @@
     "start": "electron .",
     "test": "node --test",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "make:mac": "electron-forge make --platform=darwin",
+    "make:windows": "electron-forge make --platform=win32 --arch=x64",
+    "make:windows:portable": "electron-forge make --platform=win32 --arch=x64 --targets=@electron-forge/maker-zip",
+    "make:windows:signed": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/windows/Build-SignedWindows.ps1"
   },
   "author": "Kyle Woo",
   "license": "ISC",
@@ -25,8 +30,15 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
+    "exceljs": "^4.4.0",
     "fast-csv": "^5.0.1",
     "fetch-cookie": "^3.2.0",
     "tough-cookie": "^6.0.1"
+  },
+  "overrides": {
+    "exceljs": {
+      "tmp": "^0.2.6",
+      "uuid": "^11.1.1"
+    }
   }
 }

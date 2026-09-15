@@ -132,4 +132,10 @@
   });
 
   window.api.comm.receive(CHANNELS.DELETION_PROGRESS, renderProgress);
+  window.api.comm
+    .invoke(CHANNELS.GET_DELETION_PROGRESS)
+    .then((progress) => {
+      if (progress.status !== "idle") renderProgress(progress);
+    })
+    .catch(() => {});
 })();

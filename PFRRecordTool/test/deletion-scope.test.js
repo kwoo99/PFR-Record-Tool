@@ -70,3 +70,21 @@ test("the deletion scope toggle controls every standard delete path", async () =
     { id: "EXPLICIT-ACCOUNT", deleteType: "Full" },
   ]);
 });
+
+test("single-record deletion reports API failures instead of false success", async () => {
+  const { handlers, messages } = createIPCHarness({
+    deleteRecordResult: { status: 500, statusText: "Server Error" },
+  });
+  await handlers.get(CHANNELS.SET_RECORD)(undefined, {
+    targetId: "CUST-FAIL",
+    targetType: "customers",
+  });
+
+  await handlers.get(CHANNELS.DELETE_CONFIRM)();
+
+  const response = messages.find(
+    (message) => message.channel === CHANNELS.ACTION_RESPONSE,
+  );
+  assert.match(response.value, /failed/i);
+  assert.doesNotMatch(response.value, /^Record Deleted$/);
+});

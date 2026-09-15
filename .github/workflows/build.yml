@@ -1,10 +1,10 @@
-# Windows release pipeline: test, build the installer, and upload it as an artifact.
-name: Build Windows
+# Desktop release pipeline: test and build native installers without publishing them.
+name: Build Desktop Installers
 
 on:
-  # Main-branch pushes build automatically; workflow_dispatch supports manual runs.
+  # Keep release candidates available for both the development and stable branches.
   push:
-    branches: [main]
+    branches: [ai-dev, main]
   workflow_dispatch:
 
 jobs:
@@ -33,10 +33,55 @@ jobs:
         run: npm test
 
       - name: Make Windows build
-        run: npm run make
+        run: npm run make:windows
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
-          path: PFRRecordTool/out/make/squirrel.windows/x64/*.exe
+          name: PFR-Record-Tool-Windows-x64
+          path: PFRRecordTool/out/make/squirrel.windows/x64/
+          if-no-files-found: error
+          retention-days: 14
+
+  build-macos:
+    # Build on each native Mac architecture so users do not need Rosetta.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        working-directory: PFRRecordTool
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.14.0"
+          cache: npm
+          cache-dependency-path: PFRRecordTool/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Make macOS build
+        run: npm run make:mac -- --arch=${{ matrix.arch }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PFR-Record-Tool-macOS-${{ matrix.arch }}
+          path: PFRRecordTool/out/make/zip/darwin/${{ matrix.arch }}/*.zip
+          if-no-files-found: error
+          retention-days: 14

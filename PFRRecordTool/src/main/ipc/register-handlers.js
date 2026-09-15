@@ -8,6 +8,7 @@ const path = require("node:path");
 
 const { loadData } = require("../csv/records.js");
 const { createDeletionManager } = require("../deletion/manager.js");
+const { registerAutoPayHandlers } = require("./register-autopay-handlers.js");
 const {
   configure,
   deleteRecord,
@@ -19,6 +20,7 @@ const {
   closeConfirmation,
   closeRecordEditor,
   openConfirmation,
+  openHelpWindow,
   openRecordEditor,
 } = require("../windows/manager.js");
 const CHANNELS = require("../../shared/channels.js");
@@ -36,10 +38,16 @@ const state = {
   submittedRecordBody: undefined,
   submittedRecordType: "",
   submittedResponse: null,
+  workspaceViews: {
+    autopay: null,
+    records: null,
+  },
 };
 
+const WORKSPACE_NAMES = new Set(Object.keys(state.workspaceViews));
+
 function configureClient() {
-  configure({
+  return configure({
     sandbox: state.isTest,
     portalName: state.portalName,
     integrationKey: state.integrationKey,
@@ -51,8 +59,44 @@ function send(mainWindow, channel, value) {
   mainWindow.webContents.send(channel, value);
 }
 
+// Keep page-specific UI state in memory while the Electron process is open.
+function registerWorkspaceStateHandlers() {
+  function assertWorkspaceName(workspace) {
+    if (!WORKSPACE_NAMES.has(workspace)) {
+      throw new Error(`Unknown workspace: ${workspace}`);
+    }
+  }
+
+  ipcMain.handle(CHANNELS.GET_WORKSPACE_STATE, (_event, workspace) => {
+    assertWorkspaceName(workspace);
+    return state.workspaceViews[workspace];
+  });
+
+  ipcMain.handle(
+    CHANNELS.SET_WORKSPACE_STATE,
+    (_event, { snapshot, workspace }) => {
+      assertWorkspaceName(workspace);
+      state.workspaceViews[workspace] = snapshot;
+      return true;
+    },
+  );
+
+  ipcMain.handle(CHANNELS.OPEN_HELP, () => {
+    openHelpWindow();
+    return true;
+  });
+}
+
 // Portal credentials and Sandbox/Production selection.
 function registerConfigurationHandlers() {
+  ipcMain.handle(CHANNELS.SET_CONFIGURATION, async (_event, configuration) => {
+    state.portalName = configuration.portalName;
+    state.integrationKey = configuration.integrationKey;
+    state.integrationPass = configuration.integrationPass;
+    await configureClient();
+    return { configured: true };
+  });
+
   ipcMain.handle(CHANNELS.SET_PORTAL, (_event, value) => {
     state.portalName = value;
     console.log("Portal name set to:", state.portalName);
@@ -74,7 +118,7 @@ function registerConfigurationHandlers() {
   ipcMain.handle(CHANNELS.TOGGLE_MODE, (_event, isChecked) => {
     state.isTest = !isChecked;
     console.log("Sandbox:", state.isTest);
-    configureClient();
+    return configureClient();
   });
 }
 
@@ -208,6 +252,21 @@ function registerDeletionHandlers(mainWindow) {
     });
   }
 
+  function reportDirectDeletion(response, noun) {
+    const succeeded = response.status >= 200 && response.status < 300;
+    const detail = [response.status, response.statusText]
+      .filter((value) => value !== undefined && value !== null && value !== "")
+      .join(": ");
+    send(
+      mainWindow,
+      CHANNELS.ACTION_RESPONSE,
+      succeeded ? `${noun} Deleted` : `${noun} delete failed${detail ? ` (${detail})` : ""}.`,
+    );
+    if (succeeded) state.submittedRecord = "";
+    closeConfirmation();
+    return response;
+  }
+
   ipcMain.handle(CHANNELS.BULK_DELETE_RECORD, (_event, { ids }) =>
     startDeletion(ids),
   );
@@ -267,10 +326,7 @@ function registerDeletionHandlers(mainWindow) {
 
   ipcMain.handle(CHANNELS.DELETE_CONFIRM, async () => {
     const result = await deleteRecord(state.submittedRecord, state.deleteType);
-    console.log(result);
-    send(mainWindow, CHANNELS.ACTION_RESPONSE, "Record Deleted");
-    state.submittedRecord = "";
-    closeConfirmation();
+    return reportDirectDeletion(result, "Record");
   });
 
   ipcMain.handle(CHANNELS.DELETE_ALL, () => {
@@ -307,16 +363,18 @@ function registerDeletionHandlers(mainWindow) {
     openConfirmation("delete-account");
   });
 
-  ipcMain.handle(CHANNELS.DELETE_ACCOUNT_CONFIRM, () => {
-    console.log("ACCOUNT:", state.submittedRecord, "DELETED.");
-    closeConfirmation();
-    deleteRecord(state.submittedRecord, "Full");
-    send(mainWindow, CHANNELS.ACTION_RESPONSE, "Account Deleted");
+  ipcMain.handle(CHANNELS.DELETE_ACCOUNT_CONFIRM, async () => {
+    const result = await deleteRecord(state.submittedRecord, "Full");
+    return reportDirectDeletion(result, "Account");
   });
 
   ipcMain.on(CHANNELS.CANCEL_DELETION, () => {
     deletionManager.cancel();
   });
+
+  ipcMain.handle(CHANNELS.GET_DELETION_PROGRESS, () =>
+    deletionManager.getSnapshot(),
+  );
 
   ipcMain.handle(CHANNELS.RESUME_DELETION, () => deletionManager.resume());
 
@@ -327,10 +385,12 @@ function registerDeletionHandlers(mainWindow) {
 
 function setupIPCHandlers(mainWindow) {
   // This is the only registration point called by the Electron entry module.
+  registerWorkspaceStateHandlers();
   registerConfigurationHandlers();
   registerRecordHandlers(mainWindow);
   registerCSVHandlers(mainWindow);
   registerDeletionHandlers(mainWindow);
+  registerAutoPayHandlers(mainWindow, state);
 }
 
 module.exports = { setupIPCHandlers };

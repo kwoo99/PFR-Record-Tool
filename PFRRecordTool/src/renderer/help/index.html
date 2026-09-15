@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../shared/theme.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>PFR Record Tool Help</title>
+  </head>
+  <body>
+    <!--
+      THESIS: Help is a searchable operating reference, not a long modal or detached API dump.
+      OWN-WORLD: PayFabric blue navigation, cool work surfaces, and one dense reference ledger.
+      STORY: Understand the workbook structure, find a column, and verify its allowed values before returning to AutoPay.
+      FIRST VIEWPORT: Topic navigation at left; workbook purpose, filters, and field table at right.
+      FORM: Established-world Read surface; direct extension; seed established-payfabric-help-v1.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
+    <header class="help-header">
+      <div>
+        <h1>PFR Record Tool Help</h1>
+        <p>Reference material for safe record and AutoPay operations.</p>
+      </div>
+    </header>
+
+    <div class="help-layout">
+      <aside class="topic-navigation" aria-label="Help Topics">
+        <h2>Help Topics</h2>
+        <button
+          class="topic-link is-current"
+          data-topic="guide"
+          type="button"
+          aria-pressed="true"
+        >
+          Full App Guide
+        </button>
+        <button
+          class="topic-link"
+          data-topic="workbook"
+          type="button"
+          aria-pressed="false"
+        >
+          AutoPay Workbook
+        </button>
+      </aside>
+
+      <main>
+        <div id="guideTopic" class="topic-panel">
+          <section class="guide-introduction" aria-labelledby="guide-title">
+            <div class="guide-heading">
+              <div>
+                <p class="eyebrow">Start Here</p>
+                <h2 id="guide-title">Full App Guide</h2>
+                <p>
+                  Connect safely, choose a workspace, review the intended scope,
+                  and monitor every portal change through completion.
+                </p>
+              </div>
+            </div>
+
+            <div class="safety-note">
+              <strong>Use Sandbox First</strong>
+              <span>
+                Confirm the environment badge before applying, editing, or
+                deleting portal data. Production confirmations call out the risk.
+              </span>
+            </div>
+          </section>
+
+          <div class="guide-body">
+            <nav class="guide-contents" aria-label="Guide Sections">
+              <strong>On This Page</strong>
+              <a href="#connect">Connect Safely</a>
+              <a href="#single-record">Single Records</a>
+              <a href="#load-records">Load Customer Lists</a>
+              <a href="#bulk-delete">Bulk Deletions</a>
+              <a href="#find-autopay">Find AutoPay Customers</a>
+              <a href="#individual-autopay">Individual Contracts</a>
+              <a href="#bulk-autopay">Bulk AutoPay</a>
+              <a href="#workbooks">Workbooks and Exports</a>
+              <a href="#troubleshooting">Troubleshooting</a>
+            </nav>
+
+            <article class="guide-article">
+              <section id="connect" class="guide-section">
+                <h2>Connect Safely</h2>
+                <ol>
+                  <li>Open <strong>Records</strong> and enter the portal name and integration credentials.</li>
+                  <li>Leave the Production switch off while testing. The badge should read <strong>Sandbox</strong>.</li>
+                  <li>Save the connection, then confirm the correct portal appears in the header.</li>
+                </ol>
+                <p class="guide-tip">Credentials stay in the running app session and are not shown on the AutoPay page.</p>
+              </section>
+
+              <section id="single-record" class="guide-section">
+                <h2>View or Change a Single Record</h2>
+                <p>Choose Customers, Invoices, or Payments; enter one ID; then select <strong>View or Change Record</strong>. If several IDs are pasted, this action opens only the first ID.</p>
+                <p>Review the JSON before saving. Invoice updates include the invoice ID automatically; leaving an invoice status as Outstanding keeps it unchanged when only the balance is edited.</p>
+              </section>
+
+              <section id="load-records" class="guide-section">
+                <h2>Load Customer Lists</h2>
+                <p>Use one source at a time: a pasted ID list, a CSV file, or <strong>Fetch All Customers from Portal</strong>. Loading from a new source replaces the current feed and labels where the data came from.</p>
+                <p>Search works against the complete loaded list even when only part of a very large list is rendered.</p>
+              </section>
+
+              <section id="bulk-delete" class="guide-section">
+                <h2>Run and Continue Bulk Deletions</h2>
+                <ol>
+                  <li>Choose regular customer deletion or enable <strong>Delete Full Account</strong>.</li>
+                  <li>Review the confirmation, which names the active deletion type and number of records.</li>
+                  <li>Watch deleted, failed, and remaining counts in the progress area.</li>
+                  <li>Pause to preserve the remaining queue, continue it later in the same app session, or retry failed records after the cycle.</li>
+                </ol>
+              </section>
+
+              <section id="find-autopay" class="guide-section">
+                <h2>Find and Select AutoPay Customers</h2>
+                <p>Open <strong>AutoPay</strong>, set report filters, and fetch customers. Customer ID, name, and email use exact portal matches so they reduce the report before it loads. The AutoPay Status filter can show all customers, only customers with a valid schedule, or only customers without one.</p>
+                <p><strong>Select All Matching Results</strong> includes matches beyond the rows currently rendered. Always check the selected count beside the bulk action before continuing.</p>
+              </section>
+
+              <section id="individual-autopay" class="guide-section">
+                <h2>Manage an Individual Contract</h2>
+                <p>Choose a customer row to load their current contract. You can create one when none exists, update the loaded contract, or remove AutoPay. The app rechecks the portal immediately before saving or removing to avoid acting on stale information.</p>
+                <p>Contracts process at midnight in the portal's displayed time zone. The schedule preview shows that time zone when the portal makes it available.</p>
+              </section>
+
+              <section id="bulk-autopay" class="guide-section">
+                <h2>Run a Bulk AutoPay Action</h2>
+                <p>Select customers, then choose an existing portal template, a JSON configuration, or an Excel workbook. Review the next payment date, optional payment method, and selected count before applying.</p>
+                <p>Customers already on AutoPay are skipped during apply; customers without a contract are skipped during removal. Processing is bounded to protect app and portal performance, and failed temporary requests can be retried.</p>
+              </section>
+
+              <section id="workbooks" class="guide-section">
+                <h2>Use Workbooks and Customer Exports</h2>
+                <p>Download the blank workbook from the AutoPay action panel. Templates holds reusable configurations; Assignments maps customer IDs to templates and optional overrides. Use the <strong>AutoPay Workbook</strong> topic for every supported column and value.</p>
+                <p><strong>Export Selected Customers</strong> creates a workbook of the loaded customer data and attempts to include the contract wallet first, then the customer's default payment method.</p>
+              </section>
+
+              <section id="troubleshooting" class="guide-section">
+                <h2>Troubleshooting</h2>
+                <dl>
+                  <dt>No customers load</dt>
+                  <dd>Confirm the connection, environment, and portal name, then try a broader filter.</dd>
+                  <dt>A contract action is skipped</dt>
+                  <dd>The portal state changed or the requested state already exists. Reload the customer before trying again.</dd>
+                  <dt>No wallet GUID appears</dt>
+                  <dd>The customer may have neither a contract payment method nor a default payment method, or the lookup may have failed.</dd>
+                  <dt>The portal time zone is unavailable</dt>
+                  <dd>Contract changes can still run, but verify the configured portal time zone before relying on the schedule preview.</dd>
+                </dl>
+              </section>
+            </article>
+          </div>
+        </div>
+
+        <div id="workbookTopic" class="topic-panel" hidden>
+          <section class="guide-introduction" aria-labelledby="reference-title">
+            <div class="guide-heading">
+              <div>
+                <h2 id="reference-title">AutoPay Workbook Reference</h2>
+                <p>
+                  Use Templates for reusable settings. Use Assignments to connect
+                  customers to a template or provide customer-specific overrides.
+                </p>
+              </div>
+            </div>
+
+            <div class="sheet-explanation">
+              <div>
+                <strong>Templates</strong>
+                <span>One reusable AutoPay configuration per row.</span>
+              </div>
+              <div>
+                <strong>Assignments</strong>
+                <span>One customer per row. TemplateName and override columns are optional.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="reference-section" aria-labelledby="columns-title">
+            <div class="reference-toolbar">
+              <div>
+                <h2 id="columns-title">Column Objects</h2>
+                <p id="referenceCount" aria-live="polite"></p>
+              </div>
+              <label>
+                Search Columns and Options
+                <input id="referenceSearch" type="search" autocomplete="off" />
+              </label>
+            </div>
+
+            <div class="sheet-filters" role="group" aria-label="Filter by Workbook Sheet">
+              <button class="sheet-filter is-current" data-sheet="all" type="button">All Columns</button>
+              <button class="sheet-filter" data-sheet="Templates" type="button">Templates</button>
+              <button class="sheet-filter" data-sheet="Assignments" type="button">Assignments</button>
+            </div>
+
+            <div class="reference-table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Column</th>
+                    <th>Used In</th>
+                    <th>Type and Requirement</th>
+                    <th>Available Values or Example</th>
+                    <th>What It Controls</th>
+                  </tr>
+                </thead>
+                <tbody id="referenceRows"></tbody>
+              </table>
+            </div>
+            <p id="referenceEmpty" class="empty-state" hidden>
+              No columns match that search. Clear the search or choose another sheet.
+            </p>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="../../shared/autopay-workbook-schema.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>

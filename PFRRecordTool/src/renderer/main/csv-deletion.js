@@ -27,9 +27,9 @@
   let loadedRecordCount = 0;
 
   deleteAllRecordsButton.id = "deleteAllRecords";
-  deleteAllRecordsButton.textContent = "Delete all loaded";
+  deleteAllRecordsButton.textContent = "Delete All Loaded";
   deleteDisplayedButton.id = "deleteDisplayed";
-  deleteDisplayedButton.textContent = "Delete filtered records";
+  deleteDisplayedButton.textContent = "Delete Filtered Records";
 
   function showDeleteAllButton() {
     deletionOptions.textContent = "";
@@ -49,7 +49,7 @@
   });
 
   // Filtering also defines the record subset used by “Delete filtered records.”
-  searchBar.addEventListener("input", () => {
+  function applySearch() {
     const searchTerm = searchBar.value.trim();
     const filteredFeed = window.feedWorkspace.filter(searchTerm);
     displayedRecords = filteredFeed.records;
@@ -74,7 +74,9 @@
     } else if (loadedRecordCount > 0) {
       deletionOptions.appendChild(deleteAllRecordsButton);
     }
-  });
+  }
+
+  searchBar.addEventListener("input", applySearch);
 
   deleteAllRecordsButton.addEventListener("click", () => {
     window.api.comm.invoke(CHANNELS.DELETE_ALL);
@@ -124,7 +126,7 @@
     fileCount.textContent =
       typeof value === "object"
         ? value.displayText
-        : `${loadedRecordCount} record${loadedRecordCount === 1 ? "" : "s"} loaded`;
+        : `${loadedRecordCount} Record${loadedRecordCount === 1 ? "" : "s"} Loaded`;
     showDeleteAllButton();
   });
 
@@ -132,11 +134,26 @@
     // Send the actual checkbox state so UI and main-process scope cannot drift.
     window.api.comm.invoke(CHANNELS.TOGGLE_DELETE, event.target.checked);
     deleteTypeLabel.textContent = event.target.checked
-      ? "Delete full account"
-      : "Delete customer only";
+      ? "Delete Full Account"
+      : "Delete Customer Only";
   });
 
   window.api.comm.receive(CHANNELS.ACTION_RESPONSE, (message) => {
     alert(message);
+  });
+
+  window.recordsDeletionWorkspace = Object.freeze({
+    captureState: () => ({
+      displayedRecords: [...displayedRecords],
+      loadedRecordCount,
+    }),
+    restoreState: (snapshot = {}) => {
+      displayedRecords = Array.isArray(snapshot.displayedRecords)
+        ? [...snapshot.displayedRecords]
+        : [];
+      loadedRecordCount = Number(snapshot.loadedRecordCount) || 0;
+      fileCount.textContent = `${loadedRecordCount} Record${loadedRecordCount === 1 ? "" : "s"} Loaded`;
+      applySearch();
+    },
   });
 })();

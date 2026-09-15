@@ -4,29 +4,6 @@
  * deletion progress, bulk activity, accessibility helpers, and responsive rules.
  */
 
-/* Design tokens */
-:root {
-  color-scheme: light;
-  --background: #f0f3f7;
-  --surface: #fcfcfc;
-  --surface-subtle: #f1f8fb;
-  --border: #c7d9e5;
-  --border-strong: #abc6d8;
-  --text: #181830;
-  --text-muted: #464765;
-  --primary: #1362e2;
-  --primary-hover: #0470ec;
-  --primary-soft: #e5efff;
-  --success: #067647;
-  --success-soft: #d9f2e6;
-  --warning: #9a4b00;
-  --warning-soft: #fff3de;
-  --danger: #bd2947;
-  --danger-hover: #981c36;
-  --danger-soft: #ffe3da;
-  --shadow: 0 8px 24px rgba(18, 18, 39, 0.08);
-}
-
 /* Shared element defaults and controls */
 * {
   box-sizing: border-box;
@@ -78,7 +55,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 .switch-input:focus-visible + .switch-track {
-  outline: 3px solid rgba(19, 98, 226, 0.25);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
@@ -95,7 +72,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #6b747d;
+  color: var(--text-muted);
 }
 
 label {
@@ -136,15 +113,7 @@ main {
   gap: 18px;
 }
 
-/* Header and primary workflow panels */
-.app-header {
-  align-items: flex-start;
-  display: flex;
-  justify-content: space-between;
-  margin-block-end: 24px;
-}
-
-#info,
+/* Primary workflow panels */
 .section-heading p {
   color: var(--text-muted);
   font-size: 12px;
@@ -341,11 +310,11 @@ button.help-tip__trigger:focus-visible {
 }
 
 .help-tip__content {
-  background: #121227;
-  border: 1px solid #33393d;
+  background: var(--data-surface);
+  border: 1px solid var(--data-border);
   border-radius: 7px;
   box-shadow: 0 8px 20px rgba(18, 18, 39, 0.18);
-  color: #fcfcfc;
+  color: var(--data-text);
   font-size: 12px;
   font-weight: 400;
   inset-block-end: calc(100% + 8px);
@@ -413,7 +382,7 @@ button.help-tip__trigger:focus-visible {
 }
 
 .switch-track::after {
-  background: #fcfcfc;
+  background: var(--surface);
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(18, 18, 39, 0.28);
   content: "";
@@ -493,7 +462,7 @@ button.help-tip__trigger:focus-visible {
 
 progress {
   appearance: none;
-  background: #c7d9e5;
+  background: var(--border);
   border: 0;
   border-radius: 999px;
   display: block;
@@ -504,11 +473,11 @@ progress {
 }
 
 progress::-webkit-progress-bar {
-  background: #c7d9e5;
+  background: var(--border);
 }
 
 progress::-webkit-progress-value {
-  background: var(--primary);
+  background: var(--brand-green);
   border-radius: 999px;
 }
 
@@ -609,10 +578,10 @@ progress::-webkit-progress-value {
 }
 
 #feedBox {
-  background: #121227;
-  border: 1px solid #121227;
+  background: var(--data-surface);
+  border: 1px solid var(--data-surface);
   border-radius: 7px;
-  color: #fcfcfc;
+  color: var(--data-text);
   flex: 1 1 auto;
   font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
   font-size: 12px;
@@ -703,7 +672,6 @@ progress::-webkit-progress-value {
 @media (max-width: 760px) {
   body {
     min-width: 0;
-    padding: 14px;
   }
 
   .configuration-fields,

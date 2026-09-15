@@ -35,6 +35,47 @@ test("every local stylesheet and script referenced by a renderer exists", () => 
   }
 });
 
+test("every renderer uses the single PayFabric theme token source", () => {
+  const themePath = path.join(rendererRoot, "shared/theme.css");
+  const theme = fs.readFileSync(themePath, "utf8");
+  assert.match(theme, /--brand-blue:\s*#1a80c3/i);
+  assert.match(theme, /--brand-green:\s*#58b53b/i);
+
+  for (const htmlPath of findHTMLFiles(rendererRoot)) {
+    const html = fs.readFileSync(htmlPath, "utf8");
+    assert.match(
+      html,
+      /shared\/theme\.css/,
+      `${path.relative(rendererRoot, htmlPath)} does not load the shared theme`,
+    );
+  }
+
+  for (const directory of ["main", "autopay", "help", "record-editor"]) {
+    const localCSS = fs.readFileSync(
+      path.join(rendererRoot, directory, "index.css"),
+      "utf8",
+    );
+    assert.doesNotMatch(localCSS, /:root\s*\{/);
+  }
+});
+
+test("Electron renderer windows disable direct Node integration", () => {
+  const mainProcessFiles = [
+    path.join(__dirname, "../src/main/index.js"),
+    path.join(__dirname, "../src/main/windows/manager.js"),
+  ];
+  for (const filePath of mainProcessFiles) {
+    const source = fs.readFileSync(filePath, "utf8");
+    assert.doesNotMatch(source, /nodeIntegration:\s*true/);
+    assert.match(source, /nodeIntegration:\s*false/);
+    assert.match(
+      source,
+      /sandbox:\s*false/,
+      `${path.basename(filePath)} must keep the Node-powered preload available`,
+    );
+  }
+});
+
 test("every confirmation page names a valid confirm channel", () => {
   const confirmationRoot = path.join(rendererRoot, "confirmations");
 

@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../shared/theme.css" />
+    <link rel="stylesheet" href="../shared/app-shell.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>AutoPay · PFR Record Tool</title>
+  </head>
+  <body>
+    <!--
+      THESIS: AutoPay work is a visible selection-to-action flow, not a hidden mass-action dashboard.
+      OWN-WORLD: Restrained PayFabric blue, navy data surfaces, compact workhorse controls, and status chips.
+      STORY: Filter customers, verify the selection, choose contract terms, then monitor every outcome.
+      FIRST VIEWPORT: Filters lead, the customer ledger owns the center, and guarded actions stay beside it.
+      FORM: Established-world operations workspace; direct extension; seed established-payfabric-operate-v1.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
+    <header class="app-header">
+      <div class="app-header__primary">
+        <h1>AutoPay Management</h1>
+        <nav class="app-nav" aria-label="Primary navigation">
+          <a class="app-nav__link" data-workspace-link href="../main/index.html">Records</a>
+          <a class="app-nav__link is-current" data-workspace-link href="./index.html">AutoPay</a>
+          <button class="app-nav__link app-nav__button" data-open-help type="button">Help</button>
+        </nav>
+        <div class="app-header__details">
+          <p class="app-description">Find customer groups, inspect contracts, and run controlled bulk changes.</p>
+          <p class="runtime-versions" data-runtime-versions></p>
+        </div>
+      </div>
+      <div class="connection-summary">
+        <span id="environmentBadge" class="environment-badge">Checking…</span>
+        <strong id="portalSummary">No Portal Connected</strong>
+        <span id="timezoneSummary" class="timezone-summary">Time Zone: Checking…</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="connectionNotice" class="notice" hidden>
+        <div>
+          <strong>Connect to a Portal First</strong>
+          <p>Save the portal name and integration credentials in Records.</p>
+        </div>
+        <a class="button-link" data-workspace-link href="../main/index.html">Open Connection Settings</a>
+      </section>
+
+      <section class="filter-panel" aria-labelledby="filter-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="filter-title">Find Customers</h2>
+            <p>Filters are sent to the portal customer report before results load.</p>
+          </div>
+          <button id="fetchCustomersButton" type="button">Fetch Customers</button>
+        </div>
+
+        <div class="filter-grid">
+          <label>
+            Customer ID Exact Match
+            <input id="customerIdFilter" type="text" autocomplete="off" />
+          </label>
+          <label>
+            Name Exact Match
+            <input id="nameFilter" type="text" autocomplete="off" />
+          </label>
+          <label>
+            Email Exact Match
+            <input id="emailFilter" type="email" autocomplete="off" />
+          </label>
+          <label>
+            Currency
+            <input id="currencyFilter" type="text" maxlength="10" placeholder="USD" />
+          </label>
+          <div class="field-with-help">
+            <div class="field-label-row">
+              <label for="autoPayStatusFilter">AutoPay Status</label>
+              <span class="help-tip help-tip--align-end help-tip--below">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About AutoPay Status Filtering"
+                  aria-describedby="autopay-status-help"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                  </svg>
+                </button>
+                <span id="autopay-status-help" class="help-tip__content" role="tooltip">
+                  Uses the portal report’s AutoPay schedule. The contract is
+                  verified again before a change is made.
+                </span>
+              </span>
+            </div>
+            <select id="autoPayStatusFilter">
+              <option value="all">All Customers</option>
+              <option value="on">On AutoPay</option>
+              <option value="off">Not on AutoPay</option>
+            </select>
+          </div>
+        </div>
+
+        <details class="advanced-filters">
+          <summary>Balance and Schedule Filters</summary>
+          <div class="advanced-grid">
+            <label>
+              Invoice Balance Minimum
+              <input id="invoiceBalanceMinFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Invoice Balance Maximum
+              <input id="invoiceBalanceMaxFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Past-Due Minimum
+              <input id="pastDueBalanceMinFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Past-Due Maximum
+              <input id="pastDueBalanceMaxFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Credit Balance Minimum
+              <input id="creditBalanceMinFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Credit Balance Maximum
+              <input id="creditBalanceMaxFilter" type="number" step="0.01" />
+            </label>
+            <label>
+              Active Users Minimum
+              <input id="activeUsersMinFilter" type="number" min="0" step="1" />
+            </label>
+            <label>
+              Active Users Maximum
+              <input id="activeUsersMaxFilter" type="number" min="0" step="1" />
+            </label>
+            <label>
+              Next AutoPay From
+              <input id="nextAutoPayMinFilter" type="date" />
+            </label>
+            <label>
+              Next AutoPay Through
+              <input id="nextAutoPayMaxFilter" type="date" />
+            </label>
+          </div>
+        </details>
+        <p id="customerLoadStatus" class="inline-status" aria-live="polite"></p>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="customer-workspace" aria-labelledby="customers-title">
+          <div class="customer-toolbar">
+            <div>
+              <h2 id="customers-title">Customer Selection</h2>
+              <p id="customerCount">No Customers Loaded</p>
+            </div>
+            <label class="table-search">
+              Search Loaded Results
+              <input id="customerSearch" type="search" disabled />
+            </label>
+          </div>
+
+          <div class="selection-bar">
+            <div class="selection-scope">
+              <label class="check-control">
+                <input id="selectAllCustomers" type="checkbox" disabled />
+                Select All Matching Results
+              </label>
+              <span class="help-tip help-tip--below">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About Selecting All Matching Results"
+                  aria-describedby="selection-scope-help"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                  </svg>
+                </button>
+                <span id="selection-scope-help" class="help-tip__content" role="tooltip">
+                  Selects every loaded customer matching the search, including
+                  matches beyond the 500 rows currently rendered.
+                </span>
+              </span>
+            </div>
+            <div class="selection-actions">
+              <strong id="selectedCount">0 Selected</strong>
+              <button
+                id="exportSelectedCustomersButton"
+                class="secondary compact-action"
+                type="button"
+                disabled
+              >
+                Export Selected Customers
+              </button>
+            </div>
+          </div>
+          <p id="customerExportStatus" class="inline-status" aria-live="polite"></p>
+
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th class="check-column"><span class="sr-only">Select</span></th>
+                  <th>Customer</th>
+                  <th>Currency</th>
+                  <th>Invoice Balance</th>
+                  <th>Past Due</th>
+                  <th>AutoPay</th>
+                  <th><span class="sr-only">Contract Action</span></th>
+                </tr>
+              </thead>
+              <tbody id="customerRows">
+                <tr class="empty-row">
+                  <td colspan="7">Fetch customers to begin.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p id="renderLimitNotice" class="table-note"></p>
+        </section>
+
+        <aside class="action-panel" aria-labelledby="actions-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="actions-title">Bulk AutoPay Action</h2>
+              <p>Selected customers are verified again before any change.</p>
+            </div>
+          </div>
+          <strong id="bulkSelectionSummary" class="action-selection-summary">
+            0 Customers Selected
+          </strong>
+
+          <div class="workbook-template-action">
+            <div>
+              <div class="field-label-row">
+                <strong>Excel Workbook Template</strong>
+                <span class="help-tip help-tip--align-end help-tip--below">
+                  <button
+                    class="help-tip__trigger"
+                    type="button"
+                    aria-label="About the Excel Workbook Template"
+                    aria-describedby="workbook-template-help"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                      <circle cx="10" cy="10" r="7.75"></circle>
+                      <path d="M10 8.5v5"></path>
+                      <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                    </svg>
+                  </button>
+                  <span id="workbook-template-help" class="help-tip__content" role="tooltip">
+                    Downloads blank Templates and Assignments sheets. This does
+                    not change any portal data.
+                  </span>
+                </span>
+              </div>
+              <span>Start with blank Templates and Assignments sheets.</span>
+            </div>
+            <button id="downloadWorkbookButton" class="secondary" type="button">
+              Download Template
+            </button>
+          </div>
+
+          <div class="field-with-help">
+            <div class="field-label-row">
+              <label for="contractSource">Contract Source</label>
+              <span class="help-tip help-tip--align-end help-tip--below">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About Contract Sources"
+                  aria-describedby="contract-source-help"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                  </svg>
+                </button>
+                <span id="contract-source-help" class="help-tip__content" role="tooltip">
+                  Choose settings from an existing portal template, pasted JSON,
+                  or an imported Excel workbook.
+                </span>
+              </span>
+            </div>
+            <select id="contractSource">
+              <option value="template">Existing Portal Template</option>
+              <option value="json">JSON Configuration</option>
+              <option value="workbook">Excel Workbook</option>
+            </select>
+          </div>
+
+          <div id="templateSource" class="source-fields">
+            <button id="loadTemplatesButton" class="secondary" type="button">
+              Load Portal Templates
+            </button>
+            <label>
+              Template
+              <select id="templateSelect" disabled>
+                <option value="">Load Templates First</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="jsonSource" class="source-fields" hidden>
+            <label>
+              AutoPay JSON
+              <textarea
+                id="configurationJson"
+                spellcheck="false"
+                placeholder='{"AmountOption":"Outstanding","Frequency":"Monthly","FrequencyInterval":1}'
+              ></textarea>
+            </label>
+          </div>
+
+          <div id="workbookSource" class="source-fields" hidden>
+            <div class="workbook-actions">
+              <button id="importWorkbookButton" class="secondary" type="button">
+                Choose Excel Workbook
+              </button>
+            </div>
+            <p id="workbookSummary" class="field-help">
+              Use a Templates sheet, an Assignments sheet, or both.
+            </p>
+            <details class="column-guide">
+              <summary>View Supported Columns</summary>
+              <p>
+                Templates: Name, AmountOption, Frequency, FixedAmount,
+                Currency, FrequencyInterval, PaymentDay, InvoiceTypes,
+                ApplyCredits. Assignments can also use CustomerId,
+                TemplateName, PaymentMethod, and NextPaymentDate.
+              </p>
+            </details>
+          </div>
+
+          <div class="shared-action-fields">
+            <div class="field-with-help">
+              <div class="field-label-row">
+                <label for="bulkNextPaymentDate">Next Payment Date</label>
+                <span class="help-tip help-tip--align-end help-tip--below">
+                  <button
+                    class="help-tip__trigger"
+                    type="button"
+                    aria-label="About the Bulk Next Payment Date"
+                    aria-describedby="bulk-next-payment-help"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                      <circle cx="10" cy="10" r="7.75"></circle>
+                      <path d="M10 8.5v5"></path>
+                      <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                    </svg>
+                  </button>
+                  <span id="bulk-next-payment-help" class="help-tip__content" role="tooltip">
+                    When entered, this date overrides the selected source for
+                    every customer included in the bulk action. Each contract
+                    processes at 12:00 AM (00:00) in its PayFabric portal time zone.
+                  </span>
+                </span>
+              </div>
+              <input id="bulkNextPaymentDate" type="date" />
+              <output
+                id="bulkSchedulePreview"
+                class="schedule-preview"
+                aria-live="polite"
+                for="bulkNextPaymentDate"
+              >
+                <strong>No date override selected</strong>
+                <span>
+                  Each contract starts at 12:00 AM (00:00) in its PayFabric
+                  portal time zone on the date supplied by its selected source.
+                </span>
+              </output>
+            </div>
+            <label>
+              Fixed Amount Override
+              <input id="bulkFixedAmount" type="number" min="0" step="0.01" />
+            </label>
+            <label>
+              Payment Method GUID Override
+              <input id="bulkPaymentMethod" type="text" autocomplete="off" />
+              <span class="field-help">Leave blank to use each customer's default.</span>
+            </label>
+          </div>
+
+          <button id="saveTemplateButton" class="secondary" type="button" hidden>
+            Save Configuration as Portal Template
+          </button>
+
+          <p id="bulkActionStatus" class="inline-status" aria-live="polite"></p>
+          <p class="field-help">
+            Applying skips customers who already have a contract. Removing skips
+            customers without one.
+          </p>
+          <div class="action-buttons">
+            <button id="applyAutoPayButton" type="button" disabled>
+              Apply AutoPay to Selected
+            </button>
+            <button id="removeAutoPayButton" class="danger" type="button" disabled>
+              Remove AutoPay from Selected
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <section id="contractEditor" class="contract-editor" hidden aria-labelledby="contract-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="contract-title">Customer Contract</h2>
+            <p id="contractCustomerSummary"></p>
+          </div>
+          <button id="closeContractButton" class="quiet" type="button">Close</button>
+        </div>
+        <div class="contract-grid">
+          <label>
+            Amount Option
+            <select id="contractAmountOption">
+              <option value="Outstanding">Outstanding Balance</option>
+              <option value="PastDue">Past-Due Balance</option>
+              <option value="FixedAmount">Fixed Amount</option>
+            </select>
+          </label>
+          <label>
+            Frequency
+            <select id="contractFrequency">
+              <option value="Daily">Daily</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Annually">Annually</option>
+            </select>
+          </label>
+          <div class="field-with-help">
+            <div class="field-label-row">
+              <label for="contractNextPaymentDate">Next Payment Date</label>
+              <span class="help-tip help-tip--align-end help-tip--below">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About AutoPay Schedule Timing"
+                  aria-describedby="contract-schedule-help"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                  </svg>
+                </button>
+                <span id="contract-schedule-help" class="help-tip__content" role="tooltip">
+                  PayFabric processes the contract at 12:00 AM (00:00) on this
+                  date in the contract's portal time zone.
+                </span>
+              </span>
+            </div>
+            <input id="contractNextPaymentDate" type="date" />
+            <output
+              id="contractSchedulePreview"
+              class="schedule-preview"
+              aria-live="polite"
+              for="contractNextPaymentDate"
+            >
+              <strong>No process day selected</strong>
+              <span>
+                Choose a date to preview the midnight start in the contract's
+                PayFabric portal time zone.
+              </span>
+            </output>
+          </div>
+          <label>
+            Payment Method GUID
+            <input id="contractPaymentMethod" type="text" autocomplete="off" />
+            <span class="field-help">A new contract can use the customer's default.</span>
+          </label>
+          <label>
+            Currency
+            <input id="contractCurrency" type="text" maxlength="10" />
+          </label>
+          <label>
+            Fixed Amount
+            <input id="contractFixedAmount" type="number" min="0" step="0.01" />
+          </label>
+          <label>
+            Frequency Interval
+            <input id="contractFrequencyInterval" type="number" min="1" step="1" />
+          </label>
+          <div class="field-with-help">
+            <div class="field-label-row">
+              <label for="contractPaymentDay">Payment Day</label>
+              <span class="help-tip help-tip--align-end help-tip--below">
+                <button
+                  class="help-tip__trigger"
+                  type="button"
+                  aria-label="About Payment Day"
+                  aria-describedby="payment-day-help"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                    <circle cx="10" cy="10" r="7.75"></circle>
+                    <path d="M10 8.5v5"></path>
+                    <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                  </svg>
+                </button>
+                <span id="payment-day-help" class="help-tip__content" role="tooltip">
+                  Sets the scheduled day within the selected frequency. Monthly
+                  contracts use a day of the month.
+                </span>
+              </span>
+            </div>
+            <input id="contractPaymentDay" type="number" min="0" step="1" />
+          </div>
+          <label class="wide-field">
+            Description
+            <input id="contractDescription" type="text" maxlength="255" />
+          </label>
+          <label class="wide-field">
+            Invoice Types
+            <input id="contractInvoiceTypes" type="text" placeholder="STD; SERVICE" />
+          </label>
+          <div class="selection-scope wide-field">
+            <label class="check-control">
+              <input id="contractApplyCredits" type="checkbox" />
+              Apply Credits Before Payment
+            </label>
+            <span class="help-tip help-tip--align-end help-tip--below">
+              <button
+                class="help-tip__trigger"
+                type="button"
+                aria-label="About Applying Credits Before Payment"
+                aria-describedby="apply-credits-help"
+              >
+                <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16">
+                  <circle cx="10" cy="10" r="7.75"></circle>
+                  <path d="M10 8.5v5"></path>
+                  <circle class="help-tip__dot" cx="10" cy="5.75" r="0.8"></circle>
+                </svg>
+              </button>
+              <span id="apply-credits-help" class="help-tip__content" role="tooltip">
+                Uses available customer credits before charging the remaining
+                AutoPay amount.
+              </span>
+            </span>
+          </div>
+        </div>
+        <p id="contractStatus" class="inline-status" aria-live="polite"></p>
+        <div class="action-buttons">
+          <button id="saveContractButton" type="button">Save Contract</button>
+          <button id="deleteContractButton" class="danger" type="button">
+            Remove This Contract
+          </button>
+        </div>
+      </section>
+
+      <section id="bulkProgress" class="bulk-progress" hidden aria-labelledby="progress-title">
+        <div class="progress-heading">
+          <div>
+            <h2 id="progress-title">AutoPay Progress</h2>
+            <p id="progressSummary">Waiting to Start</p>
+          </div>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <progress id="progressBar" max="100" value="0">0%</progress>
+        <div class="progress-counts">
+          <span id="progressSucceeded">0 Changed</span>
+          <span id="progressSkipped">0 Skipped</span>
+          <span id="progressFailed">0 Failed</span>
+          <span id="progressRemaining">0 Remaining</span>
+        </div>
+        <div class="action-buttons">
+          <button id="pauseAutoPayButton" class="secondary" type="button">Pause</button>
+          <button id="resumeAutoPayButton" type="button" hidden>Continue</button>
+          <button id="retryAutoPayButton" class="secondary" type="button" hidden>
+            Retry Temporary Failures
+          </button>
+        </div>
+        <div class="activity-heading">
+          <h3>Customer Outcomes</h3>
+          <button id="clearActivityButton" class="quiet" type="button">Clear</button>
+        </div>
+        <div id="autoPayActivity" class="activity-feed" role="log" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="../shared/workspace-session.js"></script>
+    <script src="../shared/app-help.js"></script>
+    <script src="../shared/runtime-versions.js"></script>
+    <script src="./schedule-timing.js"></script>
+    <script src="./workspace.js"></script>
+    <script src="./customers.js"></script>
+    <script src="./contract-editor.js"></script>
+    <script src="./bulk-actions.js"></script>
+    <script src="./session-state.js"></script>
+  </body>
+</html>

@@ -11,6 +11,11 @@ const { configure } = require("./payfabric/client.js");
 
 let mainWindow;
 
+// Squirrel uses this stable ID for taskbar grouping, shortcuts, and notifications.
+if (process.platform === "win32") {
+  app.setAppUserModelId("com.squirrel.PFRRecordTool.PFRRecordTool");
+}
+
 // Establish safe defaults before the user supplies session credentials.
 configure({
   sandbox: true,
@@ -21,12 +26,17 @@ configure({
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    width: 880,
-    height: 695,
+    width: 1180,
+    height: 820,
+    minWidth: 820,
+    minHeight: 650,
     webPreferences: {
       contextIsolation: true,
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, "../preload/index.js"),
+      // The preload imports the shared channel catalog; renderer pages still
+      // receive only the narrow contextBridge API defined by that preload.
+      sandbox: false,
     },
   });
 

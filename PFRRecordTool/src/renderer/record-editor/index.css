@@ -1,56 +1,113 @@
-/* Record-editor window layout, JSON textarea, and action buttons. */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  color: #656565;
-  background-color: #f4f4f4;
-  font-family: "Segoe UI", Helvetica, Garuda, Arial, sans-serif;
-  text-align: center;
+/* Record-editor window layout, JSON textarea, validation, and action buttons. */
+* {
+  box-sizing: border-box;
 }
 
-#wrapper {
-  display: block;
-  margin: 30px;
-  box-sizing: border-box;
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  margin: 0;
+  min-width: 420px;
+  padding: 22px;
+}
+
+.wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 44px);
+  padding: 18px;
+}
+
+h1,
+p {
+  margin-block-start: 0;
+}
+
+h1 {
+  font-size: 23px;
+  letter-spacing: -0.02em;
+  margin-block-end: 3px;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-block-end: 16px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-block-end: 5px;
 }
 
 textarea {
-  height: 500px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text);
+  flex: 1 1 auto;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  min-height: 320px;
   overflow-y: auto;
-  width: 800px;
-  background-color: #dfdede;
-  color: #656565;
-  display: block;
-  margin: 10px;
-  box-sizing: border-box;
-  outline-color: #1a80c3;
+  padding: 12px;
+  resize: none;
+  width: 100%;
 }
 
 button {
-  width: 80px;
-  height: 30px;
-  background-color: #1a80c3;
-  color: white;
-  outline-color: #b4d7f7;
-  border: 1px solid #1a80c3;
-  border-radius: 5px;
-  margin: auto;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-height: 36px;
+  padding: 7px 14px;
 }
 
-button:hover {
-  background-color: #4694c8;
+button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
-button:active {
-  background-color: #4c81cb;
+button.secondary {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--background);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+button:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.editor-status {
+  color: var(--danger);
+  font-size: 13px;
+  margin-block: 8px 0;
+  min-height: 19px;
 }
 
 #choice-label {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  margin: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-block-start: 12px;
 }

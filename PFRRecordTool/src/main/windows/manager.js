@@ -21,6 +21,7 @@ const CONFIRMATION_PAGES = Object.freeze({
 
 let recordEditorWindow;
 let confirmationWindow;
+let helpWindow;
 
 function showWindowWhenSized(targetWindow) {
   // Size popups from their rendered wrapper before showing them to the user.
@@ -51,8 +52,9 @@ function createManagedWindow({ htmlPath, modal, parent, title }) {
     show: false,
     webPreferences: {
       contextIsolation: true,
-      nodeIntegration: true,
+      nodeIntegration: false,
       preload: PRELOAD_PATH,
+      sandbox: false,
     },
   });
 
@@ -109,9 +111,43 @@ function closeConfirmation() {
   }
 }
 
+function openHelpWindow() {
+  if (helpWindow) {
+    helpWindow.focus();
+    return;
+  }
+
+  helpWindow = new BrowserWindow({
+    width: 1100,
+    height: 760,
+    minWidth: 820,
+    minHeight: 560,
+    show: false,
+    title: "PFR Record Tool Help",
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: PRELOAD_PATH,
+      sandbox: false,
+    },
+  });
+  helpWindow.once("ready-to-show", () => helpWindow.show());
+  helpWindow.on("closed", () => {
+    helpWindow = null;
+  });
+  helpWindow
+    .loadFile(path.join(RENDERER_PATH, "help/index.html"))
+    .catch((error) => {
+      console.error("Could not open Help:", error);
+      helpWindow?.destroy();
+      helpWindow = null;
+    });
+}
+
 module.exports = {
   closeConfirmation,
   closeRecordEditor,
   openConfirmation,
+  openHelpWindow,
   openRecordEditor,
 };

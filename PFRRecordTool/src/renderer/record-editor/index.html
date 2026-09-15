@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <link rel="stylesheet" href="../shared/theme.css" />
     <link rel="stylesheet" href="./index.css" />
     <meta
       http-equiv="Content-Security-Policy"
@@ -12,17 +13,24 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Record · PFR Record Tool</title>
   </head>
   <body>
     <!-- index.js loads the record JSON and routes Update/Cancel actions. -->
-    <div class="wrapper">
-      <textarea id="recordBody-label"></textarea>
+    <main class="wrapper">
+      <header>
+        <h1>Edit Record JSON</h1>
+        <p>Review the complete record before opening the update confirmation.</p>
+      </header>
+      <label for="recordBody-label">Record Data</label>
+      <textarea id="recordBody-label" spellcheck="false"></textarea>
+      <p id="editorStatus" class="editor-status" aria-live="polite"></p>
       <div id="choice-label">
-        <button id="updateButton-label">Update</button>
-        <button id="cancelButton-label">Cancel</button>
+        <button id="cancelButton-label" class="secondary" type="button">Cancel</button>
+        <button id="updateButton-label" type="button">Review Update</button>
       </div>
-    </div>
+    </main>
+    <script src="./index.js"></script>
   </body>
-  <script src="./index.js"></script>
 </html>

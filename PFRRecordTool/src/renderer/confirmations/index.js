@@ -12,13 +12,13 @@ const confirmChannel = CHANNELS[document.body.dataset.confirmChannel];
 const DELETE_CONFIRMATION_COPY = Object.freeze({
   single: {
     Partial: {
-      button: "Delete customer",
+      button: "Delete Customer",
       description:
         "This deletes the customer record only. Full account deletion is not selected.",
       title: "Delete this customer record?",
     },
     Full: {
-      button: "Delete full account",
+      button: "Delete Full Account",
       description:
         "All account data for this customer will be permanently deleted.",
       title: "Delete this customer’s full account?",
@@ -26,13 +26,13 @@ const DELETE_CONFIRMATION_COPY = Object.freeze({
   },
   loaded: {
     Partial: {
-      button: "Delete customers",
+      button: "Delete Customers",
       description:
         "Only the loaded customer records will be deleted. Full account deletion is not selected.",
       title: "Delete all loaded customer records?",
     },
     Full: {
-      button: "Delete full accounts",
+      button: "Delete Full Accounts",
       description:
         "All account data for every loaded customer will be permanently deleted.",
       title: "Delete full accounts for all loaded customers?",
@@ -40,13 +40,13 @@ const DELETE_CONFIRMATION_COPY = Object.freeze({
   },
   filtered: {
     Partial: {
-      button: "Delete customers",
+      button: "Delete Customers",
       description:
         "Only the filtered customer records will be deleted. Full account deletion is not selected.",
       title: "Delete the filtered customer records?",
     },
     Full: {
-      button: "Delete full accounts",
+      button: "Delete Full Accounts",
       description:
         "All account data for every filtered customer will be permanently deleted.",
       title: "Delete full accounts for the filtered customers?",

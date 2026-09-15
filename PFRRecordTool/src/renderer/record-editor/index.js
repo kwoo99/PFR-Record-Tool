@@ -8,6 +8,7 @@ const { CHANNELS } = window.api.comm;
 const recordBody = document.getElementById("recordBody-label");
 const updateButton = document.getElementById("updateButton-label");
 const cancelButton = document.getElementById("cancelButton-label");
+const editorStatus = document.getElementById("editorStatus");
 
 let recordType;
 let submittedId;
@@ -32,34 +33,35 @@ window.onload = async function () {
       break;
   }
 
-  console.log(recordDetails);
   const recordData = JSON.stringify(recordDetails.submittedResponse.data, null, 2);
   recordBody.value = recordData;
-  console.log("RECORD ID: " + origId);
 };
 
 updateButton.addEventListener("click", () => {
-  const updatedRecordData = JSON.parse(recordBody.value);
+  let updatedRecordData;
+  try {
+    updatedRecordData = JSON.parse(recordBody.value);
+  } catch (error) {
+    editorStatus.textContent = `The record is not valid JSON: ${error.message}`;
+    recordBody.focus();
+    return;
+  }
+  editorStatus.textContent = "";
 
   switch (recordType) {
     case "customers":
-      console.log("Customer");
       submittedId = updatedRecordData.CustomerId;
       break;
     case "invoices":
-      console.log("Invoice");
       submittedId = updatedRecordData.InvoiceId;
       break;
     case "payments":
-      console.log("Payment");
       submittedId = updatedRecordData.PaymentId;
       break;
   }
 
   // Matching IDs update the existing record; a changed ID uses create confirmation.
   const isNewId = origId == submittedId;
-  console.log(origId);
-  console.log(submittedId);
   const data = recordBody.value;
   window.api.comm.invoke(CHANNELS.CONFIRM_UPDATE, { isNewId, data });
 });

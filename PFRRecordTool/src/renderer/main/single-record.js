@@ -30,6 +30,7 @@
 
   // Build the actions permitted for the currently selected record type.
   function showRecordActions() {
+    recordOptions.textContent = "";
     changeRecordButton.id = "changeRecordButton";
     changeRecordButton.textContent = "View/Change Record";
     recordOptions.appendChild(changeRecordButton);
@@ -108,5 +109,19 @@
 
   recordType.addEventListener("change", () => {
     targetType = recordType.value;
+  });
+
+  window.singleRecordWorkspace = Object.freeze({
+    captureState: () => ({
+      hasActions: recordOptions.childElementCount > 0,
+      targetId,
+      targetType,
+    }),
+    restoreState: (snapshot = {}) => {
+      targetId = snapshot.targetId || recordField.value;
+      targetType = snapshot.targetType || recordType.value;
+      recordType.value = targetType;
+      if (snapshot.hasActions && targetId) showRecordActions();
+    },
   });
 })();
