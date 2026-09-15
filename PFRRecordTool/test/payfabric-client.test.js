@@ -153,7 +153,7 @@ test("listCustomerIds refuses an incomplete customer report", async () => {
   );
 });
 
-test("listCustomerIds uses the documented customer report page size by default", async () => {
+test("listCustomerIds stays within the portal customer page limit by default", async () => {
   const { client, requests } = createHarness([
     response(200),
     response(200, { access_token: "initial-token" }),
@@ -171,19 +171,26 @@ test("listCustomerIds uses the documented customer report page size by default",
 
   assert.equal(
     requests[3].url,
-    "https://sandbox.payfabric.com/receivables/sync/api/portal/api/reports/customers?filter.pageSize=20&filter.pageIndex=0",
+    "https://sandbox.payfabric.com/receivables/sync/api/portal/api/reports/customers?filter.pageSize=15&filter.pageIndex=0",
   );
 });
 
-test("listCustomers recovers when a portal rejects page sizes at or below 15", async () => {
+test("listCustomers caps AutoPay report pages at 15 and retrieves every page", async () => {
   const { client, requests } = createHarness([
     response(200),
     response(200, { access_token: "initial-token" }),
     response(200, { access_token: "report-token" }),
-    response(400, { Message: "Page size shall not equal to or less than 15" }),
     response(200, {
-      Result: [{ CustomerId: "CUST-1", Name: "Example" }],
-      Total: 1,
+      Index: 0,
+      Result: Array.from({ length: 15 }, (_, index) => ({
+        CustomerId: `CUST-${index + 1}`,
+      })),
+      Total: 16,
+    }),
+    response(200, {
+      Index: 1,
+      Result: [{ CustomerId: "CUST-16" }],
+      Total: 16,
     }),
   ]);
 
@@ -193,11 +200,13 @@ test("listCustomers recovers when a portal rejects page sizes at or below 15", a
     integrationKey: "key",
     integrationPass: "pass",
   });
-  const customers = await client.listCustomers();
+  const customers = await client.listCustomers({ pageSize: 100 });
 
-  assert.equal(customers.length, 1);
-  assert.match(requests[3].url, /filter\.pageSize=20/);
-  assert.match(requests[4].url, /filter\.pageSize=25/);
+  assert.equal(customers.length, 16);
+  assert.match(requests[3].url, /filter\.pageSize=15/);
+  assert.match(requests[3].url, /filter\.pageIndex=0/);
+  assert.match(requests[4].url, /filter\.pageSize=15/);
+  assert.match(requests[4].url, /filter\.pageIndex=1/);
 });
 
 test("listCustomers sends supported portal filters and returns full rows", async () => {
@@ -246,6 +255,7 @@ test("listCustomers sends supported portal filters and returns full rows", async
   // portal receives the exact filters that would reduce that response.
   assert.equal(customers.length, 2);
   const requestURL = new URL(requests[3].url);
+  assert.equal(requestURL.searchParams.get("filter.pageSize"), "15");
   assert.equal(requestURL.searchParams.get("filter.criteria.currencyCode"), "USD");
   assert.deepEqual(
     requestURL.searchParams.getAll("filter.criteria.customerId.in"),

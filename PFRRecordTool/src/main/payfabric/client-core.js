@@ -6,10 +6,11 @@
  */
 const PRODUCTION_URL = "https://www.payfabric.com";
 const SANDBOX_URL = "https://sandbox.payfabric.com";
-// Twenty matches the report's normal UI-sized pages. Some PayFabric
-// environments enforce a different accepted range, which listCustomers handles.
-const DEFAULT_CUSTOMER_PAGE_SIZE = 20;
-const CUSTOMER_PAGE_SIZE_FALLBACKS = [25, 50, 100];
+// The Receivables customer report accepts at most 15 customers per request.
+// Both Records and AutoPay use listCustomers(), so enforcing the limit here
+// keeps every customer-loading path within the portal API's paging constraint.
+const MAX_CUSTOMER_PAGE_SIZE = 15;
+const DEFAULT_CUSTOMER_PAGE_SIZE = MAX_CUSTOMER_PAGE_SIZE;
 const MAX_CUSTOMER_REPORT_PAGES = 10_000;
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) " +
@@ -286,7 +287,7 @@ function createPayFabricClient({ cookieJar, fetchWithCookies }) {
 
     const customers = [];
     let fetchedCount = 0;
-    let activePageSize = pageSize;
+    const activePageSize = Math.min(pageSize, MAX_CUSTOMER_PAGE_SIZE);
 
     async function requestPage(pageIndex, requestPageSize) {
       const query = new URLSearchParams({
@@ -301,31 +302,10 @@ function createPayFabricClient({ cookieJar, fetchWithCookies }) {
     }
 
     for (let pageIndex = 0; pageIndex < MAX_CUSTOMER_REPORT_PAGES; pageIndex++) {
-      let response = await requestPage(pageIndex, activePageSize);
-      let responseMessage;
-
-      // PayFabric deployments have returned different allowed page-size
-      // ranges. On the first page only, recover from that validation response
-      // and keep the accepted size for every following page.
-      if (pageIndex === 0 && response.status !== 200) {
-        responseMessage = await readError(response);
-        if (/page\s*size|pagesize/i.test(responseMessage ?? "")) {
-          for (const fallback of CUSTOMER_PAGE_SIZE_FALLBACKS) {
-            if (fallback === activePageSize) continue;
-            response = await requestPage(pageIndex, fallback);
-            if (response.status === 200) {
-              activePageSize = fallback;
-              responseMessage = undefined;
-              break;
-            }
-            responseMessage = await readError(response);
-            if (!/page\s*size|pagesize/i.test(responseMessage ?? "")) break;
-          }
-        }
-      }
+      const response = await requestPage(pageIndex, activePageSize);
 
       if (response.status !== 200) {
-        responseMessage ??= await readError(response);
+        const responseMessage = await readError(response);
 
         throw new Error(
           `Customer list request failed with status ${response.status}${responseMessage ? `: ${responseMessage}` : ""}`,
