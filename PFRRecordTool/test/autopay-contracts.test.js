@@ -5,6 +5,7 @@ const test = require("node:test");
 const {
   buildAutoPayContract,
   normalizeConfiguration,
+  normalizeConfigurationPatch,
   normalizeTemplateRequest,
 } = require("../src/main/autopay/contracts.js");
 
@@ -91,5 +92,22 @@ test("normalizes workbook-friendly values and rejects incomplete creates", () =>
         paymentMethod: "wallet-guid",
       }),
     /NextPaymentDate is required/,
+  );
+});
+
+test("normalizes only explicit nonblank fields for an existing-contract patch", () => {
+  assert.deepEqual(
+    normalizeConfigurationPatch({
+      AmountOption: "",
+      ApplyCredits: false,
+      FixedAmount: "",
+      InvoiceTypes: "",
+      NextPaymentDate: "2026-11-20T00:00:00.000Z",
+      PaymentMethod: "",
+    }),
+    {
+      ApplyCredits: false,
+      NextPaymentDate: "2026-11-20T00:00:00.000Z",
+    },
   );
 });

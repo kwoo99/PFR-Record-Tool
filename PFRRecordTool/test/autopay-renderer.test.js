@@ -41,6 +41,7 @@ test("AutoPay workspace includes individual and resumable bulk controls", () => 
   assert.match(html, /Customer Contract/);
   assert.match(html, /Remove This Contract/);
   assert.match(html, /Apply AutoPay to Selected/);
+  assert.match(html, /Update Existing AutoPay/);
   assert.match(html, /Remove AutoPay from Selected/);
   assert.match(html, />Continue</);
   assert.match(html, /Retry Temporary Failures/);
@@ -55,6 +56,8 @@ test("AutoPay workspace includes individual and resumable bulk controls", () => 
   assert.match(html, /PayFabric processes the contract at 12:00 AM \(00:00\)/);
   assert.match(bulkActions, /renderResults\(progress\.results\)/);
   assert.match(bulkActions, /AUTOPAY_CLEAR_RESULTS/);
+  assert.match(bulkActions, /startBulk\("update"\)/);
+  assert.match(bulkActions, /existing wallet remains unchanged/i);
   assert.doesNotMatch(bulkActions, /childElementCount > 300/);
 });
 
@@ -68,6 +71,7 @@ test("AutoPay customer selection can export wallet-enriched customer data", () =
   );
   assert.match(customers, /AUTOPAY_EXPORT_CUSTOMERS/);
   assert.match(customers, /Retrieving wallet GUIDs/);
+  assert.match(customers, /Saved.*result\.fileName/);
 });
 
 test("workbook downloads do not show an unnecessary success message", () => {

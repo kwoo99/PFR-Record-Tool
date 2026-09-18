@@ -8,7 +8,21 @@ const {
   extractPaymentMethod,
 } = require("./contracts.js");
 
-const DEFAULT_CONCURRENCY = 3;
+const MAX_CONCURRENCY = 6;
+
+function chooseConcurrency(customerCount, requestedMaximum) {
+  const maximum = Math.max(
+    1,
+    Math.min(
+      MAX_CONCURRENCY,
+      Math.floor(Number(requestedMaximum) || MAX_CONCURRENCY),
+    ),
+  );
+  if (customerCount >= 20) return Math.min(6, maximum);
+  if (customerCount >= 8) return Math.min(4, maximum);
+  if (customerCount >= 3) return Math.min(2, maximum);
+  return 1;
+}
 
 function numericValue(value) {
   if (value === undefined || value === null || value === "") return null;
@@ -44,7 +58,7 @@ async function prepareCustomerExport(
   {
     getAutoPayContract,
     getDefaultPaymentMethod,
-    maxConcurrency = DEFAULT_CONCURRENCY,
+    maxConcurrency = MAX_CONCURRENCY,
     onProgress = () => {},
   },
 ) {
@@ -58,13 +72,9 @@ async function prepareCustomerExport(
     throw new Error("An AutoPay contract lookup function is required");
   }
 
-  const concurrency = Math.max(
-    1,
-    Math.min(
-      DEFAULT_CONCURRENCY,
-      Math.floor(Number(maxConcurrency) || DEFAULT_CONCURRENCY),
-    ),
-  );
+  // Scale large exports up while retaining a hard ceiling so customer-portal
+  // authentication and wallet requests cannot grow without bound.
+  const concurrency = chooseConcurrency(customers.length, maxConcurrency);
   const rows = new Array(customers.length);
   let completed = 0;
   let nextIndex = 0;
@@ -126,4 +136,4 @@ async function prepareCustomerExport(
   return rows;
 }
 
-module.exports = { DEFAULT_CONCURRENCY, prepareCustomerExport };
+module.exports = { MAX_CONCURRENCY, prepareCustomerExport };

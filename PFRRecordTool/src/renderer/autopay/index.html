@@ -387,7 +387,10 @@
             <label>
               Payment Method GUID Override
               <input id="bulkPaymentMethod" type="text" autocomplete="off" />
-              <span class="field-help">Leave blank to use each customer's default.</span>
+              <span class="field-help">
+                Apply uses each customer's default when blank. Update preserves
+                the existing contract wallet when blank.
+              </span>
             </label>
           </div>
 
@@ -397,12 +400,16 @@
 
           <p id="bulkActionStatus" class="inline-status" aria-live="polite"></p>
           <p class="field-help">
-            Applying skips customers who already have a contract. Removing skips
-            customers without one.
+            Applying skips customers who already have a contract. Updating and
+            removing skip customers without one. Blank update fields preserve
+            the existing contract values.
           </p>
           <div class="action-buttons">
             <button id="applyAutoPayButton" type="button" disabled>
               Apply AutoPay to Selected
+            </button>
+            <button id="updateAutoPayButton" class="secondary" type="button" disabled>
+              Update Existing AutoPay
             </button>
             <button id="removeAutoPayButton" class="danger" type="button" disabled>
               Remove AutoPay from Selected

@@ -97,6 +97,28 @@ function normalizeConfiguration(configuration = {}) {
   return result;
 }
 
+function normalizeConfigurationPatch(configuration = {}) {
+  const explicit = {};
+  for (const field of CONTRACT_FIELDS) {
+    if (!Object.hasOwn(configuration, field)) continue;
+    const value = configuration[field];
+    if (Array.isArray(value) || !isBlank(value)) explicit[field] = value;
+  }
+  if (
+    !Object.hasOwn(explicit, "PaymentDay") &&
+    Object.hasOwn(configuration, "StartDay") &&
+    !isBlank(configuration.StartDay)
+  ) {
+    explicit.StartDay = configuration.StartDay;
+  }
+
+  const normalized = normalizeConfiguration(explicit);
+  // normalizeConfiguration supplies an empty list for create/template flows.
+  // A patch must omit InvoiceTypes unless the user explicitly supplied it.
+  if (!Object.hasOwn(explicit, "InvoiceTypes")) delete normalized.InvoiceTypes;
+  return normalized;
+}
+
 function validateContract(contract, { create = true } = {}) {
   if (isBlank(contract.CustomerId)) {
     throw new Error("CustomerId is required");
@@ -229,6 +251,7 @@ module.exports = {
   extractContractPaymentMethod,
   extractPaymentMethod,
   normalizeConfiguration,
+  normalizeConfigurationPatch,
   normalizeTemplateRequest,
   validateContract,
 };

@@ -70,6 +70,65 @@ test("bulk remove skips customers without a contract", async () => {
   assert.equal(deletes, 0);
 });
 
+test("bulk update patches only explicit fields and preserves the current wallet", async () => {
+  const updates = [];
+  const service = createAutoPayService({
+    getAutoPayContract: async () => ({
+      data: {
+        AmountOption: "Outstanding",
+        PaymentMethod: "current-wallet-guid",
+      },
+      error: null,
+      status: 200,
+    }),
+    getDefaultPaymentMethod: async () => {
+      throw new Error("an existing-contract update must not request a default wallet");
+    },
+    updateAutoPayContract: async (customerId, contract) => {
+      updates.push({ contract, customerId });
+      return { data: true, error: null, status: 200 };
+    },
+  });
+
+  const result = await service.update(
+    { CustomerId: "CUST-1" },
+    {
+      configuration: { AmountOption: "", PaymentMethod: "" },
+      nextPaymentDate: "2026-11-20T00:00:00.000Z",
+    },
+  );
+
+  assert.equal(result.outcome, "succeeded");
+  assert.deepEqual(updates, [
+    {
+      contract: {
+        CustomerId: "CUST-1",
+        NextPaymentDate: "2026-11-20T00:00:00.000Z",
+      },
+      customerId: "CUST-1",
+    },
+  ]);
+});
+
+test("bulk update skips a selected customer without AutoPay", async () => {
+  let updates = 0;
+  const service = createAutoPayService({
+    getAutoPayContract: async () => ({ data: null, error: null, status: 404 }),
+    updateAutoPayContract: async () => {
+      updates++;
+    },
+  });
+
+  const result = await service.update(
+    { CustomerId: "NO-CONTRACT" },
+    { nextPaymentDate: "2026-11-20T00:00:00.000Z" },
+  );
+
+  assert.equal(result.outcome, "skipped");
+  assert.match(result.message, /No AutoPay contract/);
+  assert.equal(updates, 0);
+});
+
 test("individual updates recheck that the contract still exists", async () => {
   let updates = 0;
   const service = createAutoPayService({

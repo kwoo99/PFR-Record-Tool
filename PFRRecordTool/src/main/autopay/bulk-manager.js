@@ -152,8 +152,8 @@ function createAutoPayBulkManager({
     if (!Array.isArray(customers) || customers.length === 0) {
       throw new Error("Select at least one customer");
     }
-    if (!["apply", "remove"].includes(requestedOperation)) {
-      throw new Error("AutoPay operation must be apply or remove");
+    if (!["apply", "remove", "update"].includes(requestedOperation)) {
+      throw new Error("AutoPay operation must be apply, update, or remove");
     }
 
     operation = requestedOperation;

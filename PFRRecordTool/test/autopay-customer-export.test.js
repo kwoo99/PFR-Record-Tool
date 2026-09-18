@@ -11,8 +11,8 @@ const { createCustomerExportWorkbook } = require("../src/main/autopay/workbook-t
 const CHANNELS = require("../src/shared/channels.js");
 const { createIPCHarness } = require("../test-support/ipc-harness.js");
 
-test("wallet lookups preserve selected customer order and stay within three workers", async () => {
-  const customers = Array.from({ length: 8 }, (_, index) => ({
+test("large wallet exports preserve order and use six bounded workers", async () => {
+  const customers = Array.from({ length: 24 }, (_, index) => ({
     CurrencyCode: "USD",
     CustomerId: `CUST-${index + 1}`,
     HasAutoPay: false,
@@ -34,13 +34,13 @@ test("wallet lookups preserve selected customer order and stay within three work
     onProgress: (snapshot) => progress.push(snapshot),
   });
 
-  assert.ok(maximumActive <= 3);
+  assert.equal(maximumActive, 6);
   assert.deepEqual(
     rows.map((row) => row.CustomerId),
     customers.map((customer) => customer.CustomerId),
   );
   assert.equal(rows[0].WalletGuid, "WALLET-CUST-1");
-  assert.deepEqual(progress.at(-1), { completed: 8, total: 8 });
+  assert.deepEqual(progress.at(-1), { completed: 24, total: 24 });
 });
 
 test("customer export prefers the contract wallet and falls back to the default wallet", async () => {
@@ -187,4 +187,33 @@ test("selected customer export keeps missing and failed wallet lookups visible",
         message.value.completed === 3,
     ),
   );
+});
+
+test("a thrown wallet lookup does not prevent the Excel file from being written", async (t) => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "pfr-customer-export-"));
+  t.after(() => fs.rmSync(directory, { force: true, recursive: true }));
+  const destination = path.join(directory, "Selected-Customers");
+  const excelDestination = `${destination}.xlsx`;
+  const harness = createIPCHarness({
+    autopayPaymentMethods: {
+      FAILED: new Error("Wallet request timed out"),
+      FOUND: { data: { PaymentMethodGuid: "wallet-guid" }, status: 200 },
+    },
+    selectedSaveFilePath: destination,
+  });
+
+  const result = await harness.handlers.get(
+    CHANNELS.AUTOPAY_EXPORT_CUSTOMERS,
+  )(undefined, [
+    { CurrencyCode: "USD", CustomerId: "FAILED", HasAutoPay: false },
+    { CurrencyCode: "USD", CustomerId: "FOUND", HasAutoPay: false },
+  ]);
+
+  assert.equal(result.total, 2);
+  assert.equal(result.failed, 1);
+  assert.equal(result.fileName, "Selected-Customers.xlsx");
+  assert.equal(fs.existsSync(excelDestination), true);
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.readFile(excelDestination);
+  assert.equal(workbook.getWorksheet("Customer Data").rowCount, 3);
 });

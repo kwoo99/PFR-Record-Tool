@@ -101,3 +101,36 @@ test("individual AutoPay removal verifies the contract before deleting", async (
   assert.deepEqual(autopayDeletes, ["CUST-1"]);
   assert.equal(result.error, null);
 });
+
+test("bulk update changes only selected customers with existing AutoPay", async () => {
+  const { autopayUpdates, handlers } = createIPCHarness({
+    autopayContracts: {
+      ACTIVE: {
+        data: { PaymentMethod: "current-wallet-guid" },
+        error: null,
+        status: 200,
+      },
+    },
+  });
+
+  const result = await handlers.get(CHANNELS.AUTOPAY_START_BULK)(undefined, {
+    customers: [
+      { CustomerId: "ACTIVE", HasAutoPay: true },
+      { CustomerId: "INACTIVE", HasAutoPay: false },
+    ],
+    operation: "update",
+    options: { nextPaymentDate: "2026-11-20T00:00:00.000Z" },
+  });
+
+  assert.equal(result.succeeded, 1);
+  assert.equal(result.skipped, 1);
+  assert.deepEqual(autopayUpdates, [
+    {
+      contract: {
+        CustomerId: "ACTIVE",
+        NextPaymentDate: "2026-11-20T00:00:00.000Z",
+      },
+      customerId: "ACTIVE",
+    },
+  ]);
+});

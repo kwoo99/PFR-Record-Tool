@@ -7,6 +7,7 @@ const {
   buildAutoPayContract,
   extractPaymentMethod,
   normalizeConfiguration,
+  normalizeConfigurationPatch,
   validateContract,
 } = require("./contracts.js");
 
@@ -126,6 +127,57 @@ function createAutoPayService(client) {
         };
   }
 
+  async function update(customer, options = {}) {
+    const customerId = customer.CustomerId;
+    const current = await client.getAutoPayContract(customerId);
+    if (current.error && current.status !== 404) {
+      return failure(current.error, current.status);
+    }
+    if (!current.data) {
+      return {
+        message: "No AutoPay contract; no changes made",
+        outcome: "skipped",
+        retryable: false,
+        status: current.status,
+      };
+    }
+
+    let contract;
+    try {
+      contract = normalizeConfigurationPatch({
+        ...(options.configuration ?? {}),
+        ...(options.fixedAmount === undefined
+          ? {}
+          : { FixedAmount: options.fixedAmount }),
+        ...(options.nextPaymentDate === undefined
+          ? {}
+          : { NextPaymentDate: options.nextPaymentDate }),
+        ...(options.paymentMethod === undefined
+          ? {}
+          : { PaymentMethod: options.paymentMethod }),
+      });
+      contract.CustomerId = customerId;
+      if (Object.keys(contract).length === 1) {
+        throw new Error("Enter at least one AutoPay field to update");
+      }
+      validateContract(contract, { create: false });
+    } catch (error) {
+      return failure(error.message, 400);
+    }
+
+    // PATCH only explicit values. In particular, an omitted PaymentMethod
+    // preserves the contract wallet and never falls back to the account default.
+    const result = await client.updateAutoPayContract(customerId, contract);
+    return result.error
+      ? failure(result.error, result.status)
+      : {
+          message: "AutoPay updated",
+          outcome: "succeeded",
+          retryable: false,
+          status: result.status,
+        };
+  }
+
   function failure(message, status) {
     return {
       message,
@@ -140,7 +192,7 @@ function createAutoPayService(client) {
     };
   }
 
-  return { apply, loadContract, remove, saveContract };
+  return { apply, loadContract, remove, saveContract, update };
 }
 
 module.exports = { createAutoPayService };

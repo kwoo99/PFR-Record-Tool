@@ -133,7 +133,7 @@
               <section id="bulk-autopay" class="guide-section">
                 <h2>Run a Bulk AutoPay Action</h2>
                 <p>Select customers, then choose an existing portal template, a JSON configuration, or an Excel workbook. Review the next payment date, optional payment method, and selected count before applying.</p>
-                <p>Customers already on AutoPay are skipped during apply; customers without a contract are skipped during removal. Processing is bounded to protect app and portal performance, and failed temporary requests can be retried.</p>
+                <p>Customers already on AutoPay are skipped during apply. <strong>Update Existing AutoPay</strong> changes only explicitly supplied fields for selected customers with a contract; blank fields, including the payment method, remain unchanged. Customers without a contract are skipped during update and removal. Processing is bounded to protect app and portal performance, and failed temporary requests can be retried.</p>
               </section>
 
               <section id="workbooks" class="guide-section">

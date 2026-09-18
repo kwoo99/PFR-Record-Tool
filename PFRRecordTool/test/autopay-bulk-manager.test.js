@@ -85,3 +85,22 @@ test("retains outcome history and clears it only when requested", async () => {
   assert.equal(manager.clearResults(), true);
   assert.deepEqual(manager.getSnapshot().results, []);
 });
+
+test("accepts update as a guarded bulk operation", async () => {
+  const operations = [];
+  const manager = createAutoPayBulkManager({
+    execute: async ({ operation }) => {
+      operations.push(operation);
+      return { outcome: "succeeded" };
+    },
+  });
+
+  const completed = await manager.start({
+    customers: [{ CustomerId: "CUST-1" }],
+    operation: "update",
+    options: { nextPaymentDate: "2026-11-20T00:00:00.000Z" },
+  });
+
+  assert.deepEqual(operations, ["update"]);
+  assert.equal(completed.succeeded, 1);
+});

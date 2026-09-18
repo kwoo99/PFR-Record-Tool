@@ -14,6 +14,7 @@
   };
   const status = document.getElementById("bulkActionStatus");
   const applyButton = document.getElementById("applyAutoPayButton");
+  const updateButton = document.getElementById("updateAutoPayButton");
   const removeButton = document.getElementById("removeAutoPayButton");
   const saveTemplateButton = document.getElementById("saveTemplateButton");
   const templateSelect = document.getElementById("templateSelect");
@@ -40,6 +41,7 @@
     const hasSelection = selectionCount > 0;
     selectionSummary.textContent = `${selectionCount.toLocaleString()} Customer${selectionCount === 1 ? "" : "s"} Selected`;
     applyButton.disabled = !hasSelection;
+    updateButton.disabled = !hasSelection;
     removeButton.disabled = !hasSelection;
     saveTemplateButton.hidden = sourceSelect.value === "template";
   }
@@ -78,9 +80,12 @@
     if (selectedGuid) templateSelect.value = selectedGuid;
   }
 
-  function parseJSONConfiguration() {
+  function parseJSONConfiguration({ allowEmpty = false } = {}) {
     const text = document.getElementById("configurationJson").value.trim();
-    if (!text) throw new Error("Paste an AutoPay JSON configuration first");
+    if (!text) {
+      if (allowEmpty) return {};
+      throw new Error("Paste an AutoPay JSON configuration first");
+    }
     const parsed = JSON.parse(text);
     if (!parsed || Array.isArray(parsed) || typeof parsed !== "object") {
       throw new Error("AutoPay JSON must contain one configuration object");
@@ -100,10 +105,14 @@
     };
   }
 
-  function workbookOperation(customers) {
-    if (!state.workbook) throw new Error("Choose an Excel workbook first");
+  function workbookOperation(customers, { allowEmpty = false } = {}) {
+    if (!state.workbook) {
+      if (allowEmpty) return { customers, options: sharedOptions({}) };
+      throw new Error("Choose an Excel workbook first");
+    }
     if (!state.workbook.assignments.length) {
       if (!state.workbook.templates.length) {
+        if (allowEmpty) return { customers, options: sharedOptions({}) };
         throw new Error("The workbook contains no AutoPay configuration");
       }
       return {
@@ -148,19 +157,67 @@
     };
   }
 
-  function operationRequest() {
+  function hasUpdateValues(options = {}) {
+    const updateFields = new Set([
+      "AmountOption",
+      "ApplyCredits",
+      "Currency",
+      "Description",
+      "FixedAmount",
+      "Frequency",
+      "FrequencyInterval",
+      "InvoiceTypes",
+      "NextPaymentDate",
+      "PaymentDay",
+      "PaymentMethod",
+      "StartDay",
+    ]);
+    const hasConfigurationValue = (configuration = {}) =>
+      Object.entries(configuration).some(([field, value]) =>
+        updateFields.has(field) &&
+        value !== undefined &&
+        value !== null &&
+        (Array.isArray(value) || String(value).trim() !== ""),
+      );
+
+    if (
+      options.fixedAmount !== undefined ||
+      options.nextPaymentDate !== undefined ||
+      options.paymentMethod !== undefined ||
+      hasConfigurationValue(options.configuration)
+    ) return true;
+    return Object.values(options.assignments ?? {}).some((assignment) =>
+      hasUpdateValues(assignment),
+    );
+  }
+
+  function operationRequest(operation) {
     const customers = workspace.selectedCustomers();
     if (!customers.length) throw new Error("Select at least one customer");
-    if (sourceSelect.value === "workbook") return workbookOperation(customers);
+    const updating = operation === "update";
+    if (sourceSelect.value === "workbook") {
+      const request = workbookOperation(customers, { allowEmpty: updating });
+      if (updating && !hasUpdateValues(request.options)) {
+        throw new Error("Enter at least one AutoPay field to update");
+      }
+      return request;
+    }
 
     let configuration;
     if (sourceSelect.value === "template") {
       configuration = selectedTemplate();
-      if (!configuration) throw new Error("Load and choose a portal template first");
+      if (!configuration && !updating) {
+        throw new Error("Load and choose a portal template first");
+      }
+      configuration ??= {};
     } else {
-      configuration = parseJSONConfiguration();
+      configuration = parseJSONConfiguration({ allowEmpty: updating });
     }
-    return { customers, options: sharedOptions(configuration) };
+    const request = { customers, options: sharedOptions(configuration) };
+    if (updating && !hasUpdateValues(request.options)) {
+      throw new Error("Enter at least one AutoPay field to update");
+    }
+    return request;
   }
 
   async function loadTemplates() {
@@ -231,7 +288,7 @@
     try {
       request = operation === "remove"
         ? { customers: workspace.selectedCustomers() }
-        : operationRequest();
+        : operationRequest(operation);
       if (!request.customers.length) throw new Error("Select at least one customer");
     } catch (error) {
       workspace.setStatus(status, error.message, "error");
@@ -239,13 +296,17 @@
     }
 
     const production = state.connection?.environment === "Production";
-    const verb = operation === "remove" ? "remove AutoPay from" : "apply AutoPay to";
+    const verb = operation === "remove"
+      ? "remove AutoPay from"
+      : operation === "update"
+        ? "update existing AutoPay for"
+        : "apply AutoPay to";
     const omitted = request.omitted
       ? ` ${request.omitted} selected customers without workbook assignments will not be included.`
       : "";
     if (
       !window.confirm(
-        `Ready to ${verb} ${request.customers.length} customer${request.customers.length === 1 ? "" : "s"}.${omitted}${production ? " This will change Production data." : ""}`,
+        `Ready to ${verb} ${request.customers.length} selected customer${request.customers.length === 1 ? "" : "s"}.${omitted}${operation === "update" ? " Customers without a contract will be skipped; blank fields are preserved and the existing wallet remains unchanged unless a Payment Method GUID Override is supplied." : ""}${production ? " This will change Production data." : ""}`,
       )
     ) {
       return;
@@ -254,6 +315,7 @@
     progressPanel.hidden = false;
     activity.replaceChildren();
     applyButton.disabled = true;
+    updateButton.disabled = true;
     removeButton.disabled = true;
     workspace.setStatus(status, "AutoPay operation started.");
     try {
@@ -338,6 +400,7 @@
   document.getElementById("importWorkbookButton").addEventListener("click", importWorkbook);
   document.getElementById("downloadWorkbookButton").addEventListener("click", downloadWorkbook);
   applyButton.addEventListener("click", () => startBulk("apply"));
+  updateButton.addEventListener("click", () => startBulk("update"));
   removeButton.addEventListener("click", () => startBulk("remove"));
   saveTemplateButton.addEventListener("click", saveTemplate);
   pauseButton.addEventListener("click", () =>

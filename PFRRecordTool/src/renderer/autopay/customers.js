@@ -232,11 +232,15 @@
         ].filter(Boolean).join("; ");
         workspace.setStatus(
           exportStatus,
-          `Exported ${result.total.toLocaleString()} customers. ${details}. Review the Wallet Source column in the workbook.`,
+          `Saved ${result.total.toLocaleString()} customers to ${result.fileName}. ${details}. Review the Wallet Source column in the workbook.`,
           result.failed ? "error" : "warning",
         );
       } else {
-        workspace.setStatus(exportStatus, "");
+        workspace.setStatus(
+          exportStatus,
+          `Saved ${result.total.toLocaleString()} customers to ${result.fileName}.`,
+          "success",
+        );
       }
     } catch (error) {
       workspace.setStatus(

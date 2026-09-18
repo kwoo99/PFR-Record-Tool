@@ -23,6 +23,7 @@ function createIPCHarness({
   const deletionStarts = [];
   const directDeletes = [];
   const autopayDeletes = [];
+  const autopayUpdates = [];
   const contractLookupRequests = [];
   const walletLookupRequests = [];
   let helpOpenCount = 0;
@@ -49,19 +50,25 @@ function createIPCHarness({
         },
         getDefaultPaymentMethod: async (customerId, currencyCode) => {
           walletLookupRequests.push({ currencyCode, customerId });
-          return Object.hasOwn(autopayPaymentMethods, customerId)
-            ? autopayPaymentMethods[customerId]
-            : {
-                data: { PaymentMethodGuid: "wallet-guid" },
-                status: 200,
-              };
+          if (Object.hasOwn(autopayPaymentMethods, customerId)) {
+            const result = autopayPaymentMethods[customerId];
+            if (result instanceof Error) throw result;
+            return result;
+          }
+          return {
+            data: { PaymentMethodGuid: "wallet-guid" },
+            status: 200,
+          };
         },
         getPortalTimezone: async () => {
           if (portalTimezoneError) throw portalTimezoneError;
           return portalTimezone;
         },
         createAutoPayContract: async () => ({ data: true, status: 200 }),
-        updateAutoPayContract: async () => ({ data: true, status: 200 }),
+        updateAutoPayContract: async (customerId, contract) => {
+          autopayUpdates.push({ contract, customerId });
+          return { data: true, error: null, status: 200 };
+        },
         deleteAutoPayContract: async (customerId) => {
           autopayDeletes.push(customerId);
           return autopayDeleteResult;
@@ -157,6 +164,7 @@ function createIPCHarness({
 
   return {
     autopayDeletes,
+    autopayUpdates,
     autopayListRequests,
     contractLookupRequests,
     deletionStarts,

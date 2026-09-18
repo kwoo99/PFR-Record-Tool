@@ -21,6 +21,12 @@ const CHANNELS = require("../../shared/channels.js");
 const AUTOPAY_WORKBOOK_NAME = "AutoPay-Contract-Template.xlsx";
 const CUSTOMER_EXPORT_NAME = "AutoPay-Selected-Customers.xlsx";
 
+function excelFilePath(filePath) {
+  return path.extname(filePath).toLowerCase() === ".xlsx"
+    ? filePath
+    : `${filePath}.xlsx`;
+}
+
 function registerAutoPayHandlers(mainWindow, connectionState) {
   const service = createAutoPayService(payfabricClient);
   const send = (channel, value) => mainWindow.webContents.send(channel, value);
@@ -28,6 +34,7 @@ function registerAutoPayHandlers(mainWindow, connectionState) {
     execute: ({ customer, operation, options }) => {
       if (operation === "remove") return service.remove(customer);
       const customerOptions = options.assignments?.[customer.CustomerId] ?? options;
+      if (operation === "update") return service.update(customer, customerOptions);
       return service.apply(customer, customerOptions);
     },
     maxConcurrency: 3,
@@ -149,8 +156,9 @@ function registerAutoPayHandlers(mainWindow, connectionState) {
     if (response.canceled || !response.filePath) return null;
 
     try {
-      await writeAutoPayWorkbook(response.filePath);
-      return { fileName: path.basename(response.filePath) };
+      const filePath = excelFilePath(response.filePath);
+      await writeAutoPayWorkbook(filePath);
+      return { fileName: path.basename(filePath) };
     } catch (error) {
       return { error: `Could not save the workbook: ${error.message}` };
     }
@@ -167,6 +175,7 @@ function registerAutoPayHandlers(mainWindow, connectionState) {
     if (response.canceled || !response.filePath) return null;
 
     try {
+      const filePath = excelFilePath(response.filePath);
       send(CHANNELS.AUTOPAY_EXPORT_PROGRESS, {
         completed: 0,
         total: customers.length,
@@ -179,14 +188,14 @@ function registerAutoPayHandlers(mainWindow, connectionState) {
         onProgress: (progress) =>
           send(CHANNELS.AUTOPAY_EXPORT_PROGRESS, progress),
       });
-      await writeCustomerExportWorkbook(response.filePath, rows);
+      await writeCustomerExportWorkbook(filePath, rows);
       const found = rows.filter((row) => Boolean(row.WalletGuid)).length;
       const failed = rows.filter((row) =>
         row.WalletSource === "Lookup Failed",
       ).length;
       return {
         failed,
-        fileName: path.basename(response.filePath),
+        fileName: path.basename(filePath),
         found,
         missing: rows.length - found - failed,
         total: rows.length,
